@@ -5,7 +5,7 @@ export const siteConfig = {
   shortName: "YMC",
   description:
     "Estimate whether a YouTube channel is monetized using public signals like subscribers, views, and upload history.",
-  url: "http://localhost:3000",
+  url: "https://ismonetized.com",
   ogImage: "/og.png",
   author: "Your Name",
   keywords: [
