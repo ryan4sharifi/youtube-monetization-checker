@@ -62,7 +62,7 @@ export default function Navbar() {
                 className="block truncate text-base font-bold tracking-[-0.04em] text-[var(--foreground)] sm:text-lg"
                 style={{ fontFamily: "var(--font-plus-jakarta)" }}
               >
-                {process.env.NEXT_PUBLIC_APP_NAME || "ViewNama"}
+                {process.env.NEXT_PUBLIC_APP_NAME || "IsMonetized"}
               </span>
               <span className="mt-0.5 hidden text-[11px] font-medium uppercase tracking-[0.18em] text-[var(--foreground-muted)] sm:block">
                 Monetization Intelligence
