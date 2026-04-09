@@ -1,0 +1,33 @@
+from pydantic import BaseModel, Field
+from typing import Optional, List
+
+
+class CheckRequest(BaseModel):
+    query: str = Field(..., min_length=1, max_length=500)
+
+
+class ChannelPreview(BaseModel):
+    input_query: str
+    normalized_query: str
+    detected_type: str
+    youtube_channel_id: Optional[str] = None
+    title: Optional[str] = None
+    custom_url: Optional[str] = None
+    thumbnail_url: Optional[str] = None
+    subscriber_count: Optional[int] = None
+    video_count: Optional[int] = None
+    view_count: Optional[int] = None
+
+
+class ScorePreview(BaseModel):
+    status: str
+    confidence: int
+    positive_signals: List[str]
+    negative_signals: List[str]
+    reasons_summary: str
+
+
+class CheckResponse(BaseModel):
+    success: bool
+    channel: ChannelPreview
+    score: ScorePreview

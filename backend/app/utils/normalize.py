@@ -1,0 +1,20 @@
+import re
+
+
+def normalize_query(query: str) -> str:
+    return query.strip()
+
+
+def detect_query_type(query: str) -> str:
+    q = query.strip()
+
+    if q.startswith("@"):
+        return "handle"
+
+    if "youtube.com/" in q or "youtu.be/" in q:
+        return "url"
+
+    if re.fullmatch(r"[A-Za-z0-9_-]{10,}", q):
+        return "possible_channel_identifier"
+
+    return "text"
