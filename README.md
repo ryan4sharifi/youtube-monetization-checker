@@ -1,0 +1,1 @@
+# youtube-monetization-checker
