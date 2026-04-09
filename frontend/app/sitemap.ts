@@ -1,10 +1,11 @@
-
+// FIX: ensure production URL is used instead of localhost
 
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/constants/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = siteConfig.url;
+  // Fallback to env or hardcoded domain
+  const base = process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url || "https://ismonetized.com";
 
   const routes = [
     "",
@@ -28,7 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return routes.map((path) => ({
     url: `${base}${path}`,
     lastModified: now,
-    changeFrequency: "weekly" as const,
+    changeFrequency: "weekly",
     priority: path === "" ? 1 : 0.7,
   }));
 }
