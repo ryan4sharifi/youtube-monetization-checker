@@ -1,7 +1,9 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 from app.config import supabase
 from app.routers.check import router as check_router
-from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI(title="YouTube Monetization Checker API")
 
 app.add_middleware(
@@ -19,10 +21,15 @@ def root():
     return {"message": "API is running"}
 
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
 @app.get("/test-db")
 def test_db():
     response = supabase.table("channels").select("*").limit(1).execute()
     return {
         "success": True,
-        "data": response.data
+        "data": response.data,
     }
