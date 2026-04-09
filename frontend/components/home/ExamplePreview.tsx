@@ -22,8 +22,8 @@ type MockResult = {
 
 const mockResult: MockResult = {
   channel: {
-    title: "Observe",
-    handle: "@Observe",
+    title: "FoxNews",
+    handle: "@FoxNews",
     subscribers: "8.42M",
     views: "3.1B",
     videos: "394",
@@ -70,7 +70,7 @@ export default function ExamplePreview() {
 
           <div className="mt-8 flex flex-wrap items-center gap-4 text-sm">
             <Link
-              href="/check/@mrbeast"
+              href="/check/@FoxNews"
               className="inline-flex items-center gap-2 rounded-2xl bg-[var(--brand)] px-5 py-3 font-semibold text-white !text-white shadow-[0_6px_18px_rgba(0,0,0,0.08)] transition hover:scale-[1.02] hover:bg-[var(--brand-hover)]"
             >
               View live example

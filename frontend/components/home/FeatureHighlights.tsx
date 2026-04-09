@@ -1,31 +1,31 @@
-
-
 "use client";
+
+import { Zap, Link as LinkIcon, TrendingUp, Brain } from "lucide-react";
 
 const items = [
   {
     title: "Fast public-signal analysis",
     description:
       "Estimate channel monetization likelihood in seconds using visible signals like subscribers, views, and upload activity.",
-    icon: "⚡",
+    icon: Zap,
   },
   {
     title: "Handles and full URLs supported",
     description:
       "Paste a channel handle, username, or full YouTube channel URL and let the tool normalize it automatically.",
-    icon: "🔗",
+    icon: LinkIcon,
   },
   {
     title: "Clean shareable result pages",
     description:
       "Every check can become a dedicated, SEO-friendly result page that is easy to revisit, share, and index.",
-    icon: "📈",
+    icon: TrendingUp,
   },
   {
     title: "Built for creators and researchers",
     description:
       "Use it for channel research, creator analysis, niche validation, competitor scanning, or quick monetization estimates.",
-    icon: "🧠",
+    icon: Brain,
   },
 ] as const;
 
@@ -44,7 +44,7 @@ export default function FeatureHighlights() {
 
             <div className="relative z-10">
               <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--background-elevated)] text-xl shadow-[0_2px_8px_rgba(15,23,42,0.04)]">
-                <span aria-hidden="true">{item.icon}</span>
+                <item.icon className="h-5 w-5 text-[var(--brand)]" aria-hidden="true" />
               </div>
 
               <h3

@@ -81,7 +81,7 @@ function getDisplayLabel(input: string) {
     const path = url.pathname;
 
     if (path.startsWith("/@")) {
-      return path.slice(1); // returns "@ObserveFoods"
+      return path.slice(1); // returns "@FoxNews"
     }
 
     return input;

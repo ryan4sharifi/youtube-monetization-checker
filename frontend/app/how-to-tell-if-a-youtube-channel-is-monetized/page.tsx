@@ -252,7 +252,7 @@ export default function HowToTellIfChannelIsMonetizedPage() {
             </Link>
             <span>•</span>
             <Link
-              href="/check/@mrbeast"
+              href="/check/@FoxNews"
               className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
             >
               Example result

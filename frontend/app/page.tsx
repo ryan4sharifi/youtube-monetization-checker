@@ -1,13 +1,20 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import HeroSection from "@/components/home/HeroSection";
 import FeatureHighlights from "@/components/home/FeatureHighlights";
 import HowItWorks from "@/components/home/HowItWorks";
 import ExamplePreview from "@/components/home/ExamplePreview";
 import FinalCTA from "@/components/home/FinalCTA";
 import Section from "@/components/ui/Section";
-import { useRouter } from "next/navigation";
 
+type FeaturedChannel = {
+  title: string;
+  handle: string | null;
+  thumbnail_url: string | null;
+  subscriber_count: number | null;
+};
 
 function normalizeSearchInput(input: string) {
   const value = input.trim();
@@ -28,7 +35,7 @@ function normalizeSearchInput(input: string) {
     const path = url.pathname.trim();
 
     if (path.startsWith("/@")) {
-      return path.slice(1); // "@ObserveFoods"
+      return path.slice(1); // "@FoxNews"
     }
 
     if (path.startsWith("/channel/")) {
@@ -53,6 +60,50 @@ function normalizeSearchInput(input: string) {
 }
 export default function HomePage() {
   const router = useRouter();
+  const [featuredChannels, setFeaturedChannels] = useState<FeaturedChannel[]>([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadFeaturedChannels() {
+      try {
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+        if (!supabaseUrl || !supabaseAnonKey) {
+          return;
+        }
+
+        const response = await fetch(
+          `${supabaseUrl}/rest/v1/featured_channels_view?select=title,handle,thumbnail_url,subscriber_count&order=subscriber_count.desc&limit=10`,
+          {
+            headers: {
+              apikey: supabaseAnonKey,
+              Authorization: `Bearer ${supabaseAnonKey}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch featured channels");
+        }
+
+        const data: FeaturedChannel[] = await response.json();
+
+        if (isMounted) {
+          setFeaturedChannels(data);
+        }
+      } catch (error) {
+        console.error("Failed to load featured channels", error);
+      }
+    }
+
+    loadFeaturedChannels();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleSearch = async (query: string) => {
     const normalized = normalizeSearchInput(query);
@@ -63,9 +114,13 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <Section className="min-h-screen flex items-center" size="lg">
+      <Section className="pt-4 md:pt-6 lg:pt-8" size="lg">
         <div className="w-full space-y-6">
-          <HeroSection onSearch={handleSearch} loading={false} />
+          <HeroSection
+            onSearch={handleSearch}
+            loading={false}
+            featuredChannels={featuredChannels}
+          />
         </div>
       </Section>
 

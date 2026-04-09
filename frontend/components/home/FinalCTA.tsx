@@ -51,7 +51,7 @@ export default function FinalCTA() {
             </Link>
 
             <Link
-              href="/check/@mrbeast"
+              href="/check/@FoxNews"
               className="inline-flex h-14 items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--background-elevated)] px-6 text-base font-medium text-[var(--foreground)] transition hover:border-[var(--border-strong)] hover:bg-[var(--card-muted)]"
             >
               View example result
@@ -60,10 +60,10 @@ export default function FinalCTA() {
 
           <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs text-[var(--foreground-muted)] md:text-sm">
             <span className="rounded-full bg-[var(--card-muted)] px-3 py-1 font-medium text-[var(--foreground)]">
-              @mrbeast
+              @FoxNews
             </span>
             <span className="rounded-full bg-[var(--card-muted)] px-3 py-1 font-medium text-[var(--foreground)]">
-              @ObserveFoods
+              @FoxNews
             </span>
             <span className="rounded-full bg-[var(--card-muted)] px-3 py-1 font-medium text-[var(--foreground)]">
               full channel URL

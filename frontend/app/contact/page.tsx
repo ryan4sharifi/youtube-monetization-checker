@@ -5,7 +5,7 @@ import Section from "@/components/ui/Section";
 import { siteConfig } from "@/constants/site";
 
 const pageUrl = `${siteConfig.url}/contact`;
-const contactEmail = "hello@example.com";
+const contactEmail = "support@ismonetized.com";
 
 export const metadata: Metadata = {
   title: `Contact | ${siteConfig.name}`,
