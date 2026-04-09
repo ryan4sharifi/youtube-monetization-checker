@@ -39,6 +39,12 @@ export default function RootLayout({
             <Footer />
           </div>
           <Script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6344493955204075"
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+          <Script
             src="https://www.googletagmanager.com/gtag/js?id=G-P45QFS2QX2"
             strategy="afterInteractive"
           />
