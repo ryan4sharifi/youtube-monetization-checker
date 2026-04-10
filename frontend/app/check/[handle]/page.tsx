@@ -4,6 +4,8 @@ import ChannelCard from "@/components/result/ChannelCard";
 import ScoreCard from "@/components/result/ScoreCard";
 import SignalsCard from "@/components/result/SignalsCard";
 import DisclaimerCard from "@/components/result/DisclaimerCard";
+import EarningsEstimateCard from "@/components/result/EarningsEstimateCard";
+import ChannelInsightsCard from "@/components/result/ChannelInsightsCard";
 import Section from "@/components/ui/Section";
 import { siteConfig } from "@/constants/site";
 
@@ -30,6 +32,22 @@ type CheckResponse = {
     confidence: number;
     positive_signals: string[];
     negative_signals: string[];
+  };
+  earnings: {
+    estimated_monthly_views: number;
+    low_rpm: number;
+    high_rpm: number;
+    monthly_low: number;
+    monthly_high: number;
+    yearly_low: number;
+    yearly_high: number;
+    confidence: string;
+  };
+  insights: {
+    channel_size: string;
+    upload_strength: string;
+    activity_level: string;
+    business_potential: string;
   };
 };
 
@@ -229,6 +247,8 @@ export default async function CheckPage({ params }: PageProps) {
                   positive_signals={data.score.positive_signals}
                   negative_signals={data.score.negative_signals}
                 />
+                <EarningsEstimateCard earnings={data.earnings} />
+                <ChannelInsightsCard insights={data.insights} />
                 <DisclaimerCard />
               </div>
 

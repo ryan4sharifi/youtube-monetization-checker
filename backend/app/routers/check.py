@@ -14,6 +14,8 @@ def check_channel(payload: CheckRequest):
             "success": True,
             "channel": result["channel"],
             "score": result["score"],
+            "earnings": result["earnings"],
+            "insights": result["insights"],
         }
     except YouTubeServiceError as e:
         raise HTTPException(status_code=400, detail=str(e))

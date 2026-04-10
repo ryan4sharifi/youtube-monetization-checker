@@ -37,12 +37,6 @@ export default function RootLayout({
           name="google-adsense-account"
           content="ca-pub-6344493955204075"
         />
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6344493955204075"
-          crossOrigin="anonymous"
-          strategy="beforeInteractive"
-        />
       </head>
       <body className={`${inter.variable} ${plusJakarta.variable} min-h-screen`}>
         <ThemeProvider>
@@ -64,6 +58,13 @@ export default function RootLayout({
               gtag('config', 'G-P45QFS2QX2');
             `}
           </Script>
+          <Script
+            id="adsense-script"
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6344493955204075"
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
         </ThemeProvider>
       </body>
     </html>

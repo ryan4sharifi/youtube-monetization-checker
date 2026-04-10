@@ -27,7 +27,27 @@ class ScorePreview(BaseModel):
     reasons_summary: str
 
 
+class EarningsPreview(BaseModel):
+    estimated_monthly_views: int
+    low_rpm: float
+    high_rpm: float
+    monthly_low: int
+    monthly_high: int
+    yearly_low: int
+    yearly_high: int
+    confidence: str
+
+
+class InsightsPreview(BaseModel):
+    channel_size: str
+    upload_strength: str
+    activity_level: str
+    business_potential: str
+
+
 class CheckResponse(BaseModel):
     success: bool
     channel: ChannelPreview
     score: ScorePreview
+    earnings: EarningsPreview
+    insights: InsightsPreview

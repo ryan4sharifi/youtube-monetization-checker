@@ -63,7 +63,7 @@ export default function FinalCTA() {
               @FoxNews
             </span>
             <span className="rounded-full bg-[var(--card-muted)] px-3 py-1 font-medium text-[var(--foreground)]">
-              @FoxNews
+              @WWE
             </span>
             <span className="rounded-full bg-[var(--card-muted)] px-3 py-1 font-medium text-[var(--foreground)]">
               full channel URL

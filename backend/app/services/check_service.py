@@ -6,6 +6,8 @@ from app.services.db_service import (
     insert_channel_score,
     insert_search_log,
 )
+from app.services.earnings import estimate_earnings
+from app.services.insights import build_insights
 
 
 def build_real_score(channel_data: dict) -> dict:
@@ -59,6 +61,8 @@ def process_check_query(query: str) -> dict:
     channel = resolve_channel(normalized_query)
     channel_data = transform_channel_data(channel)
     score = build_real_score(channel_data)
+    earnings = estimate_earnings(channel_data)
+    insights = build_insights(channel_data)
 
     saved_channel = upsert_channel(channel_data)
     snapshot = insert_channel_snapshot(saved_channel["id"], channel_data)
@@ -84,4 +88,6 @@ def process_check_query(query: str) -> dict:
             "view_count": channel_data["view_count"],
         },
         "score": score,
+        "earnings": earnings,
+        "insights": insights,
     }
