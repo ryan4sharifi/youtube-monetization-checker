@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import type { ReactNode, HTMLAttributes } from "react";
@@ -33,7 +31,7 @@ export default function Container({
 }: Props) {
   return (
     <div
-      className={`w-full mx-auto px-4 sm:px-6 lg:px-8 ${getMaxWidth(size)} ${className}`}
+      className={`mx-auto w-full ${getMaxWidth(size)} px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 ${className}`}
       {...props}
     >
       {children}

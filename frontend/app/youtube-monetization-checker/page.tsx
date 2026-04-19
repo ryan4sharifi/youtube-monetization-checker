@@ -63,20 +63,20 @@ export default function YouTubeMonetizationCheckerPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <Section size="md">
-        <div className="space-y-8">
+        <div className="space-y-10 md:space-y-12">
           <div className="space-y-4">
-            <p className="text-sm font-medium text-[var(--brand)]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background-elevated)] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--foreground-muted)]">
               YouTube Growth Tool
-            </p>
+            </div>
 
             <h1
-              className="text-4xl font-bold tracking-[-0.04em] md:text-5xl"
+              className="max-w-3xl text-3xl font-semibold tracking-[-0.03em] md:text-4xl"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               YouTube Monetization Checker
             </h1>
 
-            <p className="max-w-3xl text-base leading-7 text-[var(--foreground-muted)] md:text-lg">
+            <p className="max-w-2xl text-[15px] leading-7 text-[var(--foreground-muted)] md:text-base">
               Use this page to understand how a YouTube monetization checker
               works and estimate whether a channel is monetized based on public
               signals like subscribers, total views, and upload history.
@@ -85,21 +85,21 @@ export default function YouTubeMonetizationCheckerPage() {
             <div className="pt-2">
               <Link
                 href="/"
-                className="inline-flex items-center rounded-xl bg-[var(--brand)] px-5 py-3 text-sm font-medium text-white transition hover:bg-[var(--brand-hover)] !text-white"
+                className="inline-flex items-center rounded-xl bg-[var(--brand)] px-4 py-2.5 text-sm font-medium text-white transition-all hover:bg-[var(--brand-hover)] hover:shadow-md"
               >
                 Try the checker
               </Link>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
             <h2
-              className="text-2xl font-bold tracking-[-0.02em]"
+              className="text-lg font-semibold"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               What is a YouTube monetization checker?
             </h2>
-            <p className="mt-3 leading-7 text-[var(--foreground-muted)]">
+            <p className="mt-3 text-sm leading-6 text-[var(--foreground-muted)]">
               A YouTube monetization checker is a tool that estimates whether a
               YouTube channel appears likely to be monetized. Since YouTube does
               not publicly expose a universal monetization status field for all
@@ -109,30 +109,45 @@ export default function YouTubeMonetizationCheckerPage() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
               <h2
-                className="text-xl font-bold tracking-[-0.02em]"
+                className="text-base font-semibold"
                 style={{ fontFamily: "var(--font-plus-jakarta)" }}
               >
                 Signals this tool uses
               </h2>
-              <ul className="mt-4 ml-5 list-disc space-y-2 leading-7 text-[var(--foreground-muted)]">
-                <li>Subscriber count</li>
-                <li>Total channel views</li>
-                <li>Upload history</li>
-                <li>Video count</li>
-                <li>General public channel activity</li>
+              <ul className="mt-3 space-y-2 text-sm leading-6 text-[var(--foreground-muted)]">
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Subscriber count</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Total channel views</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Upload history</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Video count</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>General public channel activity</span>
+                </li>
               </ul>
             </div>
 
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
               <h2
-                className="text-xl font-bold tracking-[-0.02em]"
+                className="text-base font-semibold"
                 style={{ fontFamily: "var(--font-plus-jakarta)" }}
               >
                 Why results are estimates
               </h2>
-              <p className="mt-3 leading-7 text-[var(--foreground-muted)]">
+              <p className="mt-3 text-sm leading-6 text-[var(--foreground-muted)]">
                 Public data can suggest whether a channel is likely monetized,
                 but it cannot confirm internal YouTube review outcomes,
                 monetization eligibility in every region, or private creator-side
@@ -141,14 +156,14 @@ export default function YouTubeMonetizationCheckerPage() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
             <h2
-              className="text-2xl font-bold tracking-[-0.02em]"
+              className="text-lg font-semibold"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               Why creators and researchers use this tool
             </h2>
-            <p className="mt-3 leading-7 text-[var(--foreground-muted)]">
+            <p className="mt-3 text-sm leading-6 text-[var(--foreground-muted)]">
               This kind of checker is useful for competitive research, creator
               analysis, niche validation, and general curiosity. It helps users
               estimate channel status quickly without requiring login access to
@@ -156,20 +171,20 @@ export default function YouTubeMonetizationCheckerPage() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
             <h2
-              className="text-2xl font-bold tracking-[-0.02em]"
+              className="text-lg font-semibold"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               Frequently asked questions
             </h2>
 
-            <div className="mt-5 space-y-5">
+            <div className="mt-4 space-y-4">
               <div>
                 <h3 className="text-base font-semibold">
                   How does this YouTube monetization checker work?
                 </h3>
-                <p className="mt-2 leading-7 text-[var(--foreground-muted)]">
+                <p className="mt-2 text-sm leading-6 text-[var(--foreground-muted)]">
                   It estimates monetization likelihood using public signals like
                   subscribers, views, and upload history.
                 </p>
@@ -179,7 +194,7 @@ export default function YouTubeMonetizationCheckerPage() {
                 <h3 className="text-base font-semibold">
                   Can it confirm official monetization status?
                 </h3>
-                <p className="mt-2 leading-7 text-[var(--foreground-muted)]">
+                <p className="mt-2 text-sm leading-6 text-[var(--foreground-muted)]">
                   No. It provides an estimate only and does not have access to
                   YouTube’s internal approval systems.
                 </p>
@@ -189,7 +204,7 @@ export default function YouTubeMonetizationCheckerPage() {
                 <h3 className="text-base font-semibold">
                   Why might the result be wrong?
                 </h3>
-                <p className="mt-2 leading-7 text-[var(--foreground-muted)]">
+                <p className="mt-2 text-sm leading-6 text-[var(--foreground-muted)]">
                   Because public data is incomplete. A channel may look eligible
                   publicly but still not be approved, or may be monetized while
                   some useful signals are not visible.
@@ -201,14 +216,14 @@ export default function YouTubeMonetizationCheckerPage() {
           <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--foreground-muted)]">
             <Link
               href="/"
-              className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+              className="font-medium text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors"
             >
               Try the checker
             </Link>
             <span>•</span>
             <Link
               href="/check/@FoxNews"
-              className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+              className="font-medium text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors"
             >
               See an example result
             </Link>

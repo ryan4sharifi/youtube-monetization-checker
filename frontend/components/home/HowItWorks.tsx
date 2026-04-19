@@ -1,5 +1,3 @@
-
-
 "use client";
 
 const steps = [
@@ -25,48 +23,44 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="w-full">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-10 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--brand)]">
+    <section className="w-full py-8 md:py-10">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+        <div className="mb-8 text-center md:mb-10">
+          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--foreground-muted)]">
             How it works
           </p>
 
           <h2
-            className="mt-3 text-3xl font-bold tracking-[-0.04em] md:text-4xl"
+            className="mt-2 text-2xl font-semibold tracking-[-0.03em] md:text-3xl"
             style={{ fontFamily: "var(--font-plus-jakarta)" }}
           >
             Simple, fast, and data-driven
           </h2>
 
-          <p className="mt-4 text-sm leading-7 text-[var(--foreground-muted)] md:text-base">
+          <p className="mt-3 max-w-xl mx-auto text-sm leading-6 text-[var(--foreground-muted)]">
             Get a monetization estimate in seconds using structured public data — no login, no friction.
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
           {steps.map((item) => (
             <div
               key={item.step}
-              className="group relative overflow-hidden rounded-[28px] border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)] transition duration-200 hover:-translate-y-0.5 hover:border-[var(--border-strong)]"
+              className="group relative min-w-0 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 shadow-sm transition-colors hover:border-[var(--border-strong)]"
             >
-              <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-200 group-hover:opacity-100">
-                <div className="absolute left-[-10%] top-[-10%] h-28 w-28 rounded-full bg-[color:color-mix(in_srgb,var(--brand)_10%,transparent)] blur-2xl" />
-              </div>
-
               <div className="relative z-10">
-                <div className="mb-4 inline-flex items-center justify-center rounded-full border border-[var(--border)] bg-[var(--background-elevated)] px-3 py-1 text-xs font-semibold tracking-wide text-[var(--brand)]">
+                <div className="mb-3 inline-flex items-center justify-center rounded-full border border-[var(--border)] bg-[var(--background-elevated)] px-2.5 py-0.5 text-[11px] font-medium text-[var(--foreground-muted)]">
                   {item.step}
                 </div>
 
                 <h3
-                  className="text-lg font-bold tracking-[-0.02em] text-[var(--foreground)]"
+                  className="text-base font-semibold text-[var(--foreground)]"
                   style={{ fontFamily: "var(--font-plus-jakarta)" }}
                 >
                   {item.title}
                 </h3>
 
-                <p className="mt-3 text-sm leading-7 text-[var(--foreground-muted)] md:text-[15px]">
+                <p className="mt-2 text-sm leading-6 text-[var(--foreground-muted)]">
                   {item.description}
                 </p>
               </div>

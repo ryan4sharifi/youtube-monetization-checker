@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import type { HTMLAttributes, ReactNode } from "react";
@@ -20,7 +18,7 @@ export default function Section({
   ...props
 }: Props) {
   return (
-    <section className={`py-10 md:py-14 ${className}`} {...props}>
+    <section className={`py-12 md:py-16 xl:py-20 ${className}`} {...props}>
       <Container size={size} className={containerClassName}>
         {children}
       </Container>

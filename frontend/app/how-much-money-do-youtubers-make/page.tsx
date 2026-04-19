@@ -1,5 +1,3 @@
-
-
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, DollarSign, CircleHelp } from "lucide-react";
@@ -28,22 +26,22 @@ export default function Page() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <Section size="md">
-        <div className="space-y-10">
+        <div className="space-y-10 md:space-y-12">
           {/* Header */}
           <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background-elevated)] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--brand)]">
-              <DollarSign className="h-3.5 w-3.5" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background-elevated)] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--foreground-muted)]">
+              <DollarSign className="h-3.5 w-3.5 opacity-70" />
               YouTube Earnings Guide
             </div>
 
             <h1
-              className="max-w-4xl text-4xl font-extrabold tracking-[-0.05em] md:text-5xl"
+              className="max-w-3xl text-3xl font-semibold tracking-[-0.03em] md:text-4xl"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               How much money do YouTubers make?
             </h1>
 
-            <p className="max-w-3xl text-lg text-[var(--foreground-muted)]">
+            <p className="max-w-2xl text-[15px] leading-7 text-[var(--foreground-muted)] md:text-base">
               YouTube earnings vary widely depending on niche, audience, and
               monetization methods. Most creators earn between $1 to $5 per 1,000
               views from ads alone.
@@ -51,10 +49,10 @@ export default function Page() {
           </div>
 
           {/* Earnings overview */}
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
-            <h2 className="text-2xl font-bold">Average YouTube earnings</h2>
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
+            <h2 className="text-lg font-semibold">Average YouTube earnings</h2>
 
-            <ul className="mt-4 space-y-3 text-[var(--foreground-muted)] leading-7">
+            <ul className="mt-3 space-y-2 text-sm leading-6 text-[var(--foreground-muted)]">
               <li>• $1 – $5 per 1,000 views (ad revenue)</li>
               <li>• $10 – $30 CPM (before YouTube’s cut)</li>
               <li>• Higher earnings in niches like finance, tech, and business</li>
@@ -64,33 +62,33 @@ export default function Page() {
 
           {/* Factors */}
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="rounded-[28px] border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
-              <h3 className="text-lg font-semibold">Niche matters</h3>
-              <p className="mt-3 text-sm leading-7 text-[var(--foreground-muted)]">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="text-base font-semibold">Niche matters</h3>
+              <p className="mt-2 text-sm leading-6 text-[var(--foreground-muted)]">
                 Channels in finance, software, and business tend to earn more
                 because advertisers pay higher rates.
               </p>
             </div>
 
-            <div className="rounded-[28px] border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
-              <h3 className="text-lg font-semibold">Audience location</h3>
-              <p className="mt-3 text-sm leading-7 text-[var(--foreground-muted)]">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="text-base font-semibold">Audience location</h3>
+              <p className="mt-2 text-sm leading-6 text-[var(--foreground-muted)]">
                 Viewers from countries like the US, UK, and Canada generate
                 higher ad revenue.
               </p>
             </div>
 
-            <div className="rounded-[28px] border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
-              <h3 className="text-lg font-semibold">Engagement & watch time</h3>
-              <p className="mt-3 text-sm leading-7 text-[var(--foreground-muted)]">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="text-base font-semibold">Engagement & watch time</h3>
+              <p className="mt-2 text-sm leading-6 text-[var(--foreground-muted)]">
                 Higher watch time and engagement can lead to better ad
                 performance and increased earnings.
               </p>
             </div>
 
-            <div className="rounded-[28px] border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
-              <h3 className="text-lg font-semibold">Revenue streams</h3>
-              <p className="mt-3 text-sm leading-7 text-[var(--foreground-muted)]">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="text-base font-semibold">Revenue streams</h3>
+              <p className="mt-2 text-sm leading-6 text-[var(--foreground-muted)]">
                 Creators also earn from sponsorships, affiliate links, and
                 product sales—not just ads.
               </p>
@@ -98,13 +96,13 @@ export default function Page() {
           </div>
 
           {/* FAQ */}
-          <div className="rounded-[32px] border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)] md:p-8">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm md:p-7">
             <div className="inline-flex items-center gap-2">
-              <CircleHelp className="h-5 w-5 text-[var(--brand)]" />
-              <h2 className="text-2xl font-bold">Common questions</h2>
+              <CircleHelp className="h-5 w-5 text-[var(--foreground-muted)]" />
+              <h2 className="text-xl font-semibold">Common questions</h2>
             </div>
 
-            <div className="mt-6 space-y-4 text-[var(--foreground-muted)]">
+            <div className="mt-4 space-y-3 text-sm leading-6 text-[var(--foreground-muted)]">
               <p>
                 <strong className="text-[var(--foreground)]">Do YouTubers get paid per view?</strong><br />
                 Not directly. Earnings come from ads shown on videos, not just views.
@@ -118,9 +116,9 @@ export default function Page() {
           </div>
 
           {/* CTA */}
-          <div className="rounded-[32px] border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)] md:p-8">
-            <h2 className="text-2xl font-bold">Check any channel’s potential</h2>
-            <p className="mt-3 max-w-2xl text-[var(--foreground-muted)]">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm md:p-7">
+            <h2 className="text-xl font-semibold">Check any channel’s potential</h2>
+            <p className="mt-2 max-w-xl text-sm text-[var(--foreground-muted)]">
               Use the checker to estimate whether a channel is monetized and
               likely earning from YouTube.
             </p>
@@ -128,7 +126,7 @@ export default function Page() {
             <div className="mt-6 flex flex-wrap gap-4">
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 rounded-2xl bg-[var(--brand)] px-5 py-3 font-semibold text-white !text-white hover:bg-[var(--brand-hover)]"
+                className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand)] px-4 py-2.5 text-sm font-medium text-white transition-all hover:bg-[var(--brand-hover)] hover:shadow-md"
               >
                 Try the checker
                 <ArrowRight className="h-4 w-4" />
@@ -136,7 +134,7 @@ export default function Page() {
 
               <Link
                 href="/can-you-see-if-a-youtube-channel-is-monetized"
-                className="inline-flex items-center gap-2 font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+                className="inline-flex items-center gap-1 text-sm font-medium text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors"
               >
                 Learn how monetization works
                 <ArrowRight className="h-4 w-4" />

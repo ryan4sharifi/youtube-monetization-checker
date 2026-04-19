@@ -200,37 +200,33 @@ export default async function CheckPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <Section size="md">
-        <div className="space-y-8">
-          <div className="space-y-4">
-            <p className="text-sm font-medium text-[var(--brand)]">
+      <Section size="md" className="pt-4 md:pt-6 xl:pt-8">
+        <div className="space-y-8 md:space-y-10">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background-elevated)] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--foreground-muted)]">
               YouTube Monetization Check
-            </p>
+            </div>
             <h1
-              className="text-3xl font-bold tracking-[-0.03em] md:text-4xl"
+              className="max-w-3xl text-2xl font-semibold tracking-[-0.03em] md:text-3xl"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               Is {displayHandle} monetized on YouTube?
             </h1>
-            <p className="max-w-3xl text-base leading-7 text-[var(--foreground-muted)]">
-              This page estimates whether <span className="font-semibold text-[var(--foreground)]">{displayHandle}</span>{" "}
-              is monetized on YouTube using public signals such as subscribers,
-              views, and upload activity. The result is not an official YouTube
-              confirmation, but it can help you understand whether a channel
-              appears likely to be monetized.
+            <p className="max-w-2xl text-sm leading-6 text-[var(--foreground-muted)]">
+              This page provides an estimate of whether <span className="font-medium text-[var(--foreground)]">{displayHandle}</span> is monetized on YouTube using public signals such as subscribers, views, and upload activity. This is not an official YouTube confirmation, but a data-driven indication of whether the channel appears likely to be monetized.
             </p>
           </div>
 
           {!data && (
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
-              <p className="text-[var(--foreground-muted)]">
+            <div className="rounded-[28px] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--card)_94%,transparent)] p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur">
+              <p className="text-[var(--foreground-muted)]/90 leading-7">
                 We could not fetch data for this channel right now. Double-check
                 the handle or try another channel.
               </p>
               <div className="mt-4">
                 <Link
                   href="/"
-                  className="text-sm font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+                  className="text-sm font-medium text-[var(--brand)] transition duration-200 hover:text-[var(--brand-hover)]"
                 >
                   Back to homepage
                 </Link>
@@ -252,31 +248,31 @@ export default async function CheckPage({ params }: PageProps) {
                 <DisclaimerCard />
               </div>
 
-              <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+              <div className="rounded-[28px] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--card)_94%,transparent)] p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-[var(--border-strong)]">
                 <h2
-                  className="text-2xl font-bold tracking-[-0.02em]"
+                  className="text-2xl font-bold tracking-[-0.04em] text-[var(--foreground)]"
                   style={{ fontFamily: "var(--font-plus-jakarta)" }}
                 >
                   Summary for {displayHandle}
                 </h2>
-                <p className="mt-3 leading-7 text-[var(--foreground-muted)]">
+                <p className="mt-3 leading-7 text-[var(--foreground-muted)]/90 md:leading-8">
                   Based on the currently visible public data, this channel is
-                  classified as <span className="font-semibold text-[var(--foreground)]">{getStatusLabel(data.score.status)}</span>{" "}
-                  with a confidence score of <span className="font-semibold text-[var(--foreground)]">{data.score.confidence}%</span>.
+                  classified as <span className="font-medium text-[var(--foreground)]">{getStatusLabel(data.score.status)}</span>{" "}
+                  with a confidence score of <span className="font-medium text-[var(--foreground)]">{data.score.confidence}%</span>.
                   Public signals like subscriber count, total views, and upload
                   history were used to generate this estimate.
                 </p>
               </div>
 
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+              <div className="grid gap-5 md:grid-cols-2 md:gap-6">
+                <div className="rounded-[28px] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--card)_94%,transparent)] p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-[var(--border-strong)]">
                   <h2
-                    className="text-xl font-bold tracking-[-0.02em]"
+                    className="text-xl font-bold tracking-[-0.04em] text-[var(--foreground)]"
                     style={{ fontFamily: "var(--font-plus-jakarta)" }}
                   >
                     How this estimate works
                   </h2>
-                  <p className="mt-3 leading-7 text-[var(--foreground-muted)]">
+                  <p className="mt-3 leading-7 text-[var(--foreground-muted)]/90 md:leading-8">
                     This tool analyzes public YouTube channel signals such as
                     subscriber count, total views, channel activity, and upload
                     history. It does not use private creator data or YouTube
@@ -284,14 +280,14 @@ export default async function CheckPage({ params }: PageProps) {
                   </p>
                 </div>
 
-                <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+                <div className="rounded-[28px] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--card)_94%,transparent)] p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-[var(--border-strong)]">
                   <h2
-                    className="text-xl font-bold tracking-[-0.02em]"
+                    className="text-xl font-bold tracking-[-0.04em] text-[var(--foreground)]"
                     style={{ fontFamily: "var(--font-plus-jakarta)" }}
                   >
                     Why the result may change
                   </h2>
-                  <p className="mt-3 leading-7 text-[var(--foreground-muted)]">
+                  <p className="mt-3 leading-7 text-[var(--foreground-muted)]/90 md:leading-8">
                     YouTube monetization is not publicly confirmed for every
                     channel. A channel can gain or lose eligibility over time,
                     and some monetization decisions depend on internal review,
@@ -300,20 +296,20 @@ export default async function CheckPage({ params }: PageProps) {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+              <div className="rounded-[28px] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--card)_94%,transparent)] p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur">
                 <h2
-                  className="text-2xl font-bold tracking-[-0.02em]"
+                  className="text-2xl font-bold tracking-[-0.04em] text-[var(--foreground)]"
                   style={{ fontFamily: "var(--font-plus-jakarta)" }}
                 >
                   Frequently asked questions
                 </h2>
 
-                <div className="mt-5 space-y-5">
+                <div className="mt-5 space-y-4 md:space-y-5">
                   <div>
-                    <h3 className="text-base font-semibold">
+                  <h3 className="text-base font-medium tracking-[-0.02em] text-[var(--foreground)]">
                       Can this tool confirm whether {displayHandle} is officially monetized?
                     </h3>
-                    <p className="mt-2 leading-7 text-[var(--foreground-muted)]">
+                    <p className="mt-2 leading-7 text-[var(--foreground-muted)]/90 md:leading-8">
                       No. This tool provides an estimate based on public data. It
                       does not have access to YouTube&apos;s internal monetization
                       approval status.
@@ -321,10 +317,10 @@ export default async function CheckPage({ params }: PageProps) {
                   </div>
 
                   <div>
-                    <h3 className="text-base font-semibold">
+                  <h3 className="text-base font-medium tracking-[-0.02em] text-[var(--foreground)]">
                       What signals are used to estimate monetization?
                     </h3>
-                    <p className="mt-2 leading-7 text-[var(--foreground-muted)]">
+                    <p className="mt-2 leading-7 text-[var(--foreground-muted)]/90 md:leading-8">
                       The estimate looks at public signals such as subscribers,
                       total views, video count, and other visible channel
                       activity indicators.
@@ -332,10 +328,10 @@ export default async function CheckPage({ params }: PageProps) {
                   </div>
 
                   <div>
-                    <h3 className="text-base font-semibold">
+                  <h3 className="text-base font-medium tracking-[-0.02em] text-[var(--foreground)]">
                       Why is this not always 100% accurate?
                     </h3>
-                    <p className="mt-2 leading-7 text-[var(--foreground-muted)]">
+                    <p className="mt-2 leading-7 text-[var(--foreground-muted)]/90 md:leading-8">
                       YouTube does not expose a public monetization field for all
                       channels. Public data can suggest likelihood, but it cannot
                       guarantee the final status.
@@ -344,17 +340,17 @@ export default async function CheckPage({ params }: PageProps) {
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--foreground-muted)]">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--foreground-muted)]/90">
                 <Link
                   href="/"
-                  className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+                  className="font-medium text-[var(--brand)] transition duration-200 hover:text-[var(--brand-hover)]"
                 >
                   Check another channel
                 </Link>
                 <span>•</span>
                 <Link
                   href="/"
-                  className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+                  className="font-medium text-[var(--brand)] transition duration-200 hover:text-[var(--brand-hover)]"
                 >
                   Back to homepage
                 </Link>

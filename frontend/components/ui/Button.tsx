@@ -16,13 +16,13 @@ type Props = {
 function getVariantStyles(variant: Variant) {
   switch (variant) {
     case "primary":
-      return "bg-[var(--brand)] text-white shadow-[0_6px_18px_rgba(0,0,0,0.08)] hover:bg-[var(--brand-hover)]";
+      return "bg-[var(--brand)] text-white shadow-[0_10px_24px_rgba(15,23,42,0.12)] hover:bg-[var(--brand-hover)]";
     case "secondary":
-      return "bg-[var(--card-muted)] text-[var(--foreground)] border border-[var(--border)] hover:border-[var(--border-strong)]";
+      return "bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] text-[var(--foreground)] border border-[var(--border)] shadow-[0_6px_18px_rgba(15,23,42,0.05)] hover:border-[var(--border-strong)]";
     case "ghost":
-      return "bg-transparent text-[var(--foreground)] hover:bg-[var(--card-muted)]";
+      return "bg-transparent text-[var(--foreground)] hover:bg-[color:color-mix(in_srgb,var(--background-elevated)_90%,transparent)]";
     case "danger":
-      return "bg-[var(--danger)] text-white hover:opacity-90";
+      return "bg-[var(--danger)] text-white shadow-[0_10px_24px_rgba(220,38,38,0.25)] hover:opacity-90";
     default:
       return "";
   }
@@ -31,12 +31,12 @@ function getVariantStyles(variant: Variant) {
 function getSizeStyles(size: Size) {
   switch (size) {
     case "sm":
-      return "px-4 py-2 text-xs";
+      return "px-4 py-2 text-xs rounded-xl";
     case "lg":
-      return "px-6 py-4 text-base";
+      return "px-6 py-4 text-base rounded-2xl";
     case "md":
     default:
-      return "px-5 py-3 text-sm";
+      return "px-5 py-3 text-sm rounded-2xl";
   }
 }
 
@@ -54,10 +54,10 @@ export default function Button({
   return (
     <button
       disabled={isDisabled}
-      className={`inline-flex items-center justify-center gap-2 rounded-2xl font-semibold transition-all duration-150
-        active:scale-[0.98]
-        hover:scale-[1.02]
-        disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100
+      className={`inline-flex items-center justify-center gap-2 rounded-2xl font-semibold tracking-[-0.01em] transition-all duration-200
+        active:scale-[0.97]
+        hover:-translate-y-0.5
+        disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0
         ${getVariantStyles(variant)}
         ${getSizeStyles(size)}
         ${className}`}

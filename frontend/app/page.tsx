@@ -114,7 +114,7 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <Section className="pt-4 md:pt-6 lg:pt-8" size="lg">
+      <Section className="pt-2 md:pt-4 lg:pt-6" size="lg">
         <div className="w-full space-y-6">
           <HeroSection
             onSearch={handleSearch}
@@ -124,19 +124,19 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section size="lg" className="pt-0 md:pt-0">
+      <Section size="lg" className="pt-2 md:pt-4">
         <FeatureHighlights />
       </Section>
 
-      <Section size="lg">
+      <Section size="lg" className="pt-6 md:pt-8 xl:pt-10">
         <HowItWorks />
       </Section>
 
-      <Section size="lg">
+      <Section size="lg" className="pt-6 md:pt-8 xl:pt-10">
         <ExamplePreview />
       </Section>
 
-      <Section size="lg">
+      <Section size="lg" className="pt-6 md:pt-8 xl:pt-10">
         <FinalCTA />
       </Section>
     </main>

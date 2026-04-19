@@ -82,20 +82,20 @@ export default function YouTubePartnerProgramRequirementsPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <Section size="md">
-        <div className="space-y-8">
+        <div className="space-y-10 md:space-y-12">
           <div className="space-y-4">
-            <p className="text-sm font-medium text-[var(--brand)]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background-elevated)] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--foreground-muted)]">
               YouTube Monetization Guide
-            </p>
+            </div>
 
             <h1
-              className="text-4xl font-bold tracking-[-0.04em] md:text-5xl"
+              className="max-w-3xl text-3xl font-semibold tracking-[-0.03em] md:text-4xl"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               YouTube Partner Program Requirements
             </h1>
 
-            <p className="max-w-3xl text-base leading-7 text-[var(--foreground-muted)] md:text-lg">
+            <p className="max-w-2xl text-[15px] leading-7 text-[var(--foreground-muted)] md:text-base">
               If you want to understand YouTube Partner Program requirements,
               the most important thing to know is that public numbers alone are
               not the whole story. Thresholds matter, but policy compliance,
@@ -103,14 +103,14 @@ export default function YouTubePartnerProgramRequirementsPage() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
             <h2
-              className="text-2xl font-bold tracking-[-0.02em]"
+              className="text-lg font-semibold"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               The short answer
             </h2>
-            <p className="mt-3 leading-7 text-[var(--foreground-muted)]">
+            <p className="mt-3 text-sm leading-6 text-[var(--foreground-muted)]">
               To join the YouTube Partner Program, creators generally need to
               meet YouTube’s eligibility thresholds, follow monetization and
               community policies, live in a supported country or region, and
@@ -121,59 +121,89 @@ export default function YouTubePartnerProgramRequirementsPage() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
               <h2
-                className="text-xl font-bold tracking-[-0.02em]"
+                className="text-base font-semibold"
                 style={{ fontFamily: "var(--font-plus-jakarta)" }}
               >
                 What matters publicly
               </h2>
-              <ul className="mt-4 ml-5 list-disc space-y-2 leading-7 text-[var(--foreground-muted)]">
-                <li>Subscriber count</li>
-                <li>Total views and watch performance</li>
-                <li>Upload history and channel activity</li>
-                <li>Public channel consistency</li>
-                <li>Whether the channel appears established and active</li>
+              <ul className="mt-3 space-y-2 text-sm leading-6 text-[var(--foreground-muted)]">
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Subscriber count</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Total views and watch performance</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Upload history and channel activity</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Public channel consistency</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Whether the channel appears established and active</span>
+                </li>
               </ul>
             </div>
 
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
               <h2
-                className="text-xl font-bold tracking-[-0.02em]"
+                className="text-base font-semibold"
                 style={{ fontFamily: "var(--font-plus-jakarta)" }}
               >
                 What public numbers cannot prove
               </h2>
-              <ul className="mt-4 ml-5 list-disc space-y-2 leading-7 text-[var(--foreground-muted)]">
-                <li>Whether YouTube approved the channel after review</li>
-                <li>Whether the creator is fully policy-compliant</li>
-                <li>Whether the creator is in an eligible market</li>
-                <li>Whether monetization was disabled later</li>
-                <li>Whether all required internal setup is complete</li>
+              <ul className="mt-3 space-y-2 text-sm leading-6 text-[var(--foreground-muted)]">
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Whether YouTube approved the channel after review</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Whether the creator is fully policy-compliant</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Whether the creator is in an eligible market</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Whether monetization was disabled later</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Whether all required internal setup is complete</span>
+                </li>
               </ul>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
             <h2
-              className="text-2xl font-bold tracking-[-0.02em]"
+              className="text-lg font-semibold"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               Why the requirements are more than just thresholds
             </h2>
-            <div className="mt-4 space-y-4 text-[var(--foreground-muted)]">
-              <p className="leading-7">
+            <div className="mt-4 space-y-4 text-sm leading-6 text-[var(--foreground-muted)]">
+              <p>
                 Many creators focus only on subscriber count or watch metrics,
                 but YouTube’s own guidance makes clear that eligibility also
                 depends on review and policy compliance.
               </p>
-              <p className="leading-7">
+              <p>
                 That means a channel may look eligible from the outside and still
                 not be approved. It also means some channels can get earlier
                 access to certain monetization features in expanded YPP markets
                 before they qualify for the full ad-revenue path.
               </p>
-              <p className="leading-7">
+              <p>
                 In practice, the best public approach is to treat YouTube Partner
                 Program requirements as a mix of visible thresholds and invisible
                 approval factors.
@@ -181,14 +211,14 @@ export default function YouTubePartnerProgramRequirementsPage() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
             <h2
-              className="text-2xl font-bold tracking-[-0.02em]"
+              className="text-lg font-semibold"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               Expanded YPP vs full monetization
             </h2>
-            <p className="mt-3 leading-7 text-[var(--foreground-muted)]">
+            <p className="mt-3 text-sm leading-6 text-[var(--foreground-muted)]">
               One reason this topic confuses creators is that YouTube now has
               broader YPP access in some regions. Some creators may gain earlier
               access to fan funding and shopping features, while full ad revenue
@@ -196,34 +226,34 @@ export default function YouTubePartnerProgramRequirementsPage() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
             <h2
-              className="text-2xl font-bold tracking-[-0.02em]"
+              className="text-lg font-semibold"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               Country and market availability
             </h2>
-            <p className="mt-3 leading-7 text-[var(--foreground-muted)]">
+            <p className="mt-3 text-sm leading-6 text-[var(--foreground-muted)]">
               Monetization availability is also connected to YouTube’s supported
               markets. Even a strong channel may not have the same monetization
               options in every country or region, so geography can matter.
             </p>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
             <h2
-              className="text-2xl font-bold tracking-[-0.02em]"
+              className="text-lg font-semibold"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               Frequently asked questions
             </h2>
 
-            <div className="mt-5 space-y-5">
+            <div className="mt-4 space-y-4">
               <div>
                 <h3 className="text-base font-semibold">
                   What are the YouTube Partner Program requirements?
                 </h3>
-                <p className="mt-2 leading-7 text-[var(--foreground-muted)]">
+                <p className="mt-2 text-sm leading-6 text-[var(--foreground-muted)]">
                   They include eligibility thresholds, policy compliance, review
                   approval, and availability in a supported market.
                 </p>
@@ -233,7 +263,7 @@ export default function YouTubePartnerProgramRequirementsPage() {
                 <h3 className="text-base font-semibold">
                   Does meeting public thresholds guarantee monetization?
                 </h3>
-                <p className="mt-2 leading-7 text-[var(--foreground-muted)]">
+                <p className="mt-2 text-sm leading-6 text-[var(--foreground-muted)]">
                   No. Public thresholds are only part of the picture. YouTube
                   still reviews the channel before approval.
                 </p>
@@ -243,7 +273,7 @@ export default function YouTubePartnerProgramRequirementsPage() {
                 <h3 className="text-base font-semibold">
                   Do requirements vary by country?
                 </h3>
-                <p className="mt-2 leading-7 text-[var(--foreground-muted)]">
+                <p className="mt-2 text-sm leading-6 text-[var(--foreground-muted)]">
                   Yes. Monetization and expanded YPP availability can depend on
                   country or region.
                 </p>
@@ -254,21 +284,21 @@ export default function YouTubePartnerProgramRequirementsPage() {
           <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--foreground-muted)]">
             <Link
               href="/youtube-monetization-checker"
-              className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+              className="font-medium text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors"
             >
               YouTube monetization checker
             </Link>
             <span>•</span>
             <Link
               href="/how-to-tell-if-a-youtube-channel-is-monetized"
-              className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+              className="font-medium text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors"
             >
               How to tell if a channel is monetized
             </Link>
             <span>•</span>
             <Link
               href="/"
-              className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+              className="font-medium text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors"
             >
               Try the tool
             </Link>

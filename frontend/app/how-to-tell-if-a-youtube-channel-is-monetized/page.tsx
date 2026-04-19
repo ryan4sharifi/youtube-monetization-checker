@@ -82,20 +82,20 @@ export default function HowToTellIfChannelIsMonetizedPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <Section size="md">
-        <div className="space-y-8">
+        <div className="space-y-10 md:space-y-12">
           <div className="space-y-4">
-            <p className="text-sm font-medium text-[var(--brand)]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background-elevated)] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--foreground-muted)]">
               YouTube Monetization Guide
-            </p>
+            </div>
 
             <h1
-              className="text-4xl font-bold tracking-[-0.04em] md:text-5xl"
+              className="max-w-3xl text-3xl font-semibold tracking-[-0.03em] md:text-4xl"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               How to Tell If a YouTube Channel Is Monetized
             </h1>
 
-            <p className="max-w-3xl text-base leading-7 text-[var(--foreground-muted)] md:text-lg">
+            <p className="max-w-2xl text-[15px] leading-7 text-[var(--foreground-muted)] md:text-base">
               If you are wondering how to tell if a YouTube channel is monetized,
               the short answer is that you usually cannot know with perfect
               certainty from public data alone. But you can make a strong estimate
@@ -103,14 +103,14 @@ export default function HowToTellIfChannelIsMonetizedPage() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
             <h2
-              className="text-2xl font-bold tracking-[-0.02em]"
+              className="text-lg font-semibold"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               The short answer
             </h2>
-            <p className="mt-3 leading-7 text-[var(--foreground-muted)]">
+            <p className="text-sm leading-6 text-[var(--foreground-muted)] mt-3">
               You cannot always confirm whether a channel is monetized just by
               visiting it, because YouTube does not expose a universal public
               yes-or-no monetization field. The most practical approach is to
@@ -120,73 +120,103 @@ export default function HowToTellIfChannelIsMonetizedPage() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm hover:shadow-md hover:-translate-y-[1px] transition-all">
               <h2
-                className="text-xl font-bold tracking-[-0.02em]"
+                className="text-base font-semibold"
                 style={{ fontFamily: "var(--font-plus-jakarta)" }}
               >
                 Signals that suggest monetization
               </h2>
-              <ul className="mt-4 ml-5 list-disc space-y-2 leading-7 text-[var(--foreground-muted)]">
-                <li>A strong subscriber count</li>
-                <li>Substantial total channel views</li>
-                <li>Consistent upload history</li>
-                <li>Regular public channel activity</li>
-                <li>Visible signs that the creator is treating the channel like a business</li>
+              <ul className="mt-3 space-y-2 text-sm leading-6 text-[var(--foreground-muted)]">
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>A strong subscriber count</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Substantial total channel views</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Consistent upload history</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Regular public channel activity</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Visible signs that the creator is treating the channel like a business</span>
+                </li>
               </ul>
             </div>
 
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm hover:shadow-md hover:-translate-y-[1px] transition-all">
               <h2
-                className="text-xl font-bold tracking-[-0.02em]"
+                className="text-base font-semibold"
                 style={{ fontFamily: "var(--font-plus-jakarta)" }}
               >
                 Signals that are weaker than people think
               </h2>
-              <ul className="mt-4 ml-5 list-disc space-y-2 leading-7 text-[var(--foreground-muted)]">
-                <li>Seeing ads on one video</li>
-                <li>A large subscriber count by itself</li>
-                <li>One viral video</li>
-                <li>High views without consistent uploads</li>
-                <li>Assuming every popular channel is monetized</li>
+              <ul className="mt-3 space-y-2 text-sm leading-6 text-[var(--foreground-muted)]">
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Seeing ads on one video</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>A large subscriber count by itself</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>One viral video</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>High views without consistent uploads</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
+                  <span>Assuming every popular channel is monetized</span>
+                </li>
               </ul>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
             <h2
-              className="text-2xl font-bold tracking-[-0.02em]"
+              className="text-lg font-semibold"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               A practical way to estimate monetization
             </h2>
-            <div className="mt-4 space-y-4 text-[var(--foreground-muted)]">
-              <p className="leading-7">
+            <div className="mt-4 space-y-4 text-sm leading-6 text-[var(--foreground-muted)]">
+              <p>
                 Start with the public numbers: subscribers, total views, and video
                 count. Then look at how active the channel is. A channel with a
                 healthy upload history and meaningful audience size is more likely
                 to be monetized than a channel that has only one spike in traffic.
               </p>
-              <p className="leading-7">
+              <p>
                 After that, look at the overall quality and consistency of the
                 content. Channels that appear active, organized, and audience-focused
                 are generally stronger candidates than abandoned or irregular channels.
               </p>
-              <p className="leading-7">
+              <p>
                 The key is to combine several public indicators instead of relying
                 on one clue. That gives you a better estimate.
               </p>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
             <h2
-              className="text-2xl font-bold tracking-[-0.02em]"
+              className="text-lg font-semibold"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               Why no public method is perfect
             </h2>
-            <p className="mt-3 leading-7 text-[var(--foreground-muted)]">
+            <p className="text-sm leading-6 text-[var(--foreground-muted)] mt-3">
               YouTube monetization depends on more than public numbers. Approval,
               policy compliance, review decisions, and creator-side account status
               are not all publicly visible. That means any tool or manual method
@@ -194,20 +224,20 @@ export default function HowToTellIfChannelIsMonetizedPage() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm">
             <h2
-              className="text-2xl font-bold tracking-[-0.02em]"
+              className="text-lg font-semibold"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               Frequently asked questions
             </h2>
 
-            <div className="mt-5 space-y-5">
+            <div className="mt-4 space-y-4">
               <div>
                 <h3 className="text-base font-semibold">
                   Can you tell if a YouTube channel is monetized just by looking at it?
                 </h3>
-                <p className="mt-2 leading-7 text-[var(--foreground-muted)]">
+                <p className="text-sm leading-6 text-[var(--foreground-muted)] mt-2">
                   Not with complete certainty. You can only estimate using public
                   signals.
                 </p>
@@ -217,7 +247,7 @@ export default function HowToTellIfChannelIsMonetizedPage() {
                 <h3 className="text-base font-semibold">
                   Do ads always mean a channel is monetized?
                 </h3>
-                <p className="mt-2 leading-7 text-[var(--foreground-muted)]">
+                <p className="text-sm leading-6 text-[var(--foreground-muted)] mt-2">
                   No. Ads are one clue, but they are not definitive proof of
                   monetization status.
                 </p>
@@ -227,7 +257,7 @@ export default function HowToTellIfChannelIsMonetizedPage() {
                 <h3 className="text-base font-semibold">
                   What is the best way to estimate whether a channel is monetized?
                 </h3>
-                <p className="mt-2 leading-7 text-[var(--foreground-muted)]">
+                <p className="text-sm leading-6 text-[var(--foreground-muted)] mt-2">
                   Combine multiple public signals like subscribers, views, upload
                   history, and channel activity, then treat the result as an
                   estimate.
@@ -239,21 +269,21 @@ export default function HowToTellIfChannelIsMonetizedPage() {
           <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--foreground-muted)]">
             <Link
               href="/youtube-monetization-checker"
-              className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+              className="font-medium text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors"
             >
               YouTube monetization checker
             </Link>
             <span>•</span>
             <Link
               href="/"
-              className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+              className="font-medium text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors"
             >
               Try the tool
             </Link>
             <span>•</span>
             <Link
               href="/check/@FoxNews"
-              className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+              className="font-medium text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors"
             >
               Example result
             </Link>
