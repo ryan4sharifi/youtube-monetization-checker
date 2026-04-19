@@ -17,8 +17,15 @@ export default function Section({
   size = "lg",
   ...props
 }: Props) {
+  const spacingMap = {
+    sm: "py-4 md:py-6",
+    md: "py-6 md:py-8",
+    lg: "py-6 md:py-8",
+    xl: "py-8 md:py-10",
+  } as const;
+
   return (
-    <section className={`py-12 md:py-16 xl:py-20 ${className}`} {...props}>
+    <section className={`${spacingMap[size]} ${className}`} {...props}>
       <Container size={size} className={containerClassName}>
         {children}
       </Container>

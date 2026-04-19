@@ -24,11 +24,11 @@ export const metadata: Metadata = {
 
 export default function FAQPage() {
   return (
-    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
+    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors">
       <Section size="md">
-        <div className="space-y-10">
+        <div className="space-y-10 md:space-y-12">
           {/* Header */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background-elevated)] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--foreground-muted)]">
               <CircleHelp className="h-3.5 w-3.5 opacity-70" />
               FAQ
@@ -41,7 +41,7 @@ export default function FAQPage() {
               Frequently asked questions
             </h1>
 
-            <p className="max-w-2xl text-[15px] leading-7 text-[var(--foreground-muted)] md:text-base">
+            <p className="max-w-2xl text-sm leading-6 text-[var(--foreground-muted)] md:text-base">
               Everything you need to know about YouTube monetization and how this
               tool works.
             </p>
@@ -73,12 +73,12 @@ export default function FAQPage() {
             ].map((item, index) => (
               <div
                 key={index}
-                className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm hover:shadow-md transition-shadow"
+                className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors"
               >
-                <h2 className="text-base font-semibold">
+                <h2 className="text-base font-semibold leading-5">
                   {item.q}
                 </h2>
-                <p className="mt-2 text-sm leading-6 text-[var(--foreground-muted)]">
+                <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
                   {item.a}
                 </p>
               </div>
@@ -86,16 +86,16 @@ export default function FAQPage() {
           </div>
 
           {/* CTA */}
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm md:p-7">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors md:p-6">
             <h2 className="text-xl font-semibold">Still curious?</h2>
-            <p className="mt-2 max-w-xl text-sm text-[var(--foreground-muted)]">
+            <p className="mt-1.5 max-w-xl text-sm text-[var(--foreground-muted)]">
               Try the checker and get a quick estimate using real public data.
             </p>
 
-            <div className="mt-6 flex flex-wrap gap-4">
+            <div className="mt-5 flex flex-wrap gap-3">
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand)] px-4 py-2.5 text-sm font-medium text-white transition-all hover:bg-[var(--brand-hover)] hover:shadow-md"
+                className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand)] px-4 py-2.5 text-sm font-medium text-white !text-white transition-all hover:bg-[var(--brand-hover)] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[color:color-mix(in_srgb,var(--brand)_12%,transparent)]"
               >
                 Try the checker
                 <ArrowRight className="h-4 w-4" />
@@ -103,7 +103,7 @@ export default function FAQPage() {
 
               <Link
                 href="/how-to-tell-if-a-youtube-channel-is-monetized"
-                className="inline-flex items-center gap-1 text-sm font-medium text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors"
+                className="inline-flex items-center gap-1 text-sm font-medium text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors focus:outline-none"
               >
                 Read full guide
                 <ArrowRight className="h-4 w-4" />

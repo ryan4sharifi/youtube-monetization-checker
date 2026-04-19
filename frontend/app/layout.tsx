@@ -31,11 +31,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
       <head>
         <meta
           name="google-adsense-account"
           content="ca-pub-6344493955204075"
+        />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6344493955204075"
+          crossOrigin="anonymous"
         />
       </head>
       <body className={`${inter.variable} ${plusJakarta.variable} min-h-screen`}>
@@ -58,13 +63,6 @@ export default function RootLayout({
               gtag('config', 'G-P45QFS2QX2');
             `}
           </Script>
-          <Script
-            id="adsense-script"
-            async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6344493955204075"
-            crossOrigin="anonymous"
-            strategy="afterInteractive"
-          />
         </ThemeProvider>
       </body>
     </html>

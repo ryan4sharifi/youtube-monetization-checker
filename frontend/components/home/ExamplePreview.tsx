@@ -45,7 +45,7 @@ export default function ExamplePreview() {
     <section className="w-full">
       <div className="grid gap-6 lg:grid-cols-[1.02fr_0.98fr] lg:items-center xl:gap-8">
         <div className="max-w-2xl lg:pr-4">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--brand)] md:text-xs">
+          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--foreground-muted)] md:text-xs">
             Example result preview
           </p>
 
@@ -71,13 +71,13 @@ export default function ExamplePreview() {
           <div className="mt-6 flex flex-wrap items-center gap-3 text-sm">
             <Link
               href="/check/@FoxNews"
-              className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand)] px-4 py-2.5 text-sm font-medium text-white transition-all hover:bg-[var(--brand-hover)] hover:shadow-md"
+              className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand)] px-4 py-2.5 text-sm font-medium text-white !text-white transition-all hover:bg-[var(--brand-hover)] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[color:color-mix(in_srgb,var(--brand)_12%,transparent)]"
             >
               View live example
               <ArrowRight className="h-4 w-4 shrink-0" />
             </Link>
 
-            <span className="text-[var(--foreground-muted)]/90">
+            <span className="text-[var(--foreground-muted)]">
               Built for clean UX, SEO pages, and conversion.
             </span>
           </div>
@@ -85,10 +85,10 @@ export default function ExamplePreview() {
 
         <div className="relative">
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 shadow-sm md:p-5">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 shadow-sm transition-colors md:p-5">
             <div className="flex items-center justify-between gap-4 border-b border-[var(--border)]/90 pb-3">
               <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--background-elevated)] shadow-[0_8px_20px_rgba(15,23,42,0.07)]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--background-elevated)]">
                   <Play className="h-6 w-6 text-[var(--foreground)]" />
                 </div>
 
@@ -106,36 +106,36 @@ export default function ExamplePreview() {
             </div>
 
             <div className="mt-4 grid grid-cols-3 gap-2">
-              <div className="min-w-0 rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-3">
+              <div className="min-w-0 rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-3 transition-colors">
                 <p className="flex items-center gap-2 text-xs uppercase tracking-wide text-[var(--foreground-muted)]">
                   <Users className="h-3.5 w-3.5 shrink-0" />
                   Subscribers
                 </p>
-                <p className="mt-2 text-base font-semibold text-[var(--foreground)]">
+                <p className="mt-1 text-base font-semibold text-[var(--foreground)]">
                   {mockResult.channel.subscribers}
                 </p>
               </div>
-              <div className="min-w-0 rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-3">
+              <div className="min-w-0 rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-3 transition-colors">
                 <p className="flex items-center gap-2 text-xs uppercase tracking-wide text-[var(--foreground-muted)]">
                   <Eye className="h-3.5 w-3.5 shrink-0" />
                   Views
                 </p>
-                <p className="mt-2 text-base font-semibold text-[var(--foreground)]">
+                <p className="mt-1 text-base font-semibold text-[var(--foreground)]">
                   {mockResult.channel.views}
                 </p>
               </div>
-              <div className="min-w-0 rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-3">
+              <div className="min-w-0 rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-3 transition-colors">
                 <p className="flex items-center gap-2 text-xs uppercase tracking-wide text-[var(--foreground-muted)]">
                   <Video className="h-3.5 w-3.5 shrink-0" />
                   Videos
                 </p>
-                <p className="mt-2 text-base font-semibold text-[var(--foreground)]">
+                <p className="mt-1 text-base font-semibold text-[var(--foreground)]">
                   {mockResult.channel.videos}
                 </p>
               </div>
             </div>
 
-            <div className="mt-4 rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-4">
+            <div className="mt-4 rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-4 transition-colors">
               <div className="flex items-end justify-between gap-4">
                 <div>
                   <p className="flex items-center gap-2 text-sm text-[var(--foreground-muted)]">
@@ -147,7 +147,7 @@ export default function ExamplePreview() {
                   </p>
                 </div>
 
-                <div className="h-2 w-28 overflow-hidden rounded-full bg-[var(--card-muted)]">
+                <div className="h-2 w-28 overflow-hidden rounded-full bg-[var(--card-muted)] transition-colors">
                   <div
                     className="h-full rounded-full bg-[var(--success)]"
                     style={{ width: `${mockResult.score.confidence}%` }}
@@ -157,11 +157,11 @@ export default function ExamplePreview() {
             </div>
 
             <div className="mt-4 grid gap-3 md:grid-cols-2">
-              <div className="rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-3">
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-3 transition-colors">
                 <p className="text-sm font-semibold text-[var(--foreground)]">
                   Positive signals
                 </p>
-                <ul className="mt-2 space-y-2 text-sm text-[var(--foreground-muted)]">
+                <ul className="mt-1.5 space-y-2 text-sm text-[var(--foreground-muted)]">
                   {mockResult.score.positiveSignals.map((signal) => (
                     <li key={signal} className="flex items-start gap-2">
                       <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
@@ -171,11 +171,11 @@ export default function ExamplePreview() {
                 </ul>
               </div>
 
-              <div className="rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-3">
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-3 transition-colors">
                 <p className="text-sm font-semibold text-[var(--foreground)]">
                   Limitations
                 </p>
-                <ul className="mt-2 space-y-2 text-sm text-[var(--foreground-muted)]">
+                <ul className="mt-1.5 space-y-2 text-sm text-[var(--foreground-muted)]">
                   {mockResult.score.negativeSignals.map((signal) => (
                     <li key={signal} className="flex items-start gap-2">
                       <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--foreground-muted)]" />
