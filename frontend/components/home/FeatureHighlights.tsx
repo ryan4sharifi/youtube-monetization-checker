@@ -32,26 +32,26 @@ const items = [
 export default function FeatureHighlights() {
   return (
     <section className="w-full py-8 md:py-10">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {items.map((item) => (
             <div
               key={item.title}
-              className="group relative min-w-0 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 shadow-sm transition-colors hover:border-[var(--border-strong)]"
+              className="relative min-w-0 rounded-2xl border border-[var(--border)]/80 bg-[var(--card)] p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-colors hover:border-[var(--border-strong)]"
             >
               <div className="relative z-10">
                 <div className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--background-elevated)]">
-                  <item.icon className="h-5 w-5 text-[var(--brand)]" aria-hidden="true" />
+                  <item.icon className="h-4.5 w-4.5 text-[var(--brand)]" aria-hidden="true" />
                 </div>
 
                 <h3
-                  className="text-base font-semibold text-[var(--foreground)]"
+                  className="text-sm font-semibold text-[var(--foreground)]"
                   style={{ fontFamily: "var(--font-plus-jakarta)" }}
                 >
                   {item.title}
                 </h3>
 
-                <p className="mt-2 text-sm leading-6 text-[var(--foreground-muted)]">
+                <p className="mt-2 text-[13px] leading-5 text-[var(--foreground-muted)]">
                   {item.description}
                 </p>
               </div>

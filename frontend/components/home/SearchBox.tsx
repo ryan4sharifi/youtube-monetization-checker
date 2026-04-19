@@ -1,6 +1,6 @@
-"use client";
+ "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Search } from "lucide-react";
 
  type Props = {
@@ -11,23 +11,28 @@ import { Search } from "lucide-react";
 export default function SearchBox({ onSearch, loading }: Props) {
   const [query, setQuery] = useState("");
 
-  const handleSubmit = async () => {
-    if (!query.trim()) return;
-    await onSearch(query);
-  };
+  const handleSubmit = useCallback(
+    async (e?: React.FormEvent) => {
+      if (e) e.preventDefault();
+      const q = query.trim();
+      if (!q) return;
+      await onSearch(q);
+    },
+    [query, onSearch]
+  );
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      <div className="flex flex-col gap-2 md:flex-row md:items-center">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2 md:flex-row md:items-center">
         <div className="relative flex-1">
           <input
-            type="text"
+            type="search"
+            enterKeyHint="search"
+            autoComplete="off"
+            aria-label="YouTube channel handle or URL"
             placeholder="Paste a YouTube handle or channel URL"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleSubmit();
-            }}
             className="w-full rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] px-4 py-2.5 pr-10 text-sm text-[var(--foreground)] placeholder:text-[var(--foreground-muted)] focus:outline-none focus:border-[var(--brand)] focus:ring-2 focus:ring-[color:color-mix(in_srgb,var(--brand)_12%,transparent)] transition-colors"
           />
 
@@ -37,9 +42,10 @@ export default function SearchBox({ onSearch, loading }: Props) {
         </div>
 
         <button
+          type="submit"
           onClick={handleSubmit}
           disabled={loading}
-          className="inline-flex items-center justify-center rounded-xl bg-[var(--brand)] px-4 py-2.5 text-sm font-medium text-white transition-all hover:bg-[var(--brand-hover)] hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
+          className="inline-flex items-center justify-center rounded-xl bg-[var(--brand)] px-4 py-2.5 text-sm font-medium text-white !text-white transition-all hover:bg-[var(--brand-hover)] hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[color:color-mix(in_srgb,var(--brand)_12%,transparent)]"
         >
           {loading ? (
             <span className="flex items-center gap-2">
@@ -50,7 +56,7 @@ export default function SearchBox({ onSearch, loading }: Props) {
             "Check channel"
           )}
         </button>
-      </div>
+      </form>
 
       <p className="mt-2 text-xs text-[var(--foreground-muted)]">
         Supports @handles, channel URLs, and usernames

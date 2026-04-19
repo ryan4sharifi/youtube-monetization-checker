@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useMemo } from "react";
 import SearchBox from "@/components/home/SearchBox";
 
 
@@ -23,8 +24,10 @@ export default function HeroSection({
   loading = false,
   featuredChannels = [],
 }: HeroSectionProps) {
-  const marqueeChannels = featuredChannels.length > 0 ? featuredChannels : [];
-  const scrollingChannels = [...marqueeChannels, ...marqueeChannels];
+  const scrollingChannels = useMemo(() => {
+    const base = featuredChannels?.length ? featuredChannels : [];
+    return base.length ? [...base, ...base] : [];
+  }, [featuredChannels]);
   return (
     <section className="relative w-full rounded-2xl border border-[var(--border)] bg-[var(--card)] px-5 py-8 shadow-sm md:px-8 md:py-10">
       <div className="relative z-10 mx-auto max-w-4xl text-center">
@@ -54,14 +57,12 @@ export default function HeroSection({
             </p>
 
             <div className="relative overflow-hidden">
-              <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[color:color-mix(in_srgb,var(--card)_96%,transparent)] to-transparent" />
-              <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[color:color-mix(in_srgb,var(--card)_96%,transparent)] to-transparent" />
 
               <div className="hero-marquee flex w-max items-center gap-3">
                 {scrollingChannels.map((channel, index) => (
                   <div
                     key={`${channel.handle || channel.title}-${index}`}
-                    className="flex min-w-max items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background-elevated)] px-3 py-1.5 transition-colors hover:border-[var(--border-strong)]"
+                    className="flex min-w-max items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background-elevated)] px-3 py-1.5 transition-colors"
                   >
                     <div className="overflow-hidden rounded-full border border-[var(--border)] bg-[var(--card-muted)]">
                       <Image
@@ -70,6 +71,9 @@ export default function HeroSection({
                         width={36}
                         height={36}
                         className="h-9 w-9 rounded-full object-cover"
+                        loading="lazy"
+                        sizes="36px"
+                        decoding="async"
                       />
                     </div>
 
@@ -92,10 +96,18 @@ export default function HeroSection({
       <style jsx>{`
         .hero-marquee {
           animation: hero-marquee 28s linear infinite;
+          will-change: transform;
         }
 
         .hero-marquee:hover {
           animation-play-state: paused;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .hero-marquee {
+            animation: none;
+            transform: none;
+          }
         }
 
         @keyframes hero-marquee {
