@@ -6,8 +6,13 @@ import SignalsCard from "@/components/result/SignalsCard";
 import DisclaimerCard from "@/components/result/DisclaimerCard";
 import EarningsEstimateCard from "@/components/result/EarningsEstimateCard";
 import ChannelInsightsCard from "@/components/result/ChannelInsightsCard";
+import EarningsExplanationSection from "@/components/result/EarningsExplanationSection";
+import MonetizationAnalysisSection from "@/components/result/MonetizationAnalysisSection";
+import MonetizationTipsSection from "@/components/result/MonetizationTipsSection";
+import RelatedGuidesSection from "@/components/result/RelatedGuidesSection";
 import Section from "@/components/ui/Section";
 import { siteConfig } from "@/constants/site";
+import { guides } from "@/lib/guides";
 
 const API_BASE =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
@@ -159,6 +164,14 @@ export default async function CheckPage({ params }: PageProps) {
   const data = await getChannelData(handle);
   const canonicalUrl = buildCanonicalUrl(handle);
 
+  const relatedGuides = guides
+    .slice(0, 4)
+    .map((g) => ({
+      title: g.title,
+      description: g.description,
+      href: `/guides/${g.slug}`,
+    }));
+
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -200,7 +213,7 @@ export default async function CheckPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <Section size="md" className="pt-4 md:pt-6 xl:pt-8">
+      <Section size="lg" className="pt-4 md:pt-6 xl:pt-8">
         <div className="space-y-8 md:space-y-10">
           <div className="space-y-3">
             <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background-elevated)] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--foreground-muted)]">
@@ -243,8 +256,35 @@ export default async function CheckPage({ params }: PageProps) {
                   positive_signals={data.score.positive_signals}
                   negative_signals={data.score.negative_signals}
                 />
+                <MonetizationAnalysisSection
+                  data={{
+                    score: data.score.confidence,
+                    subscribers: data.channel.subscriber_count ?? undefined,
+                    totalViews: data.channel.view_count ?? undefined,
+                    uploadsLast30d: undefined,
+                    avgViewsPerVideo: undefined,
+                  }}
+                />
                 <EarningsEstimateCard earnings={data.earnings} />
+                <EarningsExplanationSection
+                  data={{
+                    monthlyLow: data.earnings.monthly_low,
+                    monthlyHigh: data.earnings.monthly_high,
+                    yearlyLow: data.earnings.yearly_low,
+                    yearlyHigh: data.earnings.yearly_high,
+                    views: data.earnings.estimated_monthly_views,
+                  }}
+                />
                 <ChannelInsightsCard insights={data.insights} />
+                <MonetizationTipsSection
+                  data={{
+                    score: data.score.confidence,
+                    subscribers: data.channel.subscriber_count ?? undefined,
+                    uploadsLast30d: undefined,
+                    avgViewsPerVideo: undefined,
+                    isLikelyMonetized: data.score.status === "possibly_monetized",
+                  }}
+                />
                 <DisclaimerCard />
               </div>
 
@@ -255,12 +295,14 @@ export default async function CheckPage({ params }: PageProps) {
                 >
                   Summary for {displayHandle}
                 </h2>
-                <p className="mt-3 leading-7 text-[var(--foreground-muted)]/90 md:leading-8">
-                  Based on the currently visible public data, this channel is
-                  classified as <span className="font-medium text-[var(--foreground)]">{getStatusLabel(data.score.status)}</span>{" "}
-                  with a confidence score of <span className="font-medium text-[var(--foreground)]">{data.score.confidence}%</span>.
-                  Public signals like subscriber count, total views, and upload
-                  history were used to generate this estimate.
+                <p className="mt-3 leading-7 text-[var(--foreground-muted)] md:leading-8">
+                  Based on publicly available data, <span className="font-medium text-[var(--foreground)]">{displayHandle}</span> is currently classified as <span className="font-medium text-[var(--foreground)]">{getStatusLabel(data.score.status)}</span> with a confidence score of <span className="font-medium text-[var(--foreground)]">{data.score.confidence}%</span>. This estimate is derived from signals such as subscriber count, total views, and channel activity.
+                </p>
+                <p className="mt-3 leading-7 text-[var(--foreground-muted)] md:leading-8">
+                  Channels that meet YouTube’s monetization thresholds — including 1,000 subscribers and sufficient watch time — are generally more likely to be approved for monetization. Strong engagement, consistent uploads, and audience retention also play a key role in determining whether a channel can generate revenue.
+                </p>
+                <p className="mt-3 leading-7 text-[var(--foreground-muted)] md:leading-8">
+                  While this analysis provides a data-driven estimate, actual monetization status may vary depending on YouTube’s internal review process, content policies, and advertiser suitability.
                 </p>
               </div>
 
@@ -278,6 +320,14 @@ export default async function CheckPage({ params }: PageProps) {
                     history. It does not use private creator data or YouTube
                     Studio access.
                   </p>
+                  <div className="mt-4">
+                    <Link
+                      href="/methodology"
+                      className="text-sm font-medium text-[var(--brand)] transition duration-200 hover:text-[var(--brand-hover)]"
+                    >
+                      Learn how this is calculated
+                    </Link>
+                  </div>
                 </div>
 
                 <div className="rounded-[28px] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--card)_94%,transparent)] p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-[var(--border-strong)]">
@@ -339,6 +389,8 @@ export default async function CheckPage({ params }: PageProps) {
                   </div>
                 </div>
               </div>
+
+              <RelatedGuidesSection guides={relatedGuides} />
 
               <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--foreground-muted)]/90">
                 <Link

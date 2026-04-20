@@ -1,0 +1,186 @@
+import type { Metadata } from "next";
+import { Users } from "lucide-react";
+import Section from "@/components/ui/Section";
+import { siteConfig } from "@/constants/site";
+import GuideHero from "@/components/guides/GuideHero";
+import GuideSection from "@/components/guides/GuideSection";
+import GuideList from "@/components/guides/GuideList";
+import GuideCTA from "@/components/guides/GuideCTA";
+
+const pageUrl = `${siteConfig.url}/guides/youtube-partner-program-requirements`;
+
+export const metadata: Metadata = {
+  title: `YouTube Partner Program Requirements | ${siteConfig.name}`,
+  description:
+    "Learn the YouTube Partner Program requirements, including public eligibility signals, policy considerations, and what creators need before monetization approval.",
+  alternates: {
+    canonical: pageUrl,
+  },
+  openGraph: {
+    title: `YouTube Partner Program Requirements | ${siteConfig.name}`,
+    description:
+      "Understand YouTube Partner Program requirements, public eligibility signals, and what creators need before monetization approval.",
+    url: pageUrl,
+    siteName: siteConfig.name,
+    images: [siteConfig.ogImage],
+    type: "article",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `YouTube Partner Program Requirements | ${siteConfig.name}`,
+    description:
+      "Understand YouTube Partner Program requirements and public monetization eligibility signals.",
+    images: [siteConfig.ogImage],
+  },
+};
+
+export default function YouTubePartnerProgramRequirementsPage() {
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "YouTube Partner Program Requirements",
+    description:
+      "A guide to YouTube Partner Program requirements, public eligibility signals, and monetization approval factors.",
+    author: {
+      "@type": "Person",
+      name: siteConfig.author,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+    },
+    mainEntityOfPage: pageUrl,
+  };
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What are the YouTube Partner Program requirements?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "They include eligibility thresholds, policy compliance, review approval, and availability in a supported market.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Does meeting public thresholds guarantee monetization?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "No. Meeting thresholds only makes a channel eligible — YouTube still reviews it before approval.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do YouTube Partner Program requirements vary by country?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. Monetization availability and expanded YPP features can depend on the creator’s country or region.",
+        },
+      },
+    ],
+  };
+
+  return (
+    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
+      <Section size="md">
+        <div className="space-y-7 md:space-y-8">
+          <GuideHero
+            eyebrow="YouTube Monetization Guide"
+            icon={<Users />}
+            title="YouTube Partner Program requirements"
+            description="Most creators focus on hitting public thresholds — but approval for the YouTube Partner Program depends just as much on policy compliance and review. Numbers get you eligible; consistency and content quality get you approved."
+          />
+
+          <GuideSection title="The short answer">
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              To join the YouTube Partner Program, creators need to meet eligibility thresholds, follow monetization and community policies, be in a supported region, and pass YouTube’s review process.
+            </p>
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              Meeting thresholds makes you eligible — it does not guarantee approval.
+            </p>
+          </GuideSection>
+
+          <GuideSection title="What matters publicly">
+            <GuideList
+              items={[
+                "Subscriber count indicates eligibility but not approval",
+                "Watch time or Shorts views reflect audience demand",
+                "Upload consistency shows ongoing activity",
+                "Content volume provides growth context",
+                "Engagement signals audience quality",
+              ]}
+            />
+          </GuideSection>
+
+          <GuideSection title="What public numbers cannot prove">
+            <GuideList
+              items={[
+                "Approval status is internal and not visible",
+                "Policy compliance checks are private",
+                "Monetization availability varies by region",
+                "Status can change over time",
+                "Account setup details are not public",
+              ]}
+            />
+          </GuideSection>
+
+          <GuideSection title="The biggest misunderstanding">
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              Many creators assume that once they hit subscriber and watch time thresholds, monetization is automatic. In reality, YouTube reviews channels for originality, quality, and policy compliance.
+            </p>
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              This is why some channels that look eligible publicly are not approved, while others with smaller audiences can still be monetized if they meet quality standards.
+            </p>
+          </GuideSection>
+
+          <GuideSection title="Why requirements are more than thresholds">
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              Eligibility includes both visible thresholds and invisible approval factors. YouTube evaluates policy adherence, content quality, and channel behavior before granting monetization.
+            </p>
+          </GuideSection>
+
+          <GuideSection title="Expanded YPP vs full monetization">
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              In some regions, creators may access fan funding features earlier, while full ad revenue sharing still requires higher thresholds and review approval.
+            </p>
+          </GuideSection>
+
+          <GuideSection title="Country and market availability">
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              Monetization options depend on supported markets. Geography can affect which features are available even for strong channels.
+            </p>
+          </GuideSection>
+
+          <GuideSection title="Common questions">
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              <strong className="text-[var(--foreground)]">What are the YouTube Partner Program requirements?</strong><br />
+              They include eligibility thresholds, policy compliance, review approval, and availability in a supported market.
+            </p>
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              <strong className="text-[var(--foreground)]">Does meeting thresholds guarantee monetization?</strong><br />
+              No. Meeting thresholds only makes a channel eligible — YouTube still reviews it before approval.
+            </p>
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              <strong className="text-[var(--foreground)]">Do requirements vary by country?</strong><br />
+              Yes. Availability and expanded features can depend on the creator’s region.
+            </p>
+          </GuideSection>
+
+          <GuideCTA />
+        </div>
+      </Section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+    </main>
+  );
+}

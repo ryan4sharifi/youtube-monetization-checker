@@ -17,19 +17,32 @@ import {
 
 const navItems = [
   {
-    href: "/youtube-monetization-checker",
-    label: "Checker",
-    icon: Zap,
-  },
-  {
-    href: "/how-to-tell-if-a-youtube-channel-is-monetized",
-    label: "Guide",
+    label: "Guides",
+    href: "/guides",
     icon: BookOpen,
   },
   {
-    href: "/youtube-partner-program-requirements",
-    label: "Requirements",
+    label: "Methodology",
+    href: "/methodology",
+    icon: Zap,
+  },
+  {
+    label: "Company",
     icon: CheckCircle,
+    children: [
+      { label: "About", href: "/about" },
+      { label: "Contact", href: "/contact" },
+      { label: "FAQ", href: "/faq" },
+    ],
+  },
+  {
+    label: "Legal",
+    icon: CheckCircle,
+    children: [
+      { label: "Privacy Policy", href: "/privacy-policy" },
+      { label: "Terms of Service", href: "/terms-of-service" },
+      { label: "Disclaimer", href: "/disclaimer" },
+    ],
   },
 ] as const;
 
@@ -40,7 +53,16 @@ function isActive(pathname: string, href: string) {
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
+  const toggleMenu = useCallback(() => {
+    setMenuOpen((prev) => {
+      if (prev) setOpenSections({});
+      return !prev;
+    });
+  }, []);
+  const toggleSection = useCallback((label: string) => {
+    setOpenSections((prev) => ({ ...prev, [label]: !prev[label] }));
+  }, []);
   const { mode, toggleMode, mounted } = useAppTheme();
 
   const themeLabel = mounted ? (mode === "light" ? "Dark" : "Light") : "Theme";
@@ -75,6 +97,32 @@ export default function Navbar() {
             <nav className="flex items-center gap-1 rounded-full border border-[var(--border)] bg-[var(--background-elevated)] p-1">
               {navItems.map((item) => {
                 const Icon = item.icon;
+
+                if ("children" in item) {
+                  return (
+                    <div key={item.label} className="relative group">
+                      <button className="inline-flex h-11 items-center gap-2 rounded-full px-5 text-[15px] font-medium tracking-[-0.01em] text-[var(--foreground-muted)] hover:text-[var(--foreground)]">
+                        <Icon className="h-4 w-4" />
+                        {item.label}
+                      </button>
+
+                      <div className="absolute left-0 top-full hidden min-w-[180px] pt-2 group-hover:block group-focus-within:block">
+                        <div className="rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-2 shadow-lg">
+                          {item.children.map((sub) => (
+                            <Link
+                              key={sub.href}
+                              href={sub.href}
+                              className="block rounded-lg px-3 py-2 text-sm text-[var(--foreground-muted)] hover:bg-[color:color-mix(in_srgb,var(--background)_92%,transparent)] hover:text-[var(--foreground)]"
+                            >
+                              {sub.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+
                 const active = isActive(pathname, item.href);
 
                 return (
@@ -87,7 +135,7 @@ export default function Navbar() {
                         : "text-[var(--foreground-muted)] hover:bg-[color:color-mix(in_srgb,var(--background)_92%,transparent)] hover:text-[var(--foreground)]"
                     }`}
                   >
-                    <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                    <Icon className="h-4 w-4 shrink-0" />
                     {item.label}
                   </Link>
                 );
@@ -125,9 +173,10 @@ export default function Navbar() {
             <button
               type="button"
               onClick={toggleMenu}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] text-[var(--foreground)]"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] text-[var(--foreground)] cursor-pointer"
               aria-label="Toggle navigation menu"
               aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
             >
               {menuOpen ? (
                 <X className="h-5 w-5" aria-hidden="true" />
@@ -140,12 +189,67 @@ export default function Navbar() {
       </div>
 
       {menuOpen && (
-        <div className="lg:hidden">
-          <div className="mx-auto max-w-7xl px-4 pb-4 sm:px-6 lg:px-8">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--background-elevated)] p-3 shadow-sm">
-              <nav className="flex flex-col gap-2">
+        <div className="fixed inset-0 z-50 lg:hidden">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/30 backdrop-blur-sm"
+            onClick={() => setMenuOpen(false)}
+            aria-hidden="true"
+          />
+
+          {/* Panel */}
+          <div className="relative mx-auto max-w-7xl px-4 pt-20 pb-6 sm:px-6 lg:px-8">
+            <div
+              id="mobile-menu"
+              className="relative rounded-2xl border border-[var(--border)] bg-[var(--background-elevated)] p-3 shadow-lg transition-all duration-200"
+            >
+              <button
+                type="button"
+                onClick={() => setMenuOpen(false)}
+                className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] text-[var(--foreground)] hover:bg-[color:color-mix(in_srgb,var(--background)_92%,transparent)] cursor-pointer"
+                aria-label="Close menu"
+              >
+                <X className="h-4 w-4" />
+              </button>
+              <nav className="mt-8 flex flex-col gap-2">
                 {navItems.map((item) => {
                   const Icon = item.icon;
+
+                  if ("children" in item) {
+                    const isOpen = openSections[item.label];
+
+                    return (
+                      <div key={item.label} className="space-y-1">
+                        <button
+                          onClick={() => toggleSection(item.label)}
+                          className="flex w-full items-center justify-between rounded-2xl px-4 py-3 text-xs uppercase tracking-[0.14em] text-[var(--foreground-muted)] transition hover:bg-[color:color-mix(in_srgb,var(--background)_92%,transparent)]"
+                        >
+                          <span>{item.label}</span>
+                          <span className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                          </span>
+                        </button>
+
+                        <div className={`overflow-hidden transition-all duration-200 ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
+                          <div className="flex flex-col gap-1 pb-1">
+                            {item.children.map((sub) => (
+                              <Link
+                                key={sub.href}
+                                href={sub.href}
+                                className="ml-4 inline-flex items-center gap-3 rounded-2xl px-4 py-2.5 text-sm text-[var(--foreground)] transition-colors hover:bg-[color:color-mix(in_srgb,var(--background)_92%,transparent)]"
+                                onClick={() => setMenuOpen(false)}
+                              >
+                                {sub.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  }
+
                   const active = isActive(pathname, item.href);
 
                   return (
@@ -159,7 +263,7 @@ export default function Navbar() {
                       }`}
                       onClick={() => setMenuOpen(false)}
                     >
-                      <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                      <Icon className="h-4 w-4 shrink-0" />
                       {item.label}
                     </Link>
                   );

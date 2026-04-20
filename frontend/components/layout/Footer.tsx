@@ -1,16 +1,16 @@
 import Link from "next/link";
 
 const productLinks = [
-  { href: "/", label: "Home" },
-  { href: "/youtube-monetization-checker", label: "Checker" },
+  { href: "/#hero", label: "Checker" },
+  { href: "/methodology", label: "Methodology" },
 ] as const;
 
 const guideLinks = [
-  { href: "/how-to-tell-if-a-youtube-channel-is-monetized", label: "How it works" },
-  { href: "/youtube-partner-program-requirements", label: "Requirements" },
-  { href: "/how-many-subscribers-to-get-monetized-on-youtube", label: "Subscribers" },
-  { href: "/youtube-monetization-rules", label: "Rules" },
-  { href: "/how-much-money-do-youtubers-make", label: "Earnings" },
+  { href: "/guides/how-to-tell-if-a-youtube-channel-is-monetized", label: "How it works" },
+  { href: "/guides/youtube-partner-program-requirements", label: "Requirements" },
+  { href: "/guides/how-many-subscribers-to-get-monetized-on-youtube", label: "Subscribers" },
+  { href: "/guides/youtube-monetization-rules", label: "Rules" },
+  { href: "/guides/how-much-money-do-youtubers-make", label: "Earnings" },
 ] as const;
 
 const companyLinks = [
