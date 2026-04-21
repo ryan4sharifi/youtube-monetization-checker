@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 import ChannelCard from "@/components/result/ChannelCard";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 if (!API_URL) {
   console.error("NEXT_PUBLIC_API_URL is not defined");
