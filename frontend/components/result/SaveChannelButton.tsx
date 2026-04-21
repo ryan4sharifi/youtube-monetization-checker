@@ -6,7 +6,11 @@ import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { Bookmark, BookmarkCheck } from "lucide-react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+
+if (!API_URL) {
+  console.error("NEXT_PUBLIC_API_URL is not defined");
+}
 
 type Props = {
   handle: string;

@@ -5,7 +5,11 @@ import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 import ChannelCard from "@/components/result/ChannelCard";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+
+if (!API_URL) {
+  console.error("NEXT_PUBLIC_API_URL is not defined");
+}
 
 export default function SavedChannelsList() {
   const { user } = useAuth();
