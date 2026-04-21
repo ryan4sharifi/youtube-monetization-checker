@@ -34,13 +34,13 @@ export default function SearchLimitModal({ open, onClose }: Props) {
     <div className="fixed inset-0 z-50 flex items-center justify-center" onClick={onClose}>
       {/* backdrop */}
       <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-md"
+        className="absolute inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-md"
       />
 
       {/* modal */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-md rounded-3xl border border-[var(--border)] bg-[var(--background)] p-7 shadow-[0_25px_80px_rgba(0,0,0,0.25)]"
+        className="relative w-full max-w-md rounded-3xl border border-[var(--border)] bg-[var(--background-elevated)] p-7 shadow-[0_25px_80px_rgba(0,0,0,0.25)]"
       >
         {/* header */}
         <div className="flex items-center justify-between">
@@ -87,7 +87,7 @@ export default function SearchLimitModal({ open, onClose }: Props) {
         <div className="mt-6 flex flex-col gap-3">
           <button
             onClick={handleGoogleSignIn}
-            className="h-11 rounded-full bg-[var(--foreground)] text-sm font-medium text-white transition hover:opacity-90"
+            className="h-11 rounded-full bg-[var(--brand)] text-sm font-medium text-white transition hover:bg-[var(--brand-hover)]"
           >
             <span className="flex items-center justify-center gap-2">
               Continue with Google
