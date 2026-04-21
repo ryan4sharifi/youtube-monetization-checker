@@ -55,8 +55,8 @@ def build_real_score(channel_data: dict) -> dict:
 
 
 def process_check_query(query: str) -> dict:
+    detected_type = detect_query_type(query)
     normalized_query = normalize_query(query)
-    detected_type = detect_query_type(normalized_query)
 
     channel = resolve_channel(normalized_query)
     channel_data = transform_channel_data(channel)

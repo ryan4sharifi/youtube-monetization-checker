@@ -27,7 +27,7 @@ export default function GuideHero({
       )}
 
       <h1
-        className="max-w-4xl text-3xl font-semibold tracking-[-0.04em] text-[var(--foreground)] sm:text-4xl md:text-5xl xl:text-6xl"
+        className="max-w-4xl text-3xl font-semibold tracking-[-0.04em] text-[var(--foreground)] md:text-4xl"
         style={{ fontFamily: "var(--font-plus-jakarta)" }}
       >
         {title}

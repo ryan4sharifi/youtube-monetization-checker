@@ -2,11 +2,27 @@ import re
 
 
 def normalize_query(query: str) -> str:
-    return query.strip()
+    q = query.strip().lower()
+
+    # Remove protocol
+    q = q.replace("https://", "").replace("http://", "")
+
+    # Remove common YouTube prefixes
+    q = q.replace("www.youtube.com/", "")
+    q = q.replace("youtube.com/", "")
+    q = q.replace("youtu.be/", "")
+
+    # Remove @ symbol
+    q = q.replace("@", "")
+
+    # Remove trailing slashes
+    q = q.strip("/")
+
+    return q
 
 
 def detect_query_type(query: str) -> str:
-    q = query.strip()
+    q = normalize_query(query)
 
     if q.startswith("@"):
         return "handle"

@@ -2,6 +2,7 @@ import Link from "next/link";
 
 const productLinks = [
   { href: "/#hero", label: "Checker" },
+  { href: "/compare", label: "Compare" },
   { href: "/methodology", label: "Methodology" },
 ] as const;
 

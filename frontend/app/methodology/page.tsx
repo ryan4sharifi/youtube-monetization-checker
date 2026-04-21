@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <Section size="md">
+      <Section size="lg">
         <div className="space-y-7 md:space-y-8">
 
           <GuideHero

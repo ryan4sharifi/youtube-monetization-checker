@@ -2,9 +2,12 @@ from app.config import supabase
 
 
 def upsert_channel(channel_data: dict) -> dict:
+    raw_handle = channel_data.get("handle") or channel_data.get("custom_url") or ""
+    handle = raw_handle.replace("@", "").strip().lower()
+
     payload = {
         "youtube_channel_id": channel_data["youtube_channel_id"],
-        "handle": channel_data.get("custom_url"),
+        "handle": handle,
         "custom_url": channel_data.get("custom_url"),
         "title": channel_data["title"],
         "description": channel_data.get("description"),

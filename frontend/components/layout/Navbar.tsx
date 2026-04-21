@@ -27,6 +27,11 @@ const navItems = [
     icon: Zap,
   },
   {
+    label: "Compare",
+    href: "/compare",
+    icon: Zap,
+  },
+  {
     label: "Company",
     icon: CheckCircle,
     children: [
@@ -54,6 +59,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const toggleMenu = useCallback(() => {
     setMenuOpen((prev) => {
       if (prev) setOpenSections({});
@@ -100,13 +106,24 @@ export default function Navbar() {
 
                 if ("children" in item) {
                   return (
-                    <div key={item.label} className="relative group">
+                    <div
+                      key={item.label}
+                      className="relative"
+                      onMouseEnter={() => setActiveDropdown(item.label)}
+                      onMouseLeave={() => setActiveDropdown(null)}
+                    >
                       <button className="inline-flex h-11 items-center gap-2 rounded-full px-5 text-[15px] font-medium tracking-[-0.01em] text-[var(--foreground-muted)] hover:text-[var(--foreground)]">
                         <Icon className="h-4 w-4" />
                         {item.label}
                       </button>
 
-                      <div className="absolute left-0 top-full hidden min-w-[180px] pt-2 group-hover:block group-focus-within:block">
+                      <div
+                        className={`absolute left-0 top-full min-w-[180px] pt-2 transition-all duration-150 ${
+                          activeDropdown === item.label
+                            ? "opacity-100 visible translate-y-0"
+                            : "opacity-0 invisible -translate-y-1"
+                        }`}
+                      >
                         <div className="rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-2 shadow-lg">
                           {item.children.map((sub) => (
                             <Link

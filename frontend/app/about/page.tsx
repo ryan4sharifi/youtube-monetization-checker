@@ -43,7 +43,7 @@ export default function AboutPage() {
             </div>
 
             <h1
-              className="max-w-4xl text-4xl font-extrabold tracking-[-0.06em] text-[var(--foreground)] md:text-5xl xl:text-[3.5rem]"
+              className="max-w-4xl text-3xl font-extrabold tracking-[-0.06em] text-[var(--foreground)] md:text-4xl"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
               Built to make YouTube monetization research simple

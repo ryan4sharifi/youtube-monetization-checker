@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import Image from "next/image";
@@ -20,6 +18,18 @@ type Props = {
 function format(n?: number | null) {
   if (n === null || n === undefined) return "—";
   return n.toLocaleString();
+}
+
+function formatCompact(n?: number | null) {
+  if (n === null || n === undefined) return "—";
+  try {
+    return new Intl.NumberFormat("en", {
+      notation: "compact",
+      maximumFractionDigits: 1,
+    }).format(n);
+  } catch {
+    return format(n);
+  }
 }
 
 export default function ChannelCard({ channel }: Props) {
@@ -49,15 +59,30 @@ export default function ChannelCard({ channel }: Props) {
       <div className="mt-5 grid grid-cols-3 gap-3 text-sm">
         <div className="rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-3 shadow-[0_6px_18px_rgba(15,23,42,0.04)]">
           <p className="text-[var(--foreground-muted)]/90 text-xs uppercase tracking-[0.12em]">Subscribers</p>
-          <p className="mt-1 font-semibold tracking-[-0.01em] text-[var(--foreground)]">{format(channel.subscriber_count)}</p>
+          <p
+            className="mt-1 font-semibold tracking-[-0.01em] text-[var(--foreground)] whitespace-nowrap tabular-nums"
+            title={format(channel.subscriber_count)}
+          >
+            {formatCompact(channel.subscriber_count)}
+          </p>
         </div>
         <div className="rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-3 shadow-[0_6px_18px_rgba(15,23,42,0.04)]">
           <p className="text-[var(--foreground-muted)]/90 text-xs uppercase tracking-[0.12em]">Views</p>
-          <p className="mt-1 font-semibold tracking-[-0.01em] text-[var(--foreground)]">{format(channel.view_count)}</p>
+          <p
+            className="mt-1 font-semibold tracking-[-0.01em] text-[var(--foreground)] whitespace-nowrap tabular-nums"
+            title={format(channel.view_count)}
+          >
+            {formatCompact(channel.view_count)}
+          </p>
         </div>
         <div className="rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-3 shadow-[0_6px_18px_rgba(15,23,42,0.04)]">
           <p className="text-[var(--foreground-muted)]/90 text-xs uppercase tracking-[0.12em]">Videos</p>
-          <p className="mt-1 font-semibold tracking-[-0.01em] text-[var(--foreground)]">{format(channel.video_count)}</p>
+          <p
+            className="mt-1 font-semibold tracking-[-0.01em] text-[var(--foreground)] whitespace-nowrap tabular-nums"
+            title={format(channel.video_count)}
+          >
+            {formatCompact(channel.video_count)}
+          </p>
         </div>
       </div>
     </div>

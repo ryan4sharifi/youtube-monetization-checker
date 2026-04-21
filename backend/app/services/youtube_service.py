@@ -39,6 +39,10 @@ def extract_channel_input(query: str) -> dict:
     if re.fullmatch(r"UC[a-zA-Z0-9_-]{20,}", q):
         return {"type": "channel_id", "value": q}
 
+    # Treat common short inputs as handles (IMPORTANT)
+    if re.fullmatch(r"[a-zA-Z0-9._-]{2,50}", q):
+        return {"type": "handle", "value": q}
+
     return {"type": "text", "value": q}
 
 
@@ -97,24 +101,27 @@ def search_channel_by_text(query: str) -> str | None:
 
 def resolve_channel(query: str) -> dict:
     parsed = extract_channel_input(query)
+    value = parsed["value"]
 
+    # 1. Try channel ID directly
     if parsed["type"] == "channel_id":
-        channel = get_channel_by_id(parsed["value"])
+        channel = get_channel_by_id(value)
         if channel:
             return channel
 
-    if parsed["type"] == "handle":
-        channel = get_channel_by_handle(parsed["value"])
+    # 2. ALWAYS try handle first (important for cnn, foxnews, etc.)
+    channel = get_channel_by_handle(value)
+    if channel:
+        return channel
+
+    # 3. Fallback to search for everything else
+    channel_id = search_channel_by_text(value)
+    if channel_id:
+        channel = get_channel_by_id(channel_id)
         if channel:
             return channel
 
-    if parsed["type"] in {"legacy_name", "text", "url"}:
-        channel_id = search_channel_by_text(parsed["value"])
-        if channel_id:
-            channel = get_channel_by_id(channel_id)
-            if channel:
-                return channel
-
+    # 4. Final failure
     raise YouTubeServiceError("Could not resolve channel from the provided input.")
 
 
