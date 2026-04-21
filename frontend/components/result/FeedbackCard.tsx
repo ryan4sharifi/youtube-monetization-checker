@@ -30,6 +30,15 @@ const ICONS: Record<Rating, any> = {
 export default function FeedbackCard({ handle }: Props) {
   const { user } = useAuth();
 
+  if (!handle) {
+    console.error("FeedbackCard: missing handle");
+    return null;
+  }
+
+  if (!API_URL) {
+    return null;
+  }
+
   const normalizedHandle = useMemo(
     () => handle.replace(/^@/, "").toLowerCase(),
     [handle]
@@ -40,7 +49,12 @@ export default function FeedbackCard({ handle }: Props) {
   const [submitted, setSubmitted] = useState(false);
   const [checking, setChecking] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [summary, setSummary] = useState<any>(null);
+  type Summary = {
+    total: number;
+    accuracy_score: number | null;
+  };
+
+  const [summary, setSummary] = useState<Summary | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -93,7 +107,7 @@ export default function FeedbackCard({ handle }: Props) {
 
   const submitFeedback = async (rating: Rating) => {
     if (!user?.id) return;
-    if (loading) return;
+    if (loading || submitted) return;
     if (!API_URL || !normalizedHandle) return;
 
     setError(null);
@@ -176,9 +190,9 @@ export default function FeedbackCard({ handle }: Props) {
           <h3 className="text-lg font-semibold text-[var(--foreground)]">
             How accurate is this estimate?
           </h3>
-          {summary?.total > 0 && summary?.accuracy_score !== null && (
+          {summary && summary.total > 0 && summary.accuracy_score !== null && (
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-              {Math.round(summary.accuracy_score * 100)}% of users found this accurate
+              {Math.round((summary.accuracy_score ?? 0) * 100)}% of users found this accurate
             </p>
           )}
         </div>

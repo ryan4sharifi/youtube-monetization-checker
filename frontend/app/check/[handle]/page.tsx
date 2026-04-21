@@ -22,9 +22,9 @@ if (!API_BASE) {
 }
 
 type PageProps = {
-  params: {
+  params: Promise<{
     handle: string;
-  };
+  }>;
 };
 
 type CheckResponse = {
@@ -134,7 +134,7 @@ function buildCanonicalUrl(handle: string) {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { handle: rawHandle } = params;
+  const { handle: rawHandle } = await params;
   const handle = normalizeHandle(rawHandle);
   const canonicalUrl = buildCanonicalUrl(handle);
 
@@ -162,7 +162,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function CheckPage({ params }: PageProps) {
-  const { handle: rawHandle } = params;
+  const { handle: rawHandle } = await params;
   if (!rawHandle) {
     console.error("Missing handle in params");
     return null;
