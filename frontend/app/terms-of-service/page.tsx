@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, FileText } from "lucide-react";
-import Section from "@/components/ui/Section";
 import { siteConfig } from "@/constants/site";
 
 const pageUrl = `${siteConfig.url}/terms-of-service`;
@@ -25,8 +24,8 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors">
-      <Section size="md">
-        <div className="space-y-10 md:space-y-12">
+      <div className="w-full px-6 md:px-10 pt-4 md:pt-6 xl:pt-8">
+        <div className="mx-auto max-w-6xl space-y-10 md:space-y-12">
           {/* Header */}
           <div className="space-y-3">
             <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background-elevated)] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--foreground-muted)]">
@@ -111,7 +110,7 @@ export default function TermsPage() {
             </div>
           </div>
         </div>
-      </Section>
+      </div>
     </main>
   );
 }

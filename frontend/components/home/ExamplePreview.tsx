@@ -42,7 +42,8 @@ const mockResult: MockResult = {
 
 export default function ExamplePreview() {
   return (
-    <section className="w-full">
+    <section className="w-full px-6 md:px-10">
+      <div className="mx-auto max-w-6xl">
       <div className="grid gap-6 lg:grid-cols-[1.02fr_0.98fr] lg:items-center xl:gap-8">
         <div className="max-w-2xl lg:pr-4">
           <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--foreground-muted)] md:text-xs">
@@ -192,6 +193,7 @@ export default function ExamplePreview() {
             </p>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

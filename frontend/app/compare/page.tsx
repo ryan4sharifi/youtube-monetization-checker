@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Section from "@/components/ui/Section";
 import GuideHero from "@/components/guides/GuideHero";
 import { ArrowRight } from "lucide-react";
 import { normalizeHandle } from "@/lib/youtube";
@@ -29,8 +28,8 @@ export default function ComparePage() {
 
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <Section size="lg">
-        <div className="space-y-10 md:space-y-12">
+      <div className="w-full px-6 md:px-10 pt-6 md:pt-10">
+        <div className="mx-auto max-w-6xl space-y-10 md:space-y-12">
 
           <GuideHero
             eyebrow="YouTube Comparison"
@@ -38,37 +37,40 @@ export default function ComparePage() {
             description="Enter two YouTube handles to compare subscribers, views, and estimated earnings side by side."
           />
 
-          <div className="rounded-3xl border border-[var(--border)] bg-[var(--card)] p-6 md:p-8 shadow-[0_10px_40px_rgba(0,0,0,0.06)]">
+          <div className="group rounded-[28px] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--card)_94%,transparent)] p-6 md:p-8 shadow-[0_16px_50px_rgba(15,23,42,0.08)] backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--border-strong)] hover:shadow-[0_22px_60px_rgba(15,23,42,0.12)]">
+            <div className="mb-5 text-sm font-medium text-[var(--foreground-muted)]">
+              Enter channel handles
+            </div>
             <div className="grid gap-4 md:grid-cols-2 md:gap-5">
               <input
                 value={channel1}
                 onChange={(e) => setChannel1(e.target.value)}
                 placeholder="@mrbeast or youtube.com/@mrbeast"
-                className="w-full rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] px-4 py-3 text-sm outline-none transition-all focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--brand)]/10"
+                className="w-full rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] px-4 py-3.5 text-[15px] outline-none transition-all duration-200 placeholder:text-[var(--foreground-muted)] focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--brand)]/10"
               />
 
               <input
                 value={channel2}
                 onChange={(e) => setChannel2(e.target.value)}
                 placeholder="@pewdiepie or youtube.com/@pewdiepie"
-                className="w-full rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] px-4 py-3 text-sm outline-none transition-all focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--brand)]/10"
+                className="w-full rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] px-4 py-3.5 text-[15px] outline-none transition-all duration-200 placeholder:text-[var(--foreground-muted)] focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--brand)]/10"
               />
             </div>
 
-            <div className="mt-6 flex justify-end">
+            <div className="mt-7 flex justify-end">
               <button
                 onClick={handleCompare}
                 disabled={!channel1 || !channel2}
-                className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand)] px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-[var(--brand-hover)] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="group inline-flex items-center gap-2 rounded-2xl bg-[var(--brand)] px-6 py-3 text-[15px] font-semibold text-white shadow-[0_10px_30px_rgba(15,23,42,0.12)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--brand-hover)] hover:shadow-[0_16px_40px_rgba(15,23,42,0.18)] active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Compare
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1.5" />
               </button>
             </div>
           </div>
 
         </div>
-      </Section>
+      </div>
     </main>
   );
 }

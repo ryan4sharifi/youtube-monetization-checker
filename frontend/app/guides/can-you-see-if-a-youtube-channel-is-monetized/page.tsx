@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Eye, CircleHelp } from "lucide-react";
-import Section from "@/components/ui/Section";
 import { siteConfig } from "@/constants/site";
 import GuideHero from "@/components/guides/GuideHero";
 import GuideSection from "@/components/guides/GuideSection";
@@ -29,8 +28,8 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <Section size="md" className="pt-4 md:pt-6 xl:pt-8">
-        <div className="space-y-7 md:space-y-8">
+      <div className="w-full px-6 md:px-10 pt-4 md:pt-6 xl:pt-8">
+        <div className="mx-auto max-w-6xl space-y-7 md:space-y-8">
           <GuideHero
             eyebrow="YouTube Monetization Guide"
             icon={<Eye />}
@@ -90,7 +89,7 @@ export default function Page() {
 
           <GuideCTA />
         </div>
-      </Section>
+      </div>
     </main>
   );
 }

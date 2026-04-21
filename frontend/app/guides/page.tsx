@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Section from "@/components/ui/Section";
 import GuidesHero from "@/components/guides/GuidesHero";
 import GuideCard from "@/components/guides/GuideCard";
 import GuideCTA from "@/components/guides/GuideCTA";
@@ -11,8 +10,8 @@ export default function GuidesPage() {
   const [showAll, setShowAll] = useState(false);
 
   return (
-    <Section size="lg" className="pt-6 md:pt-10">
-      <div className="space-y-7 md:space-y-8">
+    <div className="w-full px-6 md:px-10 pt-6 md:pt-10">
+      <div className="mx-auto max-w-6xl space-y-7 md:space-y-8">
         <GuidesHero
           title="YouTube Monetization Guides"
           description="Explore how YouTube monetization works — from requirements and earnings to analyzing whether a channel is actually monetized."
@@ -42,6 +41,6 @@ export default function GuidesPage() {
 
         <GuideCTA />
       </div>
-    </Section>
+    </div>
   );
 }

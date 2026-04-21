@@ -31,8 +31,8 @@ const items = [
 
 export default function FeatureHighlights() {
   return (
-    <section className="w-full py-8 md:py-10">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+    <section className="w-full px-6 md:px-10 py-8 md:py-10">
+      <div className="mx-auto max-w-6xl">
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {items.map((item) => (
             <div

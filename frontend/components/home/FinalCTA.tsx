@@ -6,7 +6,8 @@ import Button from "@/components/ui/Button";
 
 export default function FinalCTA() {
   return (
-    <section className="w-full py-6 md:py-8">
+    <section className="w-full px-6 md:px-10 py-6 md:py-8">
+      <div className="mx-auto max-w-6xl">
       <div className="relative rounded-2xl border border-[var(--border)] bg-[var(--card)] px-4 py-6 shadow-sm md:px-6 md:py-8">
 
         <div className="relative z-10 mx-auto max-w-3xl text-center">
@@ -63,6 +64,7 @@ export default function FinalCTA() {
             </span>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

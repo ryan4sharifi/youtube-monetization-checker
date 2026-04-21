@@ -29,29 +29,30 @@ export default function HeroSection({
     return base.length ? [...base, ...base] : [];
   }, [featuredChannels]);
   return (
-    <section className="relative w-full rounded-2xl border border-[var(--border)] bg-[var(--card)] px-5 py-8 shadow-sm md:px-8 md:py-10">
-      <div className="relative z-10 mx-auto max-w-4xl text-center">
+    <div className="w-full px-6 md:px-10">
+      <section className="relative mx-auto w-full max-w-6xl rounded-[28px] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--card)_94%,transparent)] px-6 py-7 shadow-[0_16px_40px_rgba(15,23,42,0.06)] md:px-10 md:py-9">
+      <div className="relative z-10 mx-auto max-w-6xl text-center">
         <div className="mb-4 inline-flex items-center rounded-full border border-[var(--border)] bg-[var(--background-elevated)] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--foreground-muted)]">
           YouTube Monetization Checker
         </div>
 
         <h1
-          className="mx-auto max-w-3xl text-2xl font-semibold tracking-[-0.03em] md:text-3xl"
+          className="mx-auto max-w-3xl text-[26px] md:text-[32px] font-semibold tracking-[-0.035em]"
           style={{ fontFamily: "var(--font-plus-jakarta)" }}
         >
           Instantly estimate YouTube monetization
         </h1>
 
-        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-[var(--foreground-muted)]">
+        <p className="mx-auto mt-3 max-w-xl text-[15px] leading-[1.65] text-[var(--foreground-muted)]">
           Analyze channels using real public signals like subscribers, views, and activity — in seconds.
         </p>
 
-        <div className="mx-auto mt-6 max-w-2xl rounded-2xl border border-[var(--border)] bg-[var(--background-elevated)] p-4 shadow-sm">
+        <div className="mx-auto mt-6 w-full max-w-3xl md:max-w-4xl">
           <SearchBox onSearch={onSearch} loading={loading} />
         </div>
 
         {scrollingChannels.length > 0 && (
-          <div className="mt-6">
+          <div className="mt-5">
             <p className="mb-2 text-center text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--foreground-muted)]">
               Trending channels
             </p>
@@ -119,6 +120,7 @@ export default function HeroSection({
           }
         }
       `}</style>
-    </section>
+      </section>
+    </div>
   );
 }

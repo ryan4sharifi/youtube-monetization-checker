@@ -22,8 +22,8 @@ export default function SearchBox({ onSearch, loading }: Props) {
   );
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2 md:flex-row md:items-center">
+    <div className="w-full max-w-3xl md:max-w-4xl mx-auto">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3 md:flex-row md:items-center">
         <div className="relative flex-1">
           <input
             type="search"
@@ -33,7 +33,7 @@ export default function SearchBox({ onSearch, loading }: Props) {
             placeholder="Paste a YouTube handle or channel URL"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] px-4 py-2.5 pr-10 text-sm text-[var(--foreground)] placeholder:text-[var(--foreground-muted)] focus:outline-none focus:border-[var(--brand)] focus:ring-2 focus:ring-[color:color-mix(in_srgb,var(--brand)_12%,transparent)] transition-colors"
+            className="w-full h-11 rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] px-5 pr-10 text-[15px] text-[var(--foreground)] placeholder:text-[var(--foreground-muted)] focus:outline-none focus:border-[var(--brand)] focus:ring-2 focus:ring-[color:color-mix(in_srgb,var(--brand)_12%,transparent)] transition-all duration-200"
           />
 
           <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--foreground-muted)]">
@@ -45,7 +45,7 @@ export default function SearchBox({ onSearch, loading }: Props) {
           type="submit"
           onClick={handleSubmit}
           disabled={loading}
-          className="inline-flex items-center justify-center rounded-xl bg-[var(--brand)] px-4 py-2.5 text-sm font-medium text-white !text-white transition-all hover:bg-[var(--brand-hover)] hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[color:color-mix(in_srgb,var(--brand)_12%,transparent)]"
+          className="inline-flex h-11 items-center justify-center rounded-2xl bg-[var(--brand)] px-6 text-[15px] font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--brand-hover)] hover:shadow-[0_12px_30px_rgba(15,23,42,0.15)] disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[color:color-mix(in_srgb,var(--brand)_12%,transparent)]"
         >
           {loading ? (
             <span className="flex items-center gap-2">

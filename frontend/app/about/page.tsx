@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, BadgeInfo, CircleHelp, Sparkles } from "lucide-react";
-import Section from "@/components/ui/Section";
 import { siteConfig } from "@/constants/site";
 
 const pageUrl = `${siteConfig.url}/about`;
@@ -34,7 +33,8 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <Section size="md" className="pt-4 md:pt-6 xl:pt-8">
+      <div className="w-full px-6 md:px-10 pt-4 md:pt-6 xl:pt-8">
+        <div className="mx-auto max-w-6xl">
         <div className="space-y-7 md:space-y-8">
           <div className="space-y-4">
             <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_94%,transparent)] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--brand)] shadow-[0_10px_24px_rgba(15,23,42,0.06)] md:text-xs">
@@ -154,7 +154,8 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
-      </Section>
+        </div>
+      </div>
     </main>
   );
 }

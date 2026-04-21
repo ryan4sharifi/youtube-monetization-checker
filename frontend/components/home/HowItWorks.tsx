@@ -23,8 +23,8 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="w-full py-8 md:py-10">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+    <section className="w-full px-6 md:px-10 py-8 md:py-10">
+      <div className="mx-auto max-w-6xl">
         <div className="mb-8 text-center md:mb-10">
           <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--foreground-muted)]">
             How it works

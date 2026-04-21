@@ -7,7 +7,6 @@ import FeatureHighlights from "@/components/home/FeatureHighlights";
 import HowItWorks from "@/components/home/HowItWorks";
 import ExamplePreview from "@/components/home/ExamplePreview";
 import FinalCTA from "@/components/home/FinalCTA";
-import Section from "@/components/ui/Section";
 
 type FeaturedChannel = {
   title: string;
@@ -114,31 +113,29 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <Section className="pt-2 md:pt-4 lg:pt-6" size="lg">
-        <div className="w-full space-y-6">
-          <HeroSection
-            onSearch={handleSearch}
-            loading={false}
-            featuredChannels={featuredChannels}
-          />
-        </div>
-      </Section>
+      <div className="w-full pt-2 md:pt-4 lg:pt-6 space-y-6">
+        <HeroSection
+          onSearch={handleSearch}
+          loading={false}
+          featuredChannels={featuredChannels}
+        />
+      </div>
 
-      <Section size="lg" className="pt-2 md:pt-4">
+      <div className="w-full pt-2 md:pt-4">
         <FeatureHighlights />
-      </Section>
+      </div>
 
-      <Section size="lg" className="pt-6 md:pt-8 xl:pt-10">
+      <div className="w-full pt-6 md:pt-8 xl:pt-10">
         <HowItWorks />
-      </Section>
+      </div>
 
-      <Section size="lg" className="pt-6 md:pt-8 xl:pt-10">
+      <div className="w-full pt-6 md:pt-8 xl:pt-10">
         <ExamplePreview />
-      </Section>
+      </div>
 
-      <Section size="lg" className="pt-6 md:pt-8 xl:pt-10">
+      <div className="w-full pt-6 md:pt-8 xl:pt-10">
         <FinalCTA />
-      </Section>
+      </div>
     </main>
   );
 }

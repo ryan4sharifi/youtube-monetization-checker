@@ -1,18 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
+import logo from "@/app/im-logo-final.png";
 import { useState, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { useAppTheme } from "@/providers/ThemeProvider";
 import {
-  Zap,
   BookOpen,
-  CheckCircle,
+  BarChart3,
+  GitCompare,
+  Building2,
+  Shield,
   Moon,
   Sun,
   Menu,
   X,
-  Play,
 } from "lucide-react";
 
 const navItems = [
@@ -24,16 +27,16 @@ const navItems = [
   {
     label: "Methodology",
     href: "/methodology",
-    icon: Zap,
+    icon: BarChart3,
   },
   {
     label: "Compare",
     href: "/compare",
-    icon: Zap,
+    icon: GitCompare,
   },
   {
     label: "Company",
-    icon: CheckCircle,
+    icon: Building2,
     children: [
       { label: "About", href: "/about" },
       { label: "Contact", href: "/contact" },
@@ -42,7 +45,7 @@ const navItems = [
   },
   {
     label: "Legal",
-    icon: CheckCircle,
+    icon: Shield,
     children: [
       { label: "Privacy Policy", href: "/privacy-policy" },
       { label: "Terms of Service", href: "/terms-of-service" },
@@ -54,6 +57,13 @@ const navItems = [
 function isActive(pathname: string, href: string) {
   return pathname === href;
 }
+
+function isChildActive(pathname: string, children: readonly { href: string }[]) {
+  return children.some((c) => pathname === c.href);
+}
+
+const ACTIVE_CLASS =
+  "bg-[var(--background-elevated)] text-[var(--foreground)] ring-1 ring-[var(--border)]";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -82,8 +92,15 @@ export default function Navbar() {
             className="inline-flex min-w-0 items-center gap-3 rounded-2xl transition duration-200 hover:opacity-90"
             onClick={() => setMenuOpen(false)}
           >
-            <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--background-elevated)]">
-              <Play className="h-5 w-5 text-[var(--foreground)]" />
+            <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] overflow-hidden">
+              <Image
+                src={logo}
+                alt="IsMonetized logo"
+                width={32}
+                height={32}
+                className="object-contain"
+                priority
+              />
             </span>
 
             <span className="min-w-0">
@@ -93,14 +110,14 @@ export default function Navbar() {
               >
                 {process.env.NEXT_PUBLIC_APP_NAME || "IsMonetized"}
               </span>
-              <span className="mt-0.5 hidden text-[11px] font-medium uppercase tracking-[0.18em] text-[var(--foreground-muted)] sm:block">
+              <span className="mt-0.5 block text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.18em] text-[var(--foreground-muted)]">
                 Monetization Intelligence
               </span>
             </span>
           </Link>
 
-          <div className="hidden items-center gap-3 lg:flex">
-            <nav className="flex items-center gap-1 rounded-full border border-[var(--border)] bg-[var(--background-elevated)] p-1">
+          <div className="hidden items-center gap-3 xl:flex">
+            <nav className="flex items-center gap-1 rounded-full border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-1 shadow-[0_6px_20px_rgba(15,23,42,0.06)] backdrop-blur">
               {navItems.map((item) => {
                 const Icon = item.icon;
 
@@ -112,8 +129,14 @@ export default function Navbar() {
                       onMouseEnter={() => setActiveDropdown(item.label)}
                       onMouseLeave={() => setActiveDropdown(null)}
                     >
-                      <button className="inline-flex h-11 items-center gap-2 rounded-full px-5 text-[15px] font-medium tracking-[-0.01em] text-[var(--foreground-muted)] hover:text-[var(--foreground)]">
-                        <Icon className="h-4 w-4" />
+                      <button
+                        className={`inline-flex h-11 items-center gap-2 rounded-full px-5 text-[15px] font-medium tracking-[-0.01em] transition-all duration-200 ${
+                          isChildActive(pathname, item.children)
+                            ? ACTIVE_CLASS
+                            : "text-[var(--foreground)] hover:bg-[var(--background-elevated)]"
+                        }`}
+                      >
+                        <Icon className="h-4 w-4 text-inherit" />
                         {item.label}
                       </button>
 
@@ -124,12 +147,16 @@ export default function Navbar() {
                             : "opacity-0 invisible -translate-y-1"
                         }`}
                       >
-                        <div className="rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-2 shadow-lg">
+                        <div className="rounded-xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_94%,transparent)] p-2 shadow-[0_14px_40px_rgba(15,23,42,0.12)] backdrop-blur">
                           {item.children.map((sub) => (
                             <Link
                               key={sub.href}
                               href={sub.href}
-                              className="block rounded-lg px-3 py-2 text-sm text-[var(--foreground-muted)] hover:bg-[color:color-mix(in_srgb,var(--background)_92%,transparent)] hover:text-[var(--foreground)]"
+                              className={`block rounded-lg px-3 py-2 text-sm transition-colors ${
+                                isActive(pathname, sub.href)
+                                  ? ACTIVE_CLASS
+                                  : "text-[var(--foreground)] hover:bg-[var(--background-elevated)]"
+                              }`}
                             >
                               {sub.label}
                             </Link>
@@ -148,32 +175,38 @@ export default function Navbar() {
                     href={item.href}
                     className={`inline-flex h-11 items-center gap-2 rounded-full px-5 text-[15px] font-medium tracking-[-0.01em] transition-all duration-200 ${
                       active
-                        ? "bg-[color:color-mix(in_srgb,var(--background)_96%,transparent)] text-[var(--foreground)]"
-                        : "text-[var(--foreground-muted)] hover:bg-[color:color-mix(in_srgb,var(--background)_92%,transparent)] hover:text-[var(--foreground)]"
+                        ? ACTIVE_CLASS
+                        : "text-[var(--foreground)] hover:bg-[var(--background-elevated)]"
                     }`}
                   >
-                    <Icon className="h-4 w-4 shrink-0" />
+                    <Icon className="h-4 w-4 shrink-0 text-inherit" />
                     {item.label}
                   </Link>
                 );
               })}
             </nav>
 
-            <button
-              type="button"
-              onClick={toggleMode}
-              className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background-elevated)] px-4 text-sm font-medium text-[var(--foreground-muted)]"
-            >
-              {mounted && mode === "light" ? (
-                <Moon className="h-4 w-4 shrink-0" aria-hidden="true" />
-              ) : (
-                <Sun className="h-4 w-4 shrink-0" aria-hidden="true" />
-              )}
-              {themeLabel}
-            </button>
+            <div className="flex items-center rounded-full border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-1 shadow-[0_6px_20px_rgba(15,23,42,0.06)] backdrop-blur">
+              <button
+                type="button"
+                onClick={toggleMode}
+                className={`inline-flex h-11 items-center gap-2 rounded-full px-5 text-[15px] font-medium tracking-[-0.01em] transition-all duration-200 ${
+                  mode === "dark"
+                    ? ACTIVE_CLASS
+                    : "text-[var(--foreground)] hover:bg-[var(--background-elevated)]"
+                }`}
+              >
+                {mounted && mode === "light" ? (
+                  <Moon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                ) : (
+                  <Sun className="h-4 w-4 shrink-0" aria-hidden="true" />
+                )}
+                {themeLabel}
+              </button>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2 lg:hidden">
+          <div className="flex items-center gap-2 xl:hidden">
             <button
               type="button"
               onClick={toggleMode}
@@ -206,7 +239,7 @@ export default function Navbar() {
       </div>
 
       {menuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
+        <div className="fixed inset-0 z-50 xl:hidden">
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/30 backdrop-blur-sm"
@@ -215,15 +248,15 @@ export default function Navbar() {
           />
 
           {/* Panel */}
-          <div className="relative mx-auto max-w-7xl px-4 pt-20 pb-6 sm:px-6 lg:px-8">
+          <div className="relative mx-auto max-w-7xl px-4 pt-20 pb-6 sm:px-6 xl:px-8">
             <div
               id="mobile-menu"
-              className="relative rounded-2xl border border-[var(--border)] bg-[var(--background-elevated)] p-3 shadow-lg transition-all duration-200"
+              className="relative rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_94%,transparent)] p-3 shadow-[0_18px_50px_rgba(15,23,42,0.15)] backdrop-blur transition-all duration-200"
             >
               <button
                 type="button"
                 onClick={() => setMenuOpen(false)}
-                className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] text-[var(--foreground)] hover:bg-[color:color-mix(in_srgb,var(--background)_92%,transparent)] cursor-pointer"
+                className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] text-[var(--foreground)] hover:bg-[var(--background-elevated)] cursor-pointer"
                 aria-label="Close menu"
               >
                 <X className="h-4 w-4" />
@@ -239,7 +272,7 @@ export default function Navbar() {
                       <div key={item.label} className="space-y-1">
                         <button
                           onClick={() => toggleSection(item.label)}
-                          className="flex w-full items-center justify-between rounded-2xl px-4 py-3 text-xs uppercase tracking-[0.14em] text-[var(--foreground-muted)] transition hover:bg-[color:color-mix(in_srgb,var(--background)_92%,transparent)]"
+                          className="flex w-full items-center justify-between rounded-2xl px-4 py-3 text-xs uppercase tracking-[0.14em] text-[var(--foreground)] transition-colors hover:bg-[var(--background-elevated)] hover:text-[var(--foreground)]"
                         >
                           <span>{item.label}</span>
                           <span className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}>
@@ -255,7 +288,11 @@ export default function Navbar() {
                               <Link
                                 key={sub.href}
                                 href={sub.href}
-                                className="ml-4 inline-flex items-center gap-3 rounded-2xl px-4 py-2.5 text-sm text-[var(--foreground)] transition-colors hover:bg-[color:color-mix(in_srgb,var(--background)_92%,transparent)]"
+                                className={`ml-4 inline-flex items-center gap-3 rounded-2xl px-4 py-2.5 text-sm transition-colors ${
+                                  isActive(pathname, sub.href)
+                                    ? ACTIVE_CLASS
+                                    : "text-[var(--foreground)] hover:bg-[var(--background-elevated)]"
+                                }`}
                                 onClick={() => setMenuOpen(false)}
                               >
                                 {sub.label}
@@ -275,12 +312,12 @@ export default function Navbar() {
                       href={item.href}
                       className={`inline-flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium tracking-[-0.01em] transition duration-200 ${
                         active
-                          ? "bg-[color:color-mix(in_srgb,var(--background)_94%,transparent)] text-[var(--foreground)]"
-                          : "text-[var(--foreground)] hover:bg-[color:color-mix(in_srgb,var(--background)_92%,transparent)]"
+                          ? ACTIVE_CLASS
+                          : "text-[var(--foreground)] hover:bg-[var(--background-elevated)]"
                       }`}
                       onClick={() => setMenuOpen(false)}
                     >
-                      <Icon className="h-4 w-4 shrink-0" />
+                      <Icon className="h-4 w-4 shrink-0 text-inherit" />
                       {item.label}
                     </Link>
                   );

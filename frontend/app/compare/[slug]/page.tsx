@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Section from "@/components/ui/Section";
 import GuideHero from "@/components/guides/GuideHero";
 import GuideSection from "@/components/guides/GuideSection";
 import GuideCTA from "@/components/guides/GuideCTA";
@@ -85,8 +84,9 @@ export default async function Page({
 
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <Section size="lg">
-        <div className="space-y-8 md:space-y-10">
+      <div className="w-full px-6 md:px-10">
+        <div className="mx-auto max-w-6xl">
+          <div className="space-y-8 md:space-y-10 pt-4 md:pt-6 xl:pt-8">
 
           <GuideHero
             eyebrow="YouTube Comparison"
@@ -168,8 +168,9 @@ export default async function Page({
 
           <GuideCTA />
 
+          </div>
         </div>
-      </Section>
+      </div>
     </main>
   );
 }
