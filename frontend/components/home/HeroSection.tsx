@@ -1,8 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 import SearchBox from "@/components/home/SearchBox";
+import { supabase } from "@/services/supabaseClient";
+import SearchLimitModal from "@/components/ui/SearchLimitModal";
 
 
 type FeaturedChannel = {
@@ -24,10 +27,28 @@ export default function HeroSection({
   loading = false,
   featuredChannels = [],
 }: HeroSectionProps) {
+  const { user } = useAuth();
+  const [showLimit, setShowLimit] = useState(false);
   const scrollingChannels = useMemo(() => {
     const base = featuredChannels?.length ? featuredChannels : [];
     return base.length ? [...base, ...base] : [];
   }, [featuredChannels]);
+
+  const handleSearch = async (query: string) => {
+    const count = Number(localStorage.getItem("search_count") || 0);
+
+    if (!user && count >= 3) {
+      setShowLimit(true);
+      return;
+    }
+
+    if (!user) {
+      localStorage.setItem("search_count", String(count + 1));
+    }
+
+    await onSearch(query);
+  };
+
   return (
     <div className="w-full px-6 md:px-10">
       <section className="relative mx-auto w-full max-w-6xl rounded-[28px] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--card)_94%,transparent)] px-6 py-7 shadow-[0_16px_40px_rgba(15,23,42,0.06)] md:px-10 md:py-9">
@@ -48,7 +69,7 @@ export default function HeroSection({
         </p>
 
         <div className="mx-auto mt-6 w-full max-w-3xl md:max-w-4xl">
-          <SearchBox onSearch={onSearch} loading={loading} />
+          <SearchBox onSearch={handleSearch} loading={loading} />
         </div>
 
         {scrollingChannels.length > 0 && (
@@ -93,6 +114,8 @@ export default function HeroSection({
           </div>
         )}
       </div>
+
+      <SearchLimitModal open={showLimit} onClose={() => setShowLimit(false)} />
 
       <style jsx>{`
         .hero-marquee {

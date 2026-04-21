@@ -10,6 +10,8 @@ import EarningsExplanationSection from "@/components/result/EarningsExplanationS
 import MonetizationAnalysisSection from "@/components/result/MonetizationAnalysisSection";
 import MonetizationTipsSection from "@/components/result/MonetizationTipsSection";
 import RelatedGuidesSection from "@/components/result/RelatedGuidesSection";
+import FeedbackCard from "@/components/result/FeedbackCard";
+import SaveChannelButton from "@/components/result/SaveChannelButton";
 import { siteConfig } from "@/constants/site";
 import { guides } from "@/lib/guides";
 
@@ -214,7 +216,8 @@ export default async function CheckPage({ params }: PageProps) {
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <div className="w-full px-6 md:px-10 pt-4 md:pt-6 xl:pt-8">
         <div className="mx-auto max-w-6xl space-y-8 md:space-y-10">
-          <div className="space-y-3">
+          <div className="flex items-start justify-between gap-4">
+            <div className="space-y-3">
             <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background-elevated)] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--foreground-muted)]">
               YouTube Monetization Check
             </div>
@@ -228,6 +231,11 @@ export default async function CheckPage({ params }: PageProps) {
               This page provides an estimate of whether <span className="font-medium text-[var(--foreground)]">{displayHandle}</span> is monetized on YouTube using public signals such as subscribers, views, and upload activity. This is not an official YouTube confirmation, but a data-driven indication of whether the channel appears likely to be monetized.
             </p>
           </div>
+
+          <div className="pt-1">
+            <SaveChannelButton handle={handle} />
+          </div>
+        </div>
 
           {!data && (
             <div className="rounded-[28px] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--card)_94%,transparent)] p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur">
@@ -265,6 +273,7 @@ export default async function CheckPage({ params }: PageProps) {
                   }}
                 />
                 <EarningsEstimateCard earnings={data.earnings} />
+                <FeedbackCard handle={handle} />
                 <EarningsExplanationSection
                   data={{
                     monthlyLow: data.earnings.monthly_low,

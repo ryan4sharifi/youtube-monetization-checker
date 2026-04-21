@@ -3,7 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import supabase
 from app.routers.check import router as check_router
-
+from app.routers.feedback import router as feedback_router
+from app.routers.saved import router as saved_router
 app = FastAPI(title="YouTube Monetization Checker API")
 
 app.add_middleware(
@@ -14,6 +15,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.include_router(check_router)
+app.include_router(feedback_router)
+app.include_router(saved_router)
 
 
 @app.get("/")

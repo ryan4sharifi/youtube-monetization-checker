@@ -33,8 +33,13 @@ function formatCompact(n?: number | null) {
 }
 
 export default function ChannelCard({ channel }: Props) {
+  const hasStats =
+    channel.subscriber_count !== null &&
+    channel.view_count !== null &&
+    channel.video_count !== null;
+
   return (
-    <div className="w-full rounded-[28px] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--card)_94%,transparent)] p-4 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-[var(--border-strong)]">
+    <div className="w-full rounded-[28px] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--card)_94%,transparent)] p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-[var(--border-strong)]">
       <div className="flex items-center gap-4">
         {channel.thumbnail_url ? (
           <Image
@@ -45,7 +50,9 @@ export default function ChannelCard({ channel }: Props) {
             className="h-16 w-16 rounded-full object-cover border border-[var(--border)] shadow-[0_6px_18px_rgba(15,23,42,0.06)]"
           />
         ) : (
-          <div className="h-16 w-16 rounded-full border border-[var(--border)] bg-[var(--card-muted)] shadow-[0_6px_18px_rgba(15,23,42,0.04)]" />
+          <div className="h-16 w-16 rounded-full border border-[var(--border)] bg-[var(--card-muted)] shadow-[0_6px_18px_rgba(15,23,42,0.04)] flex items-center justify-center text-sm text-[var(--foreground-muted)]">
+            {channel.title?.charAt(0).toUpperCase()}
+          </div>
         )}
 
         <div className="min-w-0">
@@ -56,35 +63,38 @@ export default function ChannelCard({ channel }: Props) {
         </div>
       </div>
 
-      <div className="mt-5 grid grid-cols-3 gap-3 text-sm">
-        <div className="rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-3 shadow-[0_6px_18px_rgba(15,23,42,0.04)]">
-          <p className="text-[var(--foreground-muted)]/90 text-xs uppercase tracking-[0.12em]">Subscribers</p>
-          <p
-            className="mt-1 font-semibold tracking-[-0.01em] text-[var(--foreground)] whitespace-nowrap tabular-nums"
-            title={format(channel.subscriber_count)}
-          >
-            {formatCompact(channel.subscriber_count)}
-          </p>
+      {hasStats ? (
+        <div className="mt-5 grid grid-cols-3 gap-3 text-sm">
+          <div className="rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-3 shadow-[0_6px_18px_rgba(15,23,42,0.04)]">
+            <p className="text-[var(--foreground-muted)]/90 text-xs uppercase tracking-[0.12em] truncate">
+              Subscribers
+            </p>
+            <p className="mt-1 font-semibold tracking-[-0.01em] text-[var(--foreground)] whitespace-nowrap overflow-hidden text-ellipsis tabular-nums" title={format(channel.subscriber_count)}>
+              {formatCompact(channel.subscriber_count)}
+            </p>
+          </div>
+          <div className="rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-3 shadow-[0_6px_18px_rgba(15,23,42,0.04)]">
+            <p className="text-[var(--foreground-muted)]/90 text-xs uppercase tracking-[0.12em] truncate">
+              Views
+            </p>
+            <p className="mt-1 font-semibold tracking-[-0.01em] text-[var(--foreground)] whitespace-nowrap overflow-hidden text-ellipsis tabular-nums" title={format(channel.view_count)}>
+              {formatCompact(channel.view_count)}
+            </p>
+          </div>
+          <div className="rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-3 shadow-[0_6px_18px_rgba(15,23,42,0.04)]">
+            <p className="text-[var(--foreground-muted)]/90 text-xs uppercase tracking-[0.12em] truncate">
+              Videos
+            </p>
+            <p className="mt-1 font-semibold tracking-[-0.01em] text-[var(--foreground)] whitespace-nowrap overflow-hidden text-ellipsis tabular-nums" title={format(channel.video_count)}>
+              {formatCompact(channel.video_count)}
+            </p>
+          </div>
         </div>
-        <div className="rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-3 shadow-[0_6px_18px_rgba(15,23,42,0.04)]">
-          <p className="text-[var(--foreground-muted)]/90 text-xs uppercase tracking-[0.12em]">Views</p>
-          <p
-            className="mt-1 font-semibold tracking-[-0.01em] text-[var(--foreground)] whitespace-nowrap tabular-nums"
-            title={format(channel.view_count)}
-          >
-            {formatCompact(channel.view_count)}
-          </p>
+      ) : (
+        <div className="mt-5 rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-4 text-sm text-[var(--foreground-muted)] text-center">
+          Channel data will appear here after analysis
         </div>
-        <div className="rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-3 shadow-[0_6px_18px_rgba(15,23,42,0.04)]">
-          <p className="text-[var(--foreground-muted)]/90 text-xs uppercase tracking-[0.12em]">Videos</p>
-          <p
-            className="mt-1 font-semibold tracking-[-0.01em] text-[var(--foreground)] whitespace-nowrap tabular-nums"
-            title={format(channel.video_count)}
-          >
-            {formatCompact(channel.video_count)}
-          </p>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

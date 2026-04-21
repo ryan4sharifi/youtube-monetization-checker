@@ -6,12 +6,13 @@ import logo from "@/app/im-logo-final.png";
 import { useState, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { useAppTheme } from "@/providers/ThemeProvider";
+import { useAuth } from "@/hooks/useAuth";
 import {
   BookOpen,
   BarChart3,
   GitCompare,
-  Building2,
-  Shield,
+  Bookmark,
+  LogIn,
   Moon,
   Sun,
   Menu,
@@ -35,22 +36,9 @@ const navItems = [
     icon: GitCompare,
   },
   {
-    label: "Company",
-    icon: Building2,
-    children: [
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
-      { label: "FAQ", href: "/faq" },
-    ],
-  },
-  {
-    label: "Legal",
-    icon: Shield,
-    children: [
-      { label: "Privacy Policy", href: "/privacy-policy" },
-      { label: "Terms of Service", href: "/terms-of-service" },
-      { label: "Disclaimer", href: "/disclaimer" },
-    ],
+    label: "Saved",
+    href: "/saved",
+    icon: Bookmark,
   },
 ] as const;
 
@@ -58,9 +46,6 @@ function isActive(pathname: string, href: string) {
   return pathname === href;
 }
 
-function isChildActive(pathname: string, children: readonly { href: string }[]) {
-  return children.some((c) => pathname === c.href);
-}
 
 const ACTIVE_CLASS =
   "bg-[var(--background-elevated)] text-[var(--foreground)] ring-1 ring-[var(--border)]";
@@ -80,6 +65,7 @@ export default function Navbar() {
     setOpenSections((prev) => ({ ...prev, [label]: !prev[label] }));
   }, []);
   const { mode, toggleMode, mounted } = useAppTheme();
+  const { user, loading, signInWithGoogle, signOut } = useAuth();
 
   const themeLabel = mounted ? (mode === "light" ? "Dark" : "Light") : "Theme";
 
@@ -118,90 +104,62 @@ export default function Navbar() {
 
           <div className="hidden items-center gap-3 xl:flex">
             <nav className="flex items-center gap-1 rounded-full border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-1 shadow-[0_6px_20px_rgba(15,23,42,0.06)] backdrop-blur">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-
-                if ("children" in item) {
+              {navItems
+                .filter((item) => item.label !== "Saved" || user)
+                .map((item) => {
+                  const Icon = item.icon;
+                  const active = isActive(pathname, item.href);
                   return (
-                    <div
-                      key={item.label}
-                      className="relative"
-                      onMouseEnter={() => setActiveDropdown(item.label)}
-                      onMouseLeave={() => setActiveDropdown(null)}
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`inline-flex h-11 items-center gap-2 rounded-full px-5 text-[15px] font-medium tracking-[-0.01em] transition-all duration-200 ${
+                        active
+                          ? ACTIVE_CLASS
+                          : "text-[var(--foreground)] hover:bg-[var(--background-elevated)]"
+                      }`}
                     >
-                      <button
-                        className={`inline-flex h-11 items-center gap-2 rounded-full px-5 text-[15px] font-medium tracking-[-0.01em] transition-all duration-200 ${
-                          isChildActive(pathname, item.children)
-                            ? ACTIVE_CLASS
-                            : "text-[var(--foreground)] hover:bg-[var(--background-elevated)]"
-                        }`}
-                      >
-                        <Icon className="h-4 w-4 text-inherit" />
-                        {item.label}
-                      </button>
-
-                      <div
-                        className={`absolute left-0 top-full min-w-[180px] pt-2 transition-all duration-150 ${
-                          activeDropdown === item.label
-                            ? "opacity-100 visible translate-y-0"
-                            : "opacity-0 invisible -translate-y-1"
-                        }`}
-                      >
-                        <div className="rounded-xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_94%,transparent)] p-2 shadow-[0_14px_40px_rgba(15,23,42,0.12)] backdrop-blur">
-                          {item.children.map((sub) => (
-                            <Link
-                              key={sub.href}
-                              href={sub.href}
-                              className={`block rounded-lg px-3 py-2 text-sm transition-colors ${
-                                isActive(pathname, sub.href)
-                                  ? ACTIVE_CLASS
-                                  : "text-[var(--foreground)] hover:bg-[var(--background-elevated)]"
-                              }`}
-                            >
-                              {sub.label}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
+                      <Icon className="h-4 w-4 shrink-0 text-inherit" />
+                      {item.label}
+                    </Link>
                   );
-                }
-
-                const active = isActive(pathname, item.href);
-
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`inline-flex h-11 items-center gap-2 rounded-full px-5 text-[15px] font-medium tracking-[-0.01em] transition-all duration-200 ${
-                      active
-                        ? ACTIVE_CLASS
-                        : "text-[var(--foreground)] hover:bg-[var(--background-elevated)]"
-                    }`}
-                  >
-                    <Icon className="h-4 w-4 shrink-0 text-inherit" />
-                    {item.label}
-                  </Link>
-                );
-              })}
+                })}
             </nav>
 
+            <div className="flex items-center rounded-full border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-1 shadow-[0_6px_20px_rgba(15,23,42,0.06)] backdrop-blur">
+              {loading ? null : user ? (
+                <button
+                  onClick={signOut}
+                  className="inline-flex h-11 items-center gap-2 rounded-full px-5 text-[15px] font-medium tracking-[-0.01em] text-[var(--foreground)] transition-all duration-200 hover:bg-[var(--background-elevated)]"
+                >
+                  Sign out
+                </button>
+              ) : (
+                <button
+                  onClick={signInWithGoogle}
+                  className="inline-flex h-11 items-center gap-2 rounded-full px-5 text-[15px] font-medium tracking-[-0.01em] text-[var(--foreground)] transition-all duration-200 hover:bg-[var(--background-elevated)]"
+                >
+                  <LogIn className="h-4 w-4" />
+                  Sign in
+                </button>
+              )}
+            </div>
             <div className="flex items-center rounded-full border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-1 shadow-[0_6px_20px_rgba(15,23,42,0.06)] backdrop-blur">
               <button
                 type="button"
                 onClick={toggleMode}
-                className={`inline-flex h-11 items-center gap-2 rounded-full px-5 text-[15px] font-medium tracking-[-0.01em] transition-all duration-200 ${
+                aria-label="Toggle theme"
+                className={`inline-flex h-11 w-11 items-center justify-center rounded-full text-[var(--foreground)] transition-all duration-200 border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] ${
                   mode === "dark"
                     ? ACTIVE_CLASS
                     : "text-[var(--foreground)] hover:bg-[var(--background-elevated)]"
                 }`}
               >
                 {mounted && mode === "light" ? (
-                  <Moon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <Moon className="h-4 w-4" aria-hidden="true" />
                 ) : (
-                  <Sun className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <Sun className="h-4 w-4" aria-hidden="true" />
                 )}
-                {themeLabel}
               </button>
             </div>
           </div>
@@ -262,67 +220,48 @@ export default function Navbar() {
                 <X className="h-4 w-4" />
               </button>
               <nav className="mt-8 flex flex-col gap-2">
-                {navItems.map((item) => {
-                  const Icon = item.icon;
-
-                  if ("children" in item) {
-                    const isOpen = openSections[item.label];
-
+                {navItems
+                  .filter((item) => item.label !== "Saved" || user)
+                  .map((item) => {
+                    const Icon = item.icon;
+                    const active = isActive(pathname, item.href);
                     return (
-                      <div key={item.label} className="space-y-1">
-                        <button
-                          onClick={() => toggleSection(item.label)}
-                          className="flex w-full items-center justify-between rounded-2xl px-4 py-3 text-xs uppercase tracking-[0.14em] text-[var(--foreground)] transition-colors hover:bg-[var(--background-elevated)] hover:text-[var(--foreground)]"
-                        >
-                          <span>{item.label}</span>
-                          <span className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                              <polyline points="6 9 12 15 18 9" />
-                            </svg>
-                          </span>
-                        </button>
-
-                        <div className={`overflow-hidden transition-all duration-200 ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
-                          <div className="flex flex-col gap-1 pb-1">
-                            {item.children.map((sub) => (
-                              <Link
-                                key={sub.href}
-                                href={sub.href}
-                                className={`ml-4 inline-flex items-center gap-3 rounded-2xl px-4 py-2.5 text-sm transition-colors ${
-                                  isActive(pathname, sub.href)
-                                    ? ACTIVE_CLASS
-                                    : "text-[var(--foreground)] hover:bg-[var(--background-elevated)]"
-                                }`}
-                                onClick={() => setMenuOpen(false)}
-                              >
-                                {sub.label}
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={`inline-flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium tracking-[-0.01em] transition duration-200 ${
+                          active
+                            ? ACTIVE_CLASS
+                            : "text-[var(--foreground)] hover:bg-[var(--background-elevated)]"
+                        }`}
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        <Icon className="h-4 w-4 shrink-0 text-inherit" />
+                        {item.label}
+                      </Link>
                     );
-                  }
-
-                  const active = isActive(pathname, item.href);
-
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`inline-flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium tracking-[-0.01em] transition duration-200 ${
-                        active
-                          ? ACTIVE_CLASS
-                          : "text-[var(--foreground)] hover:bg-[var(--background-elevated)]"
-                      }`}
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      <Icon className="h-4 w-4 shrink-0 text-inherit" />
-                      {item.label}
-                    </Link>
-                  );
-                })}
+                  })}
               </nav>
+              <div className="mt-4 border-t border-[var(--border)] pt-4">
+                {loading ? null : user ? (
+                  <button
+                    onClick={signOut}
+                    className="w-full rounded-xl border border-[var(--border)] px-4 py-2.5 text-sm text-[var(--foreground)]"
+                  >
+                    Sign out
+                  </button>
+                ) : (
+                  <button
+                    onClick={signInWithGoogle}
+                    className="w-full rounded-xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] px-4 py-2.5 text-sm font-semibold text-[var(--foreground)]"
+                  >
+                    <div className="inline-flex items-center gap-2">
+                      <LogIn className="h-4 w-4" />
+                      Sign in with Google
+                    </div>
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
