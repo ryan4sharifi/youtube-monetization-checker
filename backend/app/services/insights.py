@@ -26,9 +26,17 @@ def build_insights(channel: dict) -> dict:
     else:
         business_potential = "early"
 
+    # pass-through analytics metrics if present on channel
+    uploads_last_30d = channel.get("uploads_last_30d")
+    avg_views_per_video = channel.get("avg_views_per_video")
+
     return {
         "channel_size": channel_size,
         "upload_strength": upload_strength,
         "activity_level": "estimated",
         "business_potential": business_potential,
+
+        # include metrics for frontend
+        "uploads_last_30d": uploads_last_30d,
+        "avg_views_per_video": avg_views_per_video,
     }

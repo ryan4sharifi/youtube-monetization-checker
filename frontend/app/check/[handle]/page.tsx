@@ -57,6 +57,8 @@ type CheckResponse = {
     upload_strength: string;
     activity_level: string;
     business_potential: string;
+    uploads_last_30d?: number | null;
+    avg_views_per_video?: number | null;
   };
 };
 
@@ -171,6 +173,7 @@ export default async function CheckPage({ params }: PageProps) {
   const handle = normalizeHandle(rawHandle);
   const displayHandle = getDisplayLabel(handle);
   const data = await getChannelData(handle);
+
   const canonicalUrl = buildCanonicalUrl(handle);
 
   const relatedGuides = guides
@@ -276,8 +279,8 @@ export default async function CheckPage({ params }: PageProps) {
                     score: data.score.confidence,
                     subscribers: data.channel.subscriber_count ?? undefined,
                     totalViews: data.channel.view_count ?? undefined,
-                    uploadsLast30d: undefined,
-                    avgViewsPerVideo: undefined,
+                    uploadsLast30d: data.insights?.uploads_last_30d ?? undefined,
+                    avgViewsPerVideo: data.insights?.avg_views_per_video ?? undefined,
                   }}
                 />
                 <EarningsEstimateCard earnings={data.earnings} />
@@ -296,8 +299,8 @@ export default async function CheckPage({ params }: PageProps) {
                   data={{
                     score: data.score.confidence,
                     subscribers: data.channel.subscriber_count ?? undefined,
-                    uploadsLast30d: undefined,
-                    avgViewsPerVideo: undefined,
+                    uploadsLast30d: data.insights?.uploads_last_30d ?? undefined,
+                    avgViewsPerVideo: data.insights?.avg_views_per_video ?? undefined,
                     isLikelyMonetized: data.score.status === "possibly_monetized",
                   }}
                 />

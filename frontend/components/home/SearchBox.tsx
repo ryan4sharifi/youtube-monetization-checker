@@ -1,4 +1,4 @@
- "use client";
+"use client";
 
 import { useState, useCallback } from "react";
 import { Search } from "lucide-react";
@@ -29,8 +29,8 @@ export default function SearchBox({ onSearch, loading }: Props) {
             type="search"
             enterKeyHint="search"
             autoComplete="off"
-            aria-label="YouTube channel handle or URL"
-            placeholder="Paste a YouTube handle or channel URL"
+            aria-label="YouTube channel name, handle, username, or URL"
+            placeholder="Enter a YouTube channel — try: WWE · @wwe · youtube.com/@wwe"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="w-full h-11 rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] px-5 pr-10 text-[15px] text-[var(--foreground)] placeholder:text-[var(--foreground-muted)] focus:outline-none focus:border-[var(--brand)] focus:ring-2 focus:ring-[color:color-mix(in_srgb,var(--brand)_12%,transparent)] transition-all duration-200"
@@ -59,7 +59,7 @@ export default function SearchBox({ onSearch, loading }: Props) {
       </form>
 
       <p className="mt-2 text-xs text-[var(--foreground-muted)]">
-        Supports @handles, channel URLs, and usernames
+        Supports channel names, @handles, usernames, and full channel URLs
       </p>
     </div>
   );

@@ -1,10 +1,9 @@
-
-
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import GuideHero from "@/components/guides/GuideHero";
+import GuideCard from "@/components/guides/GuideCard";
 import { ArrowRight } from "lucide-react";
 import { normalizeHandle } from "@/lib/youtube";
 import { useSearchLimit } from "@/hooks/useSearchLimit";
@@ -57,24 +56,39 @@ export default function CompareClient({ trendingChannels }: Props) {
           />
 
           <div className="group rounded-[28px] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--card)_94%,transparent)] p-6 md:p-8 shadow-[0_16px_50px_rgba(15,23,42,0.08)] backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--border-strong)] hover:shadow-[0_22px_60px_rgba(15,23,42,0.12)]">
-            <div className="mb-5 text-sm font-medium text-[var(--foreground-muted)]">
-              Enter channel handles
+            <div className="mb-4 space-y-1">
+              <div className="text-sm font-semibold text-[var(--foreground)]">
+                Enter two YouTube channels
+              </div>
+              <div className="text-sm text-[var(--foreground-muted)]">
+                Compare subscribers, total views, upload activity, and estimated earnings side by side.
+              </div>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2 md:gap-5">
-              <input
-                value={channel1}
-                onChange={(e) => setChannel1(e.target.value)}
-                placeholder="@mrbeast or youtube.com/@mrbeast"
-                className="w-full rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] px-4 py-3.5 text-[15px] outline-none transition-all duration-200 placeholder:text-[var(--foreground-muted)] focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--brand)]/10"
-              />
+              <div className="space-y-1.5">
+                <div className="text-xs font-medium text-[var(--foreground-muted)]">Channel 1</div>
+                <input
+                  value={channel1}
+                  onChange={(e) => setChannel1(e.target.value)}
+                  placeholder="e.g. wwe, @wwe, WWE, or youtube.com/@wwe"
+                  className="w-full rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] px-4 py-3.5 text-[15px] outline-none transition-all duration-200 placeholder:text-[var(--foreground-muted)] focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--brand)]/10"
+                />
+              </div>
 
-              <input
-                value={channel2}
-                onChange={(e) => setChannel2(e.target.value)}
-                placeholder="@pewdiepie or youtube.com/@pewdiepie"
-                className="w-full rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] px-4 py-3.5 text-[15px] outline-none transition-all duration-200 placeholder:text-[var(--foreground-muted)] focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--brand)]/10"
-              />
+              <div className="space-y-1.5">
+                <div className="text-xs font-medium text-[var(--foreground-muted)]">Channel 2</div>
+                <input
+                  value={channel2}
+                  onChange={(e) => setChannel2(e.target.value)}
+                  placeholder="e.g. wwe, @wwe, WWE, or youtube.com/@wwe"
+                  className="w-full rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] px-4 py-3.5 text-[15px] outline-none transition-all duration-200 placeholder:text-[var(--foreground-muted)] focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--brand)]/10"
+                />
+              </div>
+            </div>
+
+            <div className="mt-4 text-xs text-[var(--foreground-muted)]">
+              Tip: You can paste a full YouTube URL or just the @handle.
             </div>
 
             <div className="mt-7 flex justify-end">
@@ -86,6 +100,38 @@ export default function CompareClient({ trendingChannels }: Props) {
                 Compare
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1.5" />
               </button>
+            </div>
+          </div>
+
+          <div className="pt-10 md:pt-12 space-y-4">
+            <div className="text-sm font-semibold text-[var(--foreground)]">
+              Learn more about YouTube monetization
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              <GuideCard
+                title="How much does YouTube pay per 1M views?"
+                description="Understand RPM ranges, ad revenue, and what creators actually earn from views."
+                href="/guides/how-much-does-1-million-views-pay-on-youtube"
+              />
+
+              <GuideCard
+                title="How many subscribers do you need to get monetized?"
+                description="Learn the exact requirements for YouTube monetization and how long it takes."
+                href="/guides/how-many-subscribers-to-get-monetized-on-youtube"
+              />
+
+              <GuideCard
+                title="How long does it take to get monetized?"
+                description="See realistic timelines and strategies to reach monetization faster."
+                href="/guides/how-long-does-it-take-to-get-monetized-on-youtube"
+              />
+
+              <GuideCard
+                title="Best YouTube niches for high RPM"
+                description="Discover niches that generate higher ad revenue and long-term growth."
+                href="/guides/best-youtube-niches-for-high-rpm"
+              />
             </div>
           </div>
 

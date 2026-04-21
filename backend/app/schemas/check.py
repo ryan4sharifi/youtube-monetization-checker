@@ -43,6 +43,11 @@ class InsightsPreview(BaseModel):
     upload_strength: str
     activity_level: str
     business_potential: str
+    uploads_last_30d: Optional[int] = None
+    avg_views_per_video: Optional[int] = None
+
+    class Config:
+        extra = "allow"
 
 
 class CheckResponse(BaseModel):

@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -91,7 +89,7 @@ export default function SaveChannelButton({ handle }: Props) {
     return (
       <button
         disabled
-        className="inline-flex h-10 items-center gap-2 rounded-full border border-[var(--border)] px-4 text-sm text-[var(--muted-foreground)]"
+        className="inline-flex h-9 sm:h-10 items-center gap-1.5 sm:gap-2 rounded-full border border-[var(--border)] px-3 sm:px-4 text-xs sm:text-sm whitespace-nowrap text-[var(--muted-foreground)]"
       >
         <Bookmark className="h-4 w-4" />
         Sign in to save
@@ -105,23 +103,26 @@ export default function SaveChannelButton({ handle }: Props) {
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
       disabled={loading}
-      className={`inline-flex h-10 items-center gap-2 rounded-full px-4 text-sm font-medium border border-[var(--border)] transition-all
+      className={`group inline-flex h-9 sm:h-10 items-center gap-1.5 sm:gap-2 rounded-full px-3 sm:px-4 text-xs sm:text-sm font-medium border border-[var(--border)]
+        backdrop-blur-md transition-all duration-200 ease-out
+        shadow-sm hover:shadow-md active:scale-[0.98]
         ${
           saved
-            ? "bg-[color:color-mix(in_srgb,var(--background)_85%,transparent)] text-[var(--foreground)]"
-            : "text-[var(--foreground)] hover:bg-[var(--background)]"
+            ? "bg-[color:color-mix(in_srgb,var(--background)_80%,transparent)] text-[var(--foreground)]"
+            : "text-[var(--foreground)] hover:bg-[color:color-mix(in_srgb,var(--background)_92%,transparent)]"
         }
-        ${loading ? "opacity-70 cursor-not-allowed" : ""}
+        ${loading ? "opacity-60 cursor-not-allowed" : "cursor-pointer"}
+        whitespace-nowrap
       `}
     >
       {saved ? (
         <>
-          <BookmarkCheck className="h-4 w-4" />
+          <BookmarkCheck className="h-4 w-4 transition-transform duration-200 group-hover:scale-110" />
           <span>{hovering ? "Remove" : "Saved"}</span>
         </>
       ) : (
         <>
-          <Bookmark className="h-4 w-4" />
+          <Bookmark className="h-4 w-4 transition-transform duration-200 group-hover:scale-110" />
           <span>Save channel</span>
         </>
       )}

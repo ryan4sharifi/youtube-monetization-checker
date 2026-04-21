@@ -9,6 +9,41 @@ from app.services.db_service import (
 from app.services.earnings import estimate_earnings
 from app.services.insights import build_insights
 
+import time
+import json
+
+# Optional Redis cache (production-ready)
+try:
+    import redis
+    REDIS_AVAILABLE = True
+    redis_client = redis.Redis(host="localhost", port=6379, db=0, decode_responses=True)
+except Exception:
+    REDIS_AVAILABLE = False
+    redis_client = None
+
+
+def get_redis_cache(key: str):
+    if not REDIS_AVAILABLE:
+        return None
+    try:
+        value = redis_client.get(key)
+        return json.loads(value) if value else None
+    except Exception:
+        return None
+
+
+def set_redis_cache(key: str, value: dict, ttl: int = 3600):
+    if not REDIS_AVAILABLE:
+        return
+    try:
+        redis_client.setex(key, ttl, json.dumps(value))
+    except Exception:
+        pass
+
+
+CACHE = {}
+CACHE_TTL = 3600  # 1 hour
+
 
 def build_real_score(channel_data: dict) -> dict:
     subs = channel_data.get("subscriber_count") or 0
@@ -55,14 +90,50 @@ def build_real_score(channel_data: dict) -> dict:
 
 
 def process_check_query(query: str) -> dict:
+    cache_key = query.lower().strip()
+
+    # 1. Check Redis cache (shared across instances)
+    redis_cached = get_redis_cache(cache_key)
+    if redis_cached:
+        return redis_cached
+
+    # 2. Fallback to in-memory cache
+    cached = CACHE.get(cache_key)
+    if cached:
+        if time.time() - cached["timestamp"] < CACHE_TTL:
+            return cached["data"]
+
     detected_type = detect_query_type(query)
     normalized_query = normalize_query(query)
 
     channel = resolve_channel(normalized_query)
     channel_data = transform_channel_data(channel)
+
+    # 3. Check cache by canonical channel_id (unifies all inputs)
+    channel_cache_key = f"channel:{channel_data['youtube_channel_id']}"
+
+    redis_channel_cached = get_redis_cache(channel_cache_key)
+    if redis_channel_cached:
+        # also hydrate query cache for faster future lookups
+        set_redis_cache(cache_key, redis_channel_cached, CACHE_TTL)
+        return redis_channel_cached
+
     score = build_real_score(channel_data)
     earnings = estimate_earnings(channel_data)
     insights = build_insights(channel_data)
+
+    # Attach additional computed metrics (ensure they are always present)
+    uploads_last_30d = channel_data.get("uploads_last_30d", None)
+    avg_views_per_video = channel_data.get("avg_views_per_video", None)
+
+    # Ensure insights is always a dict
+    if not isinstance(insights, dict):
+        insights = {}
+
+    # Explicitly attach metrics
+    insights["uploads_last_30d"] = uploads_last_30d
+    insights["avg_views_per_video"] = avg_views_per_video
+
 
     saved_channel = upsert_channel(channel_data)
     snapshot = insert_channel_snapshot(saved_channel["id"], channel_data)
@@ -74,7 +145,7 @@ def process_check_query(query: str) -> dict:
         resolved_youtube_channel_id=channel_data["youtube_channel_id"],
     )
 
-    return {
+    result = {
         "channel": {
             "input_query": query,
             "normalized_query": normalized_query,
@@ -91,3 +162,16 @@ def process_check_query(query: str) -> dict:
         "earnings": earnings,
         "insights": insights,
     }
+    # Save to in-memory cache (query key)
+    CACHE[cache_key] = {
+        "data": result,
+        "timestamp": time.time(),
+    }
+
+    # Save to Redis (query key)
+    set_redis_cache(cache_key, result, CACHE_TTL)
+
+    # Save to Redis (channel key - canonical cache)
+    set_redis_cache(channel_cache_key, result, CACHE_TTL)
+
+    return result

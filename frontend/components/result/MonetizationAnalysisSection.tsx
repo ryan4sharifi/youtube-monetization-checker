@@ -5,8 +5,14 @@ interface AnalysisData {
   score?: number; // 0–100
   subscribers?: number;
   totalViews?: number;
+
+  // camelCase (frontend)
   uploadsLast30d?: number;
   avgViewsPerVideo?: number;
+
+  // snake_case (backend fallback)
+  uploads_last_30d?: number;
+  avg_views_per_video?: number;
 }
 
 interface Props {
@@ -28,6 +34,13 @@ function scoreLabel(score?: number) {
 
 export default function MonetizationAnalysisSection({ data }: Props) {
   const label = scoreLabel(data?.score);
+
+  // normalize backend + frontend fields
+  const uploadsLast30d =
+    data?.uploadsLast30d ?? data?.uploads_last_30d;
+
+  const avgViewsPerVideo =
+    data?.avgViewsPerVideo ?? data?.avg_views_per_video;
 
   return (
     <section className="w-full">
@@ -73,14 +86,14 @@ export default function MonetizationAnalysisSection({ data }: Props) {
             <div className="rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-4">
               <p className="text-xs text-[var(--foreground-muted)]">Uploads (30d)</p>
               <p className="mt-1.5 text-[15px] sm:text-lg font-semibold tracking-[-0.01em] text-[var(--foreground)] break-all leading-tight">
-                {formatNumber(data?.uploadsLast30d)}
+                {formatNumber(uploadsLast30d)}
               </p>
             </div>
 
             <div className="rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-4">
               <p className="text-xs text-[var(--foreground-muted)]">Avg Views / Video</p>
               <p className="mt-1.5 text-[15px] sm:text-lg font-semibold tracking-[-0.01em] text-[var(--foreground)] break-all leading-tight">
-                {formatNumber(data?.avgViewsPerVideo)}
+                {formatNumber(avgViewsPerVideo)}
               </p>
             </div>
           </div>
