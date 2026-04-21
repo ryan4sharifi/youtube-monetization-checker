@@ -6,10 +6,10 @@ import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { Bookmark, BookmarkCheck } from "lucide-react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 if (!API_URL) {
-  console.error("NEXT_PUBLIC_API_URL is not defined");
+  console.error("NEXT_PUBLIC_API_BASE_URL is not defined");
 }
 
 type Props = {
@@ -31,7 +31,7 @@ export default function SaveChannelButton({ handle }: Props) {
   // Check if already saved
   useEffect(() => {
     const checkSaved = async () => {
-      if (!user?.id) return;
+      if (!user?.id || !API_URL || !normalizedHandle) return;
 
       try {
         const res = await fetch(
@@ -55,7 +55,7 @@ export default function SaveChannelButton({ handle }: Props) {
   }, [user?.id, normalizedHandle]);
 
   const toggleSave = async () => {
-    if (!user?.id || loading) return;
+    if (!user?.id || loading || !API_URL || !normalizedHandle) return;
 
     setLoading(true);
 

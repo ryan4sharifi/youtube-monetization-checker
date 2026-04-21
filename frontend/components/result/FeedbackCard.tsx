@@ -4,9 +4,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { Check, ThumbsUp, ThumbsDown, Gauge } from "lucide-react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 if (!API_URL) {
-  console.error("NEXT_PUBLIC_API_URL is not defined");
+  console.error("NEXT_PUBLIC_API_BASE_URL is not defined");
 }
 
 type Props = {
@@ -46,6 +46,7 @@ export default function FeedbackCard({ handle }: Props) {
     let cancelled = false;
 
     const fetchAll = async () => {
+      if (!API_URL || !normalizedHandle) return;
       // fetch user-specific feedback
       if (user?.id) {
         try {
@@ -93,6 +94,7 @@ export default function FeedbackCard({ handle }: Props) {
   const submitFeedback = async (rating: Rating) => {
     if (!user?.id) return;
     if (loading) return;
+    if (!API_URL || !normalizedHandle) return;
 
     setError(null);
     setSelected(rating);

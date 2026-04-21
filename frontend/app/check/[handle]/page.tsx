@@ -15,13 +15,16 @@ import SaveChannelButton from "@/components/result/SaveChannelButton";
 import { siteConfig } from "@/constants/site";
 import { guides } from "@/lib/guides";
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL!;
+
+if (!API_BASE) {
+  console.error("NEXT_PUBLIC_API_BASE_URL is not defined");
+}
 
 type PageProps = {
-  params: Promise<{
+  params: {
     handle: string;
-  }>;
+  };
 };
 
 type CheckResponse = {
@@ -131,7 +134,7 @@ function buildCanonicalUrl(handle: string) {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { handle: rawHandle } = await params;
+  const { handle: rawHandle } = params;
   const handle = normalizeHandle(rawHandle);
   const canonicalUrl = buildCanonicalUrl(handle);
 
@@ -159,7 +162,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function CheckPage({ params }: PageProps) {
-  const { handle: rawHandle } = await params;
+  const { handle: rawHandle } = params;
+  if (!rawHandle) {
+    console.error("Missing handle in params");
+    return null;
+  }
+
   const handle = normalizeHandle(rawHandle);
   const displayHandle = getDisplayLabel(handle);
   const data = await getChannelData(handle);
