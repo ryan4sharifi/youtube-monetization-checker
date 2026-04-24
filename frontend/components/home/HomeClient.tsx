@@ -18,7 +18,11 @@ export default function HomeClient({ featuredChannels = [] }: Props) {
 
   const handleSearch = (query: string) => {
     if (!query) return;
-    window.location.href = `/check/${query.replace("@", "")}`;
+
+    const cleaned = query.replace(/^@/, "");
+    const encoded = encodeURIComponent(cleaned);
+
+    window.location.href = `/check/${encoded}`;
   };
 
   return (
