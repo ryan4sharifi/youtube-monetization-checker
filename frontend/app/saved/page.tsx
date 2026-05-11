@@ -1,4 +1,14 @@
+import type { Metadata } from "next";
 import SavedChannelsList from "@/components/saved/SavedChannelsList";
+import { siteConfig } from "@/constants/site";
+
+export const metadata: Metadata = {
+  title: `Saved Channels | ${siteConfig.shortName}`,
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function SavedPage() {
   return (

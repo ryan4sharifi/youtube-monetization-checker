@@ -1,16 +1,20 @@
 
 
 import type { Metadata } from "next";
+import { siteConfig } from "@/constants/site";
 import GuideHero from "@/components/guides/GuideHero";
 import GuideSection from "@/components/guides/GuideSection";
 import GuideList from "@/components/guides/GuideList";
 import GuideCTA from "@/components/guides/GuideCTA";
 import { DollarSign } from "lucide-react";
 
+const pageUrl = `${siteConfig.url}/guides/best-youtube-niches-for-high-rpm`;
+
 export const metadata: Metadata = {
   title: "Best YouTube Niches for High RPM (Highest Paying Topics)",
   description:
     "Discover the highest paying YouTube niches and why some channels earn significantly more per view than others.",
+  alternates: { canonical: pageUrl },
 };
 
 export default function Page() {

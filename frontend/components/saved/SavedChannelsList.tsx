@@ -11,54 +11,85 @@ if (!API_URL) {
   console.error("NEXT_PUBLIC_API_URL is not defined");
 }
 
-export default function SavedChannelsList() {
-  const { user } = useAuth();
+type SavedChannel = {
+  id: string;
+  channel_handle: string;
+};
 
-  const [channels, setChannels] = useState<any[]>([]);
-  const [channelDataMap, setChannelDataMap] = useState<Record<string, any>>({});
+type ChannelDetails = {
+  title: string;
+  youtube_channel_id: string;
+  thumbnail_url?: string | null;
+  subscriber_count?: number | null;
+  view_count?: number | null;
+  video_count?: number | null;
+};
+
+type CheckApiResponse = {
+  channel?: ChannelDetails | null;
+};
+
+export default function SavedChannelsList() {
+  const { user, session } = useAuth();
+  const accessToken = session?.access_token;
+
+  const [channels, setChannels] = useState<SavedChannel[]>([]);
+  const [channelDataMap, setChannelDataMap] = useState<Record<string, ChannelDetails>>({});
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchSaved = async () => {
-      if (!user?.id) {
+      if (!user?.id || !accessToken) {
         setLoading(false);
         return;
       }
 
+      setError(null);
+
       try {
-        const res = await fetch(
-          `${API_URL}/saved-channels?user_id=${user.id}`
-        );
+        const res = await fetch(`${API_URL}/saved-channels`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
 
         if (!res.ok) {
+          setError(
+            res.status === 429
+              ? "Saved channels are temporarily rate limited. Please try again later."
+              : "We could not load your saved channels right now."
+          );
           setLoading(false);
           return;
         }
 
-        const data = await res.json();
-        setChannels(data || []);
+        const data = (await res.json()) as SavedChannel[];
+        const savedChannels = Array.isArray(data) ? data : [];
+        setChannels(savedChannels);
 
         // Fetch real channel data for each saved channel
         try {
           const results = await Promise.all(
-            (data || []).map(async (c: any) => {
+            savedChannels.map(async (c): Promise<[string, ChannelDetails | null]> => {
               const handle = c.channel_handle.replace(/^@/, "").toLowerCase();
               const r = await fetch(`${API_URL}/api/check`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
+                  Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({ query: handle }),
               });
 
               if (!r.ok) return [handle, null];
 
-              const json = await r.json();
+              const json = (await r.json()) as CheckApiResponse;
               return [handle, json?.channel || null];
             })
           );
 
-          const map: Record<string, any> = {};
+          const map: Record<string, ChannelDetails> = {};
           results.forEach(([handle, ch]) => {
             if (ch) map[handle] = ch;
           });
@@ -69,13 +100,14 @@ export default function SavedChannelsList() {
         }
       } catch (err) {
         console.error("Saved channels fetch error", err);
+        setError("We could not load your saved channels right now.");
       } finally {
         setLoading(false);
       }
     };
 
     fetchSaved();
-  }, [user?.id]);
+  }, [accessToken, user?.id]);
 
   if (!user) {
     return (
@@ -94,6 +126,14 @@ export default function SavedChannelsList() {
             className="h-40 animate-pulse rounded-xl border border-[var(--border)] bg-[var(--background-elevated)]"
           />
         ))}
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="mt-10 rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] p-8 text-center">
+        <p className="text-sm text-[var(--muted-foreground)]">{error}</p>
       </div>
     );
   }

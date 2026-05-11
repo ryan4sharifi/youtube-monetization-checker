@@ -42,6 +42,12 @@ export const guides = [
       "A complete guide to YouTube Partner Program eligibility and approval factors.",
   },
   {
+    slug: "why-subscriber-count-alone-does-not-prove-monetization",
+    title: "Why Subscriber Count Alone Does Not Prove Monetization",
+    description:
+      "Learn why subscribers are only one public signal and what other data matters when estimating monetization.",
+  },
+  {
     slug: "how-youtube-monetization-works",
     title: "How YouTube Monetization Actually Works",
     description:

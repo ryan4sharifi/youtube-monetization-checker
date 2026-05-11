@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Eye, CircleHelp } from "lucide-react";
+import { Eye } from "lucide-react";
 import { siteConfig } from "@/constants/site";
 import GuideHero from "@/components/guides/GuideHero";
 import GuideSection from "@/components/guides/GuideSection";
 import GuideList from "@/components/guides/GuideList";
 import GuideCTA from "@/components/guides/GuideCTA";
 
-const pageUrl = `${siteConfig.url}/can-you-see-if-a-youtube-channel-is-monetized`;
+const pageUrl = `${siteConfig.url}/guides/can-you-see-if-a-youtube-channel-is-monetized`;
 
 export const metadata: Metadata = {
   title: `Can You See If a YouTube Channel Is Monetized? | ${siteConfig.name}`,
@@ -67,6 +67,35 @@ export default function Page() {
             />
           </GuideSection>
 
+          <GuideSection title="What public data can and cannot tell you">
+            <div className="overflow-x-auto rounded-2xl border border-[var(--border)]">
+              <table className="min-w-full divide-y divide-[var(--border)] text-sm">
+                <thead className="bg-[var(--background-elevated)] text-left text-xs uppercase tracking-[0.12em] text-[var(--foreground-muted)]">
+                  <tr>
+                    <th className="px-4 py-3 font-medium">Public clue</th>
+                    <th className="px-4 py-3 font-medium">Useful for</th>
+                    <th className="px-4 py-3 font-medium">Cannot prove</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[var(--border)] bg-[var(--card)]">
+                  {[
+                    ["Subscribers", "Eligibility context", "Official approval"],
+                    ["Views", "Audience demand", "Actual revenue"],
+                    ["Upload activity", "Current channel momentum", "Policy standing"],
+                    ["Ads appearing", "Possible ad inventory", "Creator is receiving revenue"],
+                    ["Channel metadata", "Identity and public profile", "Private account setup"],
+                  ].map(([clue, useful, cannot]) => (
+                    <tr key={clue}>
+                      <td className="px-4 py-3 font-medium text-[var(--foreground)]">{clue}</td>
+                      <td className="px-4 py-3 text-[var(--foreground-muted)]">{useful}</td>
+                      <td className="px-4 py-3 text-[var(--foreground-muted)]">{cannot}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </GuideSection>
+
           <GuideSection title="The biggest mistake people make">
             <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
               Most people look at just one metric — usually subscriber count — and assume a channel is monetized. That’s not how it works.
@@ -84,6 +113,18 @@ export default function Page() {
           <GuideSection title="Better way: use a checker">
             <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
               Instead of trying to manually analyze all these signals, you can use {siteConfig.name} to instantly evaluate a channel’s likelihood of being monetized. It combines multiple data points into a single, easy-to-understand estimate.
+            </p>
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              The estimate is still not official YouTube confirmation. For a
+              transparent explanation of the public signals and RPM assumptions,
+              read the{" "}
+              <Link
+                href="/methodology"
+                className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+              >
+                methodology
+              </Link>
+              .
             </p>
           </GuideSection>
 

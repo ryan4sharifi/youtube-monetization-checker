@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { siteConfig } from "@/constants/site";
 import GuideHero from "@/components/guides/GuideHero";
 import GuideSection from "@/components/guides/GuideSection";
@@ -115,6 +116,42 @@ export default function HowToTellIfChannelIsMonetizedPage() {
             />
           </GuideSection>
 
+          <GuideSection title="Signal strength: what to trust most">
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              The strongest estimates come from combining several independent
+              signals. A channel with one impressive number can still be
+              misleading, while a channel with steady strength across multiple
+              areas is easier to evaluate.
+            </p>
+
+            <div className="overflow-x-auto rounded-2xl border border-[var(--border)]">
+              <table className="min-w-full divide-y divide-[var(--border)] text-sm">
+                <thead className="bg-[var(--background-elevated)] text-left text-xs uppercase tracking-[0.12em] text-[var(--foreground-muted)]">
+                  <tr>
+                    <th className="px-4 py-3 font-medium">Signal</th>
+                    <th className="px-4 py-3 font-medium">Why it matters</th>
+                    <th className="px-4 py-3 font-medium">How to read it</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[var(--border)] bg-[var(--card)]">
+                  {[
+                    ["Subscribers", "Shows scale and eligibility context", "Useful, but weak without views and activity"],
+                    ["Total views", "Shows lifetime audience demand", "Stronger when paired with recent uploads"],
+                    ["Video count", "Shows publishing depth", "A deep library can produce long-tail views"],
+                    ["Recent uploads", "Shows current activity", "Inactive channels are harder to evaluate"],
+                    ["Ads observed", "Can suggest ad inventory", "Never treat ads alone as proof"],
+                  ].map(([signal, why, read]) => (
+                    <tr key={signal}>
+                      <td className="px-4 py-3 font-medium text-[var(--foreground)]">{signal}</td>
+                      <td className="px-4 py-3 text-[var(--foreground-muted)]">{why}</td>
+                      <td className="px-4 py-3 text-[var(--foreground-muted)]">{read}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </GuideSection>
+
           <GuideSection title="Signals that are weaker than people think">
             <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
               These are commonly misunderstood signals that can be misleading when viewed in isolation.
@@ -145,9 +182,37 @@ export default function HowToTellIfChannelIsMonetizedPage() {
             </p>
           </GuideSection>
 
+          <GuideSection title="Example: why one metric is not enough">
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              Imagine two channels with 100,000 subscribers. Channel A has 400
+              videos, steady uploads, and most recent videos reach 20,000 views.
+              Channel B has 12 old videos, no uploads in a year, and most views
+              came from one viral clip. Channel A is much easier to classify as
+              commercially active, even though both channels have the same
+              subscriber count.
+            </p>
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              This is why IsMonetized looks at public signals together. You can
+              read the full scoring approach on the{" "}
+              <Link
+                href="/methodology"
+                className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+              >
+                methodology page
+              </Link>
+              .
+            </p>
+          </GuideSection>
+
           <GuideSection title="Why no public method is perfect">
             <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
               Even the best estimates have limitations. YouTube’s monetization decisions involve internal reviews, policy checks, and account-level factors that are not publicly visible.
+            </p>
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              IsMonetized is independent and is not affiliated with, endorsed by,
+              sponsored by, or officially connected to YouTube, Google, or
+              Alphabet. The checker estimates likelihood from public signals; it
+              does not confirm official YouTube Partner Program status.
             </p>
           </GuideSection>
 

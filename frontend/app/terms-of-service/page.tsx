@@ -8,12 +8,12 @@ const pageUrl = `${siteConfig.url}/terms-of-service`;
 export const metadata: Metadata = {
   title: `Terms of Service | ${siteConfig.name}`,
   description:
-    "Read the terms and conditions for using this YouTube monetization checker.",
+    "Read the terms for using IsMonetized, including estimate limits, public-data usage, and no-affiliation disclosures.",
   alternates: { canonical: pageUrl },
   openGraph: {
     title: `Terms of Service | ${siteConfig.name}`,
     description:
-      "Read the terms and conditions for using this YouTube monetization checker.",
+      "Read the terms for using IsMonetized, including estimate limits, public-data usage, and no-affiliation disclosures.",
     url: pageUrl,
     siteName: siteConfig.name,
     images: [siteConfig.ogImage],
@@ -41,8 +41,9 @@ export default function TermsPage() {
             </h1>
 
             <p className="max-w-2xl text-sm leading-6 text-[var(--foreground-muted)] md:text-base">
-              By using {siteConfig.name}, you agree to the following terms and
-              conditions.
+              By using {siteConfig.shortName}, you agree to these terms. The
+              service is designed for public-signal research and informational
+              estimates.
             </p>
           </div>
 
@@ -51,43 +52,101 @@ export default function TermsPage() {
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
               <h2 className="text-base font-semibold">Use of the service</h2>
               <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
-                This tool is provided for informational purposes only. You agree
-                to use the service responsibly and not for any unlawful or
-                harmful activities.
+                {siteConfig.shortName} helps users research public YouTube
+                channels and estimate whether a channel may be monetized. You
+                agree to use the service responsibly, only for lawful purposes,
+                and without attempting to disrupt, scrape, abuse, or reverse
+                engineer the site.
               </p>
             </div>
 
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
-              <h2 className="text-base font-semibold">No guarantees</h2>
+              <h2 className="text-base font-semibold">Estimates, not official confirmation</h2>
               <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
-                We do not guarantee the accuracy, completeness, or reliability of
-                the results. Estimates are based on public data and should not be
-                considered definitive.
+                Monetization status shown by {siteConfig.shortName} is
+                estimated from public signals. It is not verified, official, or
+                confirmed by YouTube, Google, Alphabet, AdSense, or the YouTube
+                Partner Program.
               </p>
             </div>
 
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
-              <h2 className="text-base font-semibold">Limitation of liability</h2>
+              <h2 className="text-base font-semibold">No access to private account data</h2>
               <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
-                We are not liable for any decisions, losses, or damages resulting
-                from the use of this tool.
+                {siteConfig.shortName} does not have access to private YouTube
+                Studio data, AdSense data, YouTube Partner Program records,
+                creator revenue accounts, watch-time dashboards, or internal
+                platform decisions.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
+              <h2 className="text-base font-semibold">Earnings and performance estimates</h2>
+              <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
+                Earnings, RPM, CPM, view, subscriber, growth, watch-time,
+                eligibility, and channel-performance figures are informational
+                estimates only. We do not guarantee monetization status, revenue,
+                RPM, CPM, views, subscribers, growth, watch time, eligibility, or
+                future channel performance.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
+              <h2 className="text-base font-semibold">Public data limitations</h2>
+              <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
+                Results depend on publicly available YouTube information and
+                other visible signals. Public signals may be incomplete, delayed,
+                hidden, unavailable, outdated, or inaccurate, and those limits
+                can affect the analysis.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
+              <h2 className="text-base font-semibold">Independent product</h2>
+              <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
+                {siteConfig.shortName} is independent and is not affiliated
+                with, endorsed by, sponsored by, or officially connected to
+                YouTube, Google, or Alphabet.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
+              <h2 className="text-base font-semibold">Decisions and responsibility</h2>
+              <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
+                Do not make financial, business, legal, platform, partnership,
+                investment, hiring, or content-strategy decisions based only on
+                {siteConfig.shortName} estimates. Use the results as one
+                research input and verify important decisions with official
+                sources or professional guidance when needed.
               </p>
             </div>
 
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
               <h2 className="text-base font-semibold">Third-party services</h2>
               <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
-                This site may rely on third-party data sources or APIs. We are
-                not responsible for the availability or accuracy of these
-                services.
+                The site may rely on third-party services, including public
+                YouTube data sources, hosting providers, analytics providers, and
+                advertising providers. Those services operate under their own
+                terms and policies.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
+              <h2 className="text-base font-semibold">Limitation of liability</h2>
+              <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
+                To the fullest extent permitted by law, {siteConfig.shortName}
+                is not responsible for losses, claims, or damages that result
+                from use of the site, reliance on estimates, unavailable data, or
+                changes to public YouTube information.
               </p>
             </div>
 
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
               <h2 className="text-base font-semibold">Changes to terms</h2>
               <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
-                These terms may be updated at any time. Continued use of the
-                service means you accept any changes.
+                These terms may be updated as the product, data sources, or
+                policies change. Continued use of the service means you accept
+                the latest version posted on this page.
               </p>
             </div>
           </div>

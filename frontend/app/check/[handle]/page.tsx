@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import ChannelCard from "@/components/result/ChannelCard";
 import ScoreCard from "@/components/result/ScoreCard";
 import SignalsCard from "@/components/result/SignalsCard";
@@ -14,6 +15,13 @@ import FeedbackCard from "@/components/result/FeedbackCard";
 import SaveChannelButton from "@/components/result/SaveChannelButton";
 import { siteConfig } from "@/constants/site";
 import { guides } from "@/lib/guides";
+import {
+  buildCheckCanonicalUrl,
+  buildCheckPath,
+  getCanonicalHandle,
+  isInvalidCheckInput,
+  safeDecodeURIComponent,
+} from "@/lib/channelRoutes";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
@@ -28,9 +36,13 @@ type PageProps = {
 };
 
 type CheckResponse = {
+  success?: boolean;
   channel: {
     title: string;
     youtube_channel_id: string;
+    input_query?: string | null;
+    normalized_query?: string | null;
+    custom_url?: string | null;
     thumbnail_url?: string | null;
     subscriber_count?: number | null;
     view_count?: number | null;
@@ -63,6 +75,8 @@ type CheckResponse = {
 };
 
 async function getChannelData(handle: string): Promise<CheckResponse | null> {
+  if (!API_BASE) return null;
+
   try {
     const res = await fetch(`${API_BASE}/api/check`, {
       method: "POST",
@@ -81,42 +95,49 @@ async function getChannelData(handle: string): Promise<CheckResponse | null> {
   }
 }
 
-function normalizeHandle(rawHandle: string) {
-  const decoded = decodeURIComponent(rawHandle).trim();
-
-  const isUrl =
-    decoded.startsWith("http://") ||
-    decoded.startsWith("https://") ||
-    decoded.includes("youtube.com/") ||
-    decoded.includes("youtu.be/");
-
-  if (isUrl) return decoded;
-  if (decoded.startsWith("@")) return decoded;
-
-  return `@${decoded}`;
+function getCanonicalHandleForResult(data: CheckResponse | null, input: string) {
+  return (
+    getCanonicalHandle(data?.channel.custom_url) ??
+    getCanonicalHandle(data?.channel.normalized_query) ??
+    getCanonicalHandle(data?.channel.input_query) ??
+    getCanonicalHandle(input)
+  );
 }
 
-function getDisplayLabel(input: string) {
-  try {
-    const isUrl =
-      input.startsWith("http://") ||
-      input.startsWith("https://") ||
-      input.includes("youtube.com/") ||
-      input.includes("youtu.be/");
+function isFiniteCount(value: number | null | undefined): value is number {
+  return typeof value === "number" && Number.isFinite(value);
+}
 
-    if (!isUrl) return input;
+function hasPositiveCount(value: number | null | undefined) {
+  return isFiniteCount(value) && value > 0;
+}
 
-    const url = new URL(input);
-    const path = url.pathname;
+function isIndexableCheckResult(data: CheckResponse | null): data is CheckResponse {
+  if (!data || data.success === false) return false;
+  if (!data.channel?.title || !data.channel.youtube_channel_id) return false;
 
-    if (path.startsWith("/@")) {
-      return path.slice(1); // returns "@FoxNews"
-    }
+  const statCount = [
+    data.channel.subscriber_count,
+    data.channel.view_count,
+    data.channel.video_count,
+  ].filter(isFiniteCount).length;
 
-    return input;
-  } catch {
-    return input;
-  }
+  const hasActivity = [
+    data.channel.subscriber_count,
+    data.channel.view_count,
+    data.channel.video_count,
+  ].some(hasPositiveCount);
+
+  const hasScore =
+    typeof data.score?.confidence === "number" &&
+    Array.isArray(data.score.positive_signals) &&
+    Array.isArray(data.score.negative_signals);
+
+  const hasEarnings =
+    typeof data.earnings?.monthly_low === "number" &&
+    typeof data.earnings.monthly_high === "number";
+
+  return statCount >= 2 && hasActivity && hasScore && hasEarnings && Boolean(data.insights);
 }
 
 function getStatusLabel(status: string) {
@@ -131,33 +152,134 @@ function getStatusLabel(status: string) {
   }
 }
 
-function buildCanonicalUrl(handle: string) {
-  return `${siteConfig.url}/check/${encodeURIComponent(handle)}`;
+function formatNumber(value?: number | null) {
+  if (value === null || value === undefined) return "unavailable";
+  return value.toLocaleString();
+}
+
+function formatCurrency(value?: number | null) {
+  if (value === null || value === undefined) return "unavailable";
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
+function getChannelSizeExplanation(size: string) {
+  switch (size) {
+    case "very_large":
+      return "This is a very large channel by public subscriber scale, so even modest RPM assumptions can translate into meaningful earnings ranges.";
+    case "large":
+      return "This channel has large-audience public signals, which usually makes monetization more plausible when views and activity are also strong.";
+    case "medium":
+      return "This channel appears established enough to evaluate, but activity and view consistency matter more than size alone.";
+    case "small":
+      return "This channel is still small by public scale, so subscriber eligibility, recent activity, and view consistency become especially important.";
+    default:
+      return "The available public data is limited, so this channel should be interpreted with extra caution.";
+  }
+}
+
+function getUploadStrengthExplanation(strength: string) {
+  switch (strength) {
+    case "strong":
+      return "A deep upload history can create recurring long-tail traffic and gives the estimate more public evidence to work with.";
+    case "moderate":
+      return "A moderate library gives some useful signal, but recent consistency still matters for current monetization potential.";
+    case "light":
+      return "A light upload history makes the estimate less certain because there is less public content performance to evaluate.";
+    default:
+      return "Upload strength is unclear from the available public data.";
+  }
+}
+
+function getBusinessPotentialExplanation(potential: string) {
+  switch (potential) {
+    case "high":
+      return "High public reach suggests meaningful commercial potential, though actual revenue still depends on niche, audience geography, and policy status.";
+    case "medium":
+      return "The channel shows some commercial potential, but earnings may vary widely depending on content category and audience quality.";
+    case "early":
+      return "The channel appears early from public signals, so earnings estimates should be treated as especially directional.";
+    default:
+      return "Commercial potential is unclear because some public signals are unavailable or weak.";
+  }
+}
+
+function getConfidenceExplanation(score: number) {
+  if (score >= 80) {
+    return "The public signals are strong and aligned, so the estimate has a higher degree of confidence. It is still not official confirmation.";
+  }
+  if (score >= 60) {
+    return "The public signals point in a positive direction, but some important private signals remain unavailable.";
+  }
+  if (score >= 40) {
+    return "The public evidence is mixed. Treat the result as a research signal rather than a firm conclusion.";
+  }
+  return "The public evidence is weak or sparse, so the result should be interpreted cautiously.";
+}
+
+function getEarningsRangeExplanation(earnings: CheckResponse["earnings"]) {
+  return `The current estimate uses about ${formatNumber(
+    earnings.estimated_monthly_views
+  )} estimated monthly views with an RPM range of $${earnings.low_rpm.toFixed(
+    2
+  )} to $${earnings.high_rpm.toFixed(2)}, producing a monthly range of ${formatCurrency(
+    earnings.monthly_low
+  )} to ${formatCurrency(earnings.monthly_high)}.`;
+}
+
+function getNoindexRobots() {
+  return {
+    index: false,
+    follow: false,
+  };
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { handle: rawHandle } = await params;
-  const handle = normalizeHandle(rawHandle);
-  const canonicalUrl = buildCanonicalUrl(handle);
+  const input = safeDecodeURIComponent(rawHandle).trim();
+  const query = getCanonicalHandle(input) ?? input;
+  const data = isInvalidCheckInput(input) ? null : await getChannelData(query);
+  const canonicalHandle = getCanonicalHandleForResult(data, input);
+  const canonicalUrl = canonicalHandle
+    ? buildCheckCanonicalUrl(canonicalHandle, siteConfig.url)
+    : `${siteConfig.url}/check/${encodeURIComponent(input)}`;
+  const displayHandle = canonicalHandle ?? input;
+  const indexable = Boolean(canonicalHandle && isIndexableCheckResult(data));
 
   return {
-    title: `Is ${handle} monetized? | ${siteConfig.name}`,
-    description: `Check if ${handle} is monetized on YouTube. View an estimate based on subscribers, views, upload history, and other public signals.`,
+    title: indexable
+      ? `Is ${displayHandle} monetized? | ${siteConfig.name}`
+      : `Channel result unavailable | ${siteConfig.name}`,
+    description: indexable
+      ? `Check if ${displayHandle} is monetized on YouTube. View an estimate based on subscribers, views, upload history, and other public signals.`
+      : "This channel result could not be indexed because the public data is unavailable, invalid, or insufficient.",
+    robots: indexable ? undefined : getNoindexRobots(),
     alternates: {
-      canonical: canonicalUrl,
+      canonical: canonicalUrl ?? undefined,
     },
     openGraph: {
-      title: `Is ${handle} monetized? | ${siteConfig.name}`,
-      description: `Estimate whether ${handle} is monetized on YouTube using public channel signals.`,
-      url: canonicalUrl,
+      title: indexable
+        ? `Is ${displayHandle} monetized? | ${siteConfig.name}`
+        : `Channel result unavailable | ${siteConfig.name}`,
+      description: indexable
+        ? `Estimate whether ${displayHandle} is monetized on YouTube using public channel signals.`
+        : "This channel result is not indexed because the public data is unavailable, invalid, or insufficient.",
+      url: canonicalUrl ?? undefined,
       siteName: siteConfig.name,
       images: [siteConfig.ogImage],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: `Is ${handle} monetized? | ${siteConfig.name}`,
-      description: `Estimate whether ${handle} is monetized on YouTube using public signals.`,
+      title: indexable
+        ? `Is ${displayHandle} monetized? | ${siteConfig.name}`
+        : `Channel result unavailable | ${siteConfig.name}`,
+      description: indexable
+        ? `Estimate whether ${displayHandle} is monetized on YouTube using public signals.`
+        : "This channel result is not indexed because the public data is unavailable, invalid, or insufficient.",
       images: [siteConfig.ogImage],
     },
   };
@@ -170,11 +292,27 @@ export default async function CheckPage({ params }: PageProps) {
     return null;
   }
 
-  const handle = normalizeHandle(rawHandle);
-  const displayHandle = getDisplayLabel(handle);
-  const data = await getChannelData(handle);
+  const input = safeDecodeURIComponent(rawHandle).trim();
+  const inputCanonicalHandle = getCanonicalHandle(input);
+  const inputCanonicalPath = inputCanonicalHandle ? buildCheckPath(inputCanonicalHandle) : null;
 
-  const canonicalUrl = buildCanonicalUrl(handle);
+  if (inputCanonicalPath && input !== inputCanonicalHandle) {
+    redirect(inputCanonicalPath);
+  }
+
+  const query = inputCanonicalHandle ?? input;
+  const data = isInvalidCheckInput(input) ? null : await getChannelData(query);
+  const canonicalHandle = getCanonicalHandleForResult(data, input);
+  const canonicalPath = canonicalHandle ? buildCheckPath(canonicalHandle) : null;
+
+  if (data && canonicalPath && input !== canonicalHandle) {
+    redirect(canonicalPath);
+  }
+
+  const displayHandle = canonicalHandle ?? inputCanonicalHandle ?? input;
+  const canonicalUrl =
+    canonicalHandle && buildCheckCanonicalUrl(canonicalHandle, siteConfig.url);
+  const indexable = Boolean(canonicalHandle && isIndexableCheckResult(data));
 
   const relatedGuides = guides
     .slice(0, 4)
@@ -244,7 +382,7 @@ export default async function CheckPage({ params }: PageProps) {
           </div>
 
           <div className="pt-1">
-            <SaveChannelButton handle={handle} />
+              <SaveChannelButton handle={displayHandle} />
           </div>
         </div>
 
@@ -284,7 +422,7 @@ export default async function CheckPage({ params }: PageProps) {
                   }}
                 />
                 <EarningsEstimateCard earnings={data.earnings} />
-                <FeedbackCard handle={handle} />
+                <FeedbackCard handle={displayHandle} />
                 <EarningsExplanationSection
                   data={{
                     monthlyLow: data.earnings.monthly_low,
@@ -323,6 +461,98 @@ export default async function CheckPage({ params }: PageProps) {
                 <p className="mt-3 leading-7 text-[var(--foreground-muted)] md:leading-8">
                   While this analysis provides a data-driven estimate, actual monetization status may vary depending on YouTube’s internal review process, content policies, and advertiser suitability.
                 </p>
+              </div>
+
+              <div className="rounded-[28px] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--card)_94%,transparent)] p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur md:p-7">
+                <div className="max-w-2xl">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--foreground-muted)]">
+                    What this means
+                  </p>
+                  <h2
+                    className="mt-2 text-2xl font-bold tracking-[-0.04em] text-[var(--foreground)]"
+                    style={{ fontFamily: "var(--font-plus-jakarta)" }}
+                  >
+                    A practical read on {displayHandle}
+                  </h2>
+                  <p className="mt-3 leading-7 text-[var(--foreground-muted)] md:leading-8">
+                    The estimate combines the backend score, public channel
+                    scale, upload depth, and earnings range. These explanations
+                    help translate the cards above into a decision-useful
+                    research summary.
+                  </p>
+                </div>
+
+                <div className="mt-6 grid gap-4 md:grid-cols-2">
+                  {[
+                    {
+                      label: "Channel size classification",
+                      value: data.insights.channel_size.replaceAll("_", " "),
+                      copy: getChannelSizeExplanation(data.insights.channel_size),
+                    },
+                    {
+                      label: "Confidence score",
+                      value: `${data.score.confidence}%`,
+                      copy: getConfidenceExplanation(data.score.confidence),
+                    },
+                    {
+                      label: "Earnings range",
+                      value: `${formatCurrency(data.earnings.monthly_low)}-${formatCurrency(data.earnings.monthly_high)} / month`,
+                      copy: getEarningsRangeExplanation(data.earnings),
+                    },
+                    {
+                      label: "Upload and activity read",
+                      value: data.insights.upload_strength,
+                      copy: getUploadStrengthExplanation(data.insights.upload_strength),
+                    },
+                    {
+                      label: "Business potential",
+                      value: data.insights.business_potential,
+                      copy: getBusinessPotentialExplanation(data.insights.business_potential),
+                    },
+                    {
+                      label: "Public-data caveat",
+                      value: "Estimate only",
+                      copy: "Public signals cannot reveal private YouTube Studio data, AdSense status, policy review outcomes, or official YouTube Partner Program approval.",
+                    },
+                  ].map((item) => (
+                    <div
+                      key={item.label}
+                      className="rounded-2xl border border-[var(--border)] bg-[var(--background-elevated)] p-4"
+                    >
+                      <p className="text-xs uppercase tracking-[0.12em] text-[var(--foreground-muted)]">
+                        {item.label}
+                      </p>
+                      <p className="mt-2 capitalize font-semibold tracking-[-0.02em] text-[var(--foreground)]">
+                        {item.value}
+                      </p>
+                      <p className="mt-2 text-sm leading-6 text-[var(--foreground-muted)]">
+                        {item.copy}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_88%,transparent)] p-4 text-sm leading-7 text-[var(--foreground-muted)] md:p-5">
+                  <p>
+                    Suggested next step: compare this result against the
+                    channel&apos;s recent uploads, content category, audience, and
+                    any public business signals. Use the{" "}
+                    <Link
+                      href="/methodology"
+                      className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+                    >
+                      methodology
+                    </Link>{" "}
+                    to understand how the estimate is formed, and review the{" "}
+                    <Link
+                      href="/disclaimer"
+                      className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+                    >
+                      disclaimer
+                    </Link>{" "}
+                    before using the result for business decisions.
+                  </p>
+                </div>
               </div>
 
               <div className="grid gap-5 md:grid-cols-2 md:gap-6">
@@ -420,10 +650,24 @@ export default async function CheckPage({ params }: PageProps) {
                 </Link>
                 <span>•</span>
                 <Link
-                  href="/"
+                  href="/methodology"
                   className="font-medium text-[var(--brand)] transition duration-200 hover:text-[var(--brand-hover)]"
                 >
-                  Back to homepage
+                  Methodology
+                </Link>
+                <span>•</span>
+                <Link
+                  href="/faq"
+                  className="font-medium text-[var(--brand)] transition duration-200 hover:text-[var(--brand-hover)]"
+                >
+                  FAQ
+                </Link>
+                <span>•</span>
+                <Link
+                  href="/disclaimer"
+                  className="font-medium text-[var(--brand)] transition duration-200 hover:text-[var(--brand-hover)]"
+                >
+                  Disclaimer
                 </Link>
               </div>
             </>
@@ -431,14 +675,18 @@ export default async function CheckPage({ params }: PageProps) {
         </div>
       </div>
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
+      {indexable && (
+        <>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          />
+        </>
+      )}
     </main>
   );
 }

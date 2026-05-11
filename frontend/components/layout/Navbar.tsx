@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/app/im-logo-final.png";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { useAppTheme } from "@/providers/ThemeProvider";
 import { useAuth } from "@/hooks/useAuth";
@@ -53,21 +53,9 @@ const ACTIVE_CLASS =
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const toggleMenu = useCallback(() => {
-    setMenuOpen((prev) => {
-      if (prev) setOpenSections({});
-      return !prev;
-    });
-  }, []);
-  const toggleSection = useCallback((label: string) => {
-    setOpenSections((prev) => ({ ...prev, [label]: !prev[label] }));
-  }, []);
+  const toggleMenu = () => setMenuOpen((prev) => !prev);
   const { mode, toggleMode, mounted } = useAppTheme();
   const { user, loading, signInWithGoogle, signOut } = useAuth();
-
-  const themeLabel = mounted ? (mode === "light" ? "Dark" : "Light") : "Theme";
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[var(--background)]/90">

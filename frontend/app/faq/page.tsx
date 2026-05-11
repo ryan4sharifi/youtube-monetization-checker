@@ -108,7 +108,23 @@ export default function FAQPage() {
                 href="/guides"
                 className="inline-flex items-center gap-1 text-sm font-medium text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors focus:outline-none"
               >
-                Read full guide
+                Read full guides
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+
+              <Link
+                href="/methodology"
+                className="inline-flex items-center gap-1 text-sm font-medium text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors focus:outline-none"
+              >
+                View methodology
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+
+              <Link
+                href="/disclaimer"
+                className="inline-flex items-center gap-1 text-sm font-medium text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors focus:outline-none"
+              >
+                Read disclaimer
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>

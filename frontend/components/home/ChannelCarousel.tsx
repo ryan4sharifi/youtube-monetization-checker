@@ -14,10 +14,10 @@ interface Props {
 }
 
 export default function ChannelCarousel({ channels }: Props) {
-  if (!channels || channels.length === 0) return null;
-
   // duplicate for smooth infinite scroll
   const items = useMemo(() => [...channels, ...channels], [channels]);
+
+  if (channels.length === 0) return null;
 
   return (
     <div className="relative overflow-hidden">

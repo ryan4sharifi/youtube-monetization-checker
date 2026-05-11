@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import GuideHero from "@/components/guides/GuideHero";
 import GuideSection from "@/components/guides/GuideSection";
@@ -7,6 +8,17 @@ import ScoreCard from "@/components/result/ScoreCard";
 import EarningsEstimateCard from "@/components/result/EarningsEstimateCard";
 import ChannelInsightsCard from "@/components/result/ChannelInsightsCard";
 import ChannelCard from "@/components/result/ChannelCard";
+import { siteConfig } from "@/constants/site";
+
+export const metadata: Metadata = {
+  title: `Channel Comparison | ${siteConfig.shortName}`,
+  description:
+    "Compare two public YouTube channels using IsMonetized estimates and visible channel signals.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 // Fetch channel data using POST /api/check, matching check page logic
 async function fetchChannel(handle: string) {
@@ -54,6 +66,29 @@ function parseSlug(slug?: string) {
     channel1: c1.replace("@", "").trim().toLowerCase(),
     channel2: c2.replace("@", "").trim().toLowerCase(),
   };
+}
+
+function ChannelUnavailableCard({ handle }: { handle: string }) {
+  return (
+    <div className="rounded-[28px] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--card)_94%,transparent)] p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
+      <div className="flex items-center gap-4">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--card-muted)] text-sm font-medium text-[var(--foreground-muted)]">
+          @{handle.charAt(0).toUpperCase()}
+        </div>
+        <div className="min-w-0">
+          <h3 className="truncate text-lg font-semibold tracking-[-0.02em] text-[var(--foreground)]">
+            @{handle}
+          </h3>
+          <p className="text-sm text-[var(--foreground-muted)]/90">
+            Channel data unavailable
+          </p>
+        </div>
+      </div>
+      <div className="mt-5 rounded-2xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-4 text-center text-sm text-[var(--foreground-muted)]">
+        We could not load public data for this channel right now.
+      </div>
+    </div>
+  );
 }
 
 export default async function Page({
@@ -128,7 +163,11 @@ export default async function Page({
                   : "border-[var(--border)]"
               }`}
             >
-              <ChannelCard channel={data1} />
+              {data1 ? (
+                <ChannelCard channel={data1} />
+              ) : (
+                <ChannelUnavailableCard handle={channel1} />
+              )}
               <div className="mt-6 space-y-4">
                 <ScoreCard score={data1?.score} />
                 <EarningsEstimateCard
@@ -147,7 +186,11 @@ export default async function Page({
                   : "border-[var(--border)]"
               }`}
             >
-              <ChannelCard channel={data2} />
+              {data2 ? (
+                <ChannelCard channel={data2} />
+              ) : (
+                <ChannelUnavailableCard handle={channel2} />
+              )}
               <div className="mt-6 space-y-4">
                 <ScoreCard score={data2?.score} />
                 <EarningsEstimateCard

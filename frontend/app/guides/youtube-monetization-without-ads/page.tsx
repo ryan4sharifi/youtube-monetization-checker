@@ -1,16 +1,20 @@
 
 
 import type { Metadata } from "next";
+import { siteConfig } from "@/constants/site";
 import GuideHero from "@/components/guides/GuideHero";
 import GuideSection from "@/components/guides/GuideSection";
 import GuideList from "@/components/guides/GuideList";
 import GuideCTA from "@/components/guides/GuideCTA";
 import { HandCoins } from "lucide-react";
 
+const pageUrl = `${siteConfig.url}/guides/youtube-monetization-without-ads`;
+
 export const metadata: Metadata = {
   title: "How to Make Money on YouTube Without Ads (Real Methods)",
   description:
     "Learn practical ways creators make money on YouTube without relying on ad revenue.",
+  alternates: { canonical: pageUrl },
 };
 
 export default function Page() {

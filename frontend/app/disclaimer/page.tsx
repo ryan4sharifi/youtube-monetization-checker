@@ -8,14 +8,14 @@ const pageUrl = `${siteConfig.url}/disclaimer`;
 export const metadata: Metadata = {
   title: `Disclaimer | ${siteConfig.name}`,
   description:
-    "Understand how this YouTube monetization checker works and its limitations.",
+    "Understand how IsMonetized estimates YouTube monetization signals, earnings ranges, and public-data limitations.",
   alternates: {
     canonical: pageUrl,
   },
   openGraph: {
     title: `Disclaimer | ${siteConfig.name}`,
     description:
-      "Understand how this YouTube monetization checker works and its limitations.",
+      "Understand how IsMonetized estimates YouTube monetization signals, earnings ranges, and public-data limitations.",
     url: pageUrl,
     siteName: siteConfig.name,
     images: [siteConfig.ogImage],
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `Disclaimer | ${siteConfig.name}`,
     description:
-      "Understand how this YouTube monetization checker works and its limitations.",
+      "Understand how IsMonetized estimates YouTube monetization signals, earnings ranges, and public-data limitations.",
     images: [siteConfig.ogImage],
   },
 };
@@ -50,8 +50,9 @@ export default function DisclaimerPage() {
             </h1>
 
             <p className="max-w-2xl text-sm leading-6 text-[var(--foreground-muted)] md:text-base">
-              This page explains the limitations of {siteConfig.name} and how to
-              interpret the results provided by the tool.
+              This page explains what {siteConfig.shortName} can and cannot
+              tell you, how estimates should be interpreted, and why results are
+              not official YouTube confirmation.
             </p>
           </div>
 
@@ -65,9 +66,11 @@ export default function DisclaimerPage() {
               <div>
                 <h2 className="text-lg font-semibold">No official confirmation</h2>
                 <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
-                  {siteConfig.name} does not provide official confirmation of
-                  whether a YouTube channel is monetized. Only YouTube can
-                  confirm a channel’s monetization status.
+                  {siteConfig.shortName} does not provide official confirmation
+                  of whether a YouTube channel is monetized. Results are
+                  estimates based on public signals only. Only YouTube, Google,
+                  or the channel owner can confirm official monetization,
+                  AdSense, revenue, or YouTube Partner Program status.
                 </p>
               </div>
             </div>
@@ -78,34 +81,77 @@ export default function DisclaimerPage() {
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
               <h3 className="text-base font-semibold">Estimates only</h3>
               <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
-                All results are based on publicly available signals such as
-                subscriber count, views, upload activity, and visible trends.
-                These are used to estimate likelihood, not certainty.
+                Monetization status, confidence scores, reasoning signals, and
+                channel insights are estimated from publicly available signals
+                such as subscriber count, views, video count, upload activity,
+                and visible channel trends. They indicate likelihood, not
+                certainty.
               </p>
             </div>
 
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
               <h3 className="text-base font-semibold">No access to private data</h3>
               <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
-                This tool does not access YouTube Studio, internal systems, or
-                any private creator data. It relies strictly on public
-                information.
+                This tool does not access private YouTube Studio data, AdSense
+                accounts, YouTube Partner Program records, creator revenue
+                accounts, internal platform systems, or private channel
+                analytics. It relies on public information only.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
+              <h3 className="text-base font-semibold">Earnings are not guaranteed</h3>
+              <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
+                Earnings estimates, RPM ranges, CPM ranges, revenue ranges, and
+                performance projections are informational estimates only. Actual
+                earnings can vary widely and are not guaranteed.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
+              <h3 className="text-base font-semibold">Public signals have limits</h3>
+              <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
+                Public YouTube data may be incomplete, delayed, hidden,
+                unavailable, outdated, or inaccurate. Channel owners can change
+                settings, remove videos, hide metrics, or update content at any
+                time.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
+              <h3 className="text-base font-semibold">No platform-performance guarantees</h3>
+              <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
+                {siteConfig.shortName} does not guarantee monetization status,
+                revenue, RPM, CPM, views, subscribers, growth, watch time,
+                eligibility, policy compliance, or future channel performance.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
+              <h3 className="text-base font-semibold">Independent from YouTube and Google</h3>
+              <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
+                {siteConfig.shortName} is independent and is not affiliated
+                with, endorsed by, sponsored by, or officially connected to
+                YouTube, Google, or Alphabet.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
+              <h3 className="text-base font-semibold">Use as one research signal</h3>
+              <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
+                Do not make financial, business, legal, platform, partnership,
+                investment, hiring, or content-strategy decisions based only on
+                {siteConfig.shortName} estimates. Verify important decisions
+                with official sources or qualified advisors.
               </p>
             </div>
 
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
               <h3 className="text-base font-semibold">Results may change</h3>
               <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
-                Channel performance changes over time. A channel that appears
-                monetized today may not meet requirements later, and vice versa.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm transition-colors">
-              <h3 className="text-base font-semibold">Use for research only</h3>
-              <p className="mt-1.5 text-sm leading-6 text-[var(--foreground-muted)]">
-                This tool is intended for informational and research purposes. It
-                should not be used as definitive proof of monetization status.
+                Channel performance, public metrics, platform policies, and data
+                availability can change over time. A result that appears
+                reasonable today may become outdated later.
               </p>
             </div>
           </div>

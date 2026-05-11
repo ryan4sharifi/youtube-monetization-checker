@@ -7,29 +7,31 @@ import FeatureHighlights from "@/components/home/FeatureHighlights";
 import HowItWorks from "@/components/home/HowItWorks";
 import ExamplePreview from "@/components/home/ExamplePreview";
 import FinalCTA from "@/components/home/FinalCTA";
-import { useState } from "react";
+import { buildCheckPathForQuery } from "@/lib/channelRoutes";
+
+type FeaturedChannel = {
+  title: string;
+  handle: string | null;
+  thumbnail_url: string | null;
+  subscriber_count?: number | null;
+};
 
 type Props = {
-  featuredChannels?: any[];
+  featuredChannels?: FeaturedChannel[];
 };
 
 export default function HomeClient({ featuredChannels = [] }: Props) {
-  const [loading, setLoading] = useState(false);
-
   const handleSearch = (query: string) => {
     if (!query) return;
 
-    const cleaned = query.replace(/^@/, "");
-    const encoded = encodeURIComponent(cleaned);
-
-    window.location.href = `/check/${encoded}`;
+    window.location.href = buildCheckPathForQuery(query);
   };
 
   return (
     <main className="w-full">
       <HeroSection
         onSearch={handleSearch}
-        loading={loading}
+        loading={false}
         featuredChannels={featuredChannels}
       />
 

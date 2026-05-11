@@ -18,7 +18,7 @@ const items = [
   {
     title: "Clean shareable result pages",
     description:
-      "Every check can become a dedicated, SEO-friendly result page that is easy to revisit, share, and index.",
+      "Every successful check becomes a clear result page that is easy to revisit, share, and interpret.",
     icon: TrendingUp,
   },
   {

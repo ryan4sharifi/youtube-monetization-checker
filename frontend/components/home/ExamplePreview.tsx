@@ -71,7 +71,7 @@ export default function ExamplePreview() {
 
           <div className="mt-6 flex flex-wrap items-center gap-3 text-sm">
             <Link
-              href="/check/@FoxNews"
+              href="/check/@foxnews"
               className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand)] px-4 py-2.5 text-sm font-medium text-white !text-white transition-all hover:bg-[var(--brand-hover)] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[color:color-mix(in_srgb,var(--brand)_12%,transparent)]"
             >
               View live example

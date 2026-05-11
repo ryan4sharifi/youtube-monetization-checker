@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 const steps = [
   {
     step: "01",
@@ -66,6 +68,15 @@ export default function HowItWorks() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-6 flex justify-center">
+          <Link
+            href="/methodology"
+            className="text-sm font-medium text-[var(--brand)] transition-colors hover:text-[var(--brand-hover)]"
+          >
+            See how the estimate is calculated
+          </Link>
         </div>
       </div>
     </section>

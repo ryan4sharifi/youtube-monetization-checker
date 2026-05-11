@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import SearchBox from "@/components/home/SearchBox";
-import { supabase } from "@/services/supabaseClient";
 import SearchLimitModal from "@/components/ui/SearchLimitModal";
 
 

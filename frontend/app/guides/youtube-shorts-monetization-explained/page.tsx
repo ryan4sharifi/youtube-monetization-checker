@@ -1,16 +1,20 @@
 
 
 import type { Metadata } from "next";
+import { siteConfig } from "@/constants/site";
 import GuideHero from "@/components/guides/GuideHero";
 import GuideSection from "@/components/guides/GuideSection";
 import GuideList from "@/components/guides/GuideList";
 import GuideCTA from "@/components/guides/GuideCTA";
 import { PlaySquare } from "lucide-react";
 
+const pageUrl = `${siteConfig.url}/guides/youtube-shorts-monetization-explained`;
+
 export const metadata: Metadata = {
   title: "YouTube Shorts Monetization Explained (How It Actually Pays)",
   description:
     "Understand how YouTube Shorts monetization works and how much creators can realistically earn from Shorts.",
+  alternates: { canonical: pageUrl },
 };
 
 export default function Page() {

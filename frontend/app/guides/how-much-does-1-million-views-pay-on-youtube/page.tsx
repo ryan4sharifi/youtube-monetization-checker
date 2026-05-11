@@ -1,16 +1,20 @@
 
 
 import type { Metadata } from "next";
+import { siteConfig } from "@/constants/site";
 import GuideHero from "@/components/guides/GuideHero";
 import GuideSection from "@/components/guides/GuideSection";
 import GuideList from "@/components/guides/GuideList";
 import GuideCTA from "@/components/guides/GuideCTA";
 import { DollarSign } from "lucide-react";
 
+const pageUrl = `${siteConfig.url}/guides/how-much-does-1-million-views-pay-on-youtube`;
+
 export const metadata: Metadata = {
   title: "How Much Does 1 Million Views Pay on YouTube? (Real Earnings)",
   description:
     "See how much 1 million YouTube views actually pay and what factors can increase or decrease earnings.",
+  alternates: { canonical: pageUrl },
 };
 
 export default function Page() {

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { Check, ThumbsUp, ThumbsDown, Gauge } from "lucide-react";
+import { Check, ThumbsUp, ThumbsDown, Gauge, type LucideIcon } from "lucide-react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 if (!API_URL) {
@@ -21,58 +21,61 @@ const LABELS: Record<Rating, string> = {
   not_accurate: "Not accurate",
 };
 
-const ICONS: Record<Rating, any> = {
+const ICONS: Record<Rating, LucideIcon> = {
   very_accurate: ThumbsUp,
   somewhat: Gauge,
   not_accurate: ThumbsDown,
 };
 
+type Summary = {
+  total: number;
+  accuracy_score: number | null;
+};
+
+function isRating(value: unknown): value is Rating {
+  return typeof value === "string" && value in LABELS;
+}
+
 export default function FeedbackCard({ handle }: Props) {
-  const { user } = useAuth();
-
-  if (!handle) {
-    console.error("FeedbackCard: missing handle");
-    return null;
-  }
-
-  if (!API_URL) {
-    return null;
-  }
-
-  const normalizedHandle = useMemo(
-    () => handle.replace(/^@/, "").toLowerCase(),
-    [handle]
-  );
-
+  const { user, session } = useAuth();
+  const accessToken = session?.access_token;
+  const normalizedHandle = useMemo(() => handle.replace(/^@/, "").toLowerCase(), [handle]);
   const [selected, setSelected] = useState<Rating | null>(null);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [checking, setChecking] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  type Summary = {
-    total: number;
-    accuracy_score: number | null;
-  };
-
   const [summary, setSummary] = useState<Summary | null>(null);
 
   useEffect(() => {
     let cancelled = false;
 
     const fetchAll = async () => {
-      if (!API_URL || !normalizedHandle) return;
+      if (!API_URL || !normalizedHandle) {
+        if (!cancelled) setChecking(false);
+        return;
+      }
+
       // fetch user-specific feedback
-      if (user?.id) {
+      if (user?.id && accessToken) {
         try {
           const res = await fetch(
-            `${API_URL}/feedback?channel_handle=${normalizedHandle}&user_id=${user.id}`,
-            { cache: "no-store" }
+            `${API_URL}/feedback?channel_handle=${encodeURIComponent(
+              normalizedHandle
+            )}`,
+            {
+              cache: "no-store",
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
           );
 
           if (res.ok) {
             const data = await res.json();
-            if (!cancelled && data?.rating) {
-              setSelected(data.rating as Rating);
+            const rating = data?.rating;
+            if (!cancelled && isRating(rating)) {
+              setSelected(rating);
               setSubmitted(true);
             }
           }
@@ -103,12 +106,25 @@ export default function FeedbackCard({ handle }: Props) {
     return () => {
       cancelled = true;
     };
-  }, [normalizedHandle, user?.id]);
+  }, [accessToken, normalizedHandle, user?.id]);
+
+  if (!handle) {
+    console.error("FeedbackCard: missing handle");
+    return null;
+  }
+
+  if (!API_URL) {
+    return null;
+  }
 
   const submitFeedback = async (rating: Rating) => {
     if (!user?.id) return;
     if (loading || submitted) return;
     if (!API_URL || !normalizedHandle) return;
+    if (!accessToken) {
+      setError("Please sign in again to rate this estimate.");
+      return;
+    }
 
     setError(null);
     setSelected(rating);
@@ -119,13 +135,19 @@ export default function FeedbackCard({ handle }: Props) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
           channel_handle: normalizedHandle,
           rating,
-          user_id: user.id,
         }),
       });
+
+      if (res.status === 429) {
+        setError("Too many feedback submissions. Please try again later.");
+        setSelected(null);
+        return;
+      }
 
       if (!res.ok) throw new Error("Failed to submit");
 

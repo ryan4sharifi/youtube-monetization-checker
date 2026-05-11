@@ -45,7 +45,7 @@ export default function FinalCTA() {
             </Link>
 
             <Link
-              href="/check/@FoxNews"
+              href="/check/@foxnews"
               className="inline-flex h-11 min-w-[180px] items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--background-elevated)] px-4 text-sm font-medium text-[var(--foreground)] transition-colors hover:border-[var(--border-strong)]"
             >
               View example result

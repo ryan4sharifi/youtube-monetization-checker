@@ -1,46 +1,32 @@
-"use client";
-import { useState } from "react";
-import GuidesHero from "@/components/guides/GuidesHero";
-import GuideCard from "@/components/guides/GuideCard";
-import GuideCTA from "@/components/guides/GuideCTA";
-import { DollarSign, Eye, ShieldCheck, Users, Zap } from "lucide-react";
-import { guides as allGuides } from "@/lib/guides";
+import type { Metadata } from "next";
+import GuidesIndexClient from "@/components/guides/GuidesIndexClient";
+import { siteConfig } from "@/constants/site";
+
+const pageUrl = `${siteConfig.url}/guides`;
+
+export const metadata: Metadata = {
+  title: `YouTube Monetization Guides | ${siteConfig.name}`,
+  description:
+    "Detailed guides on YouTube monetization, RPM, CPM, public channel signals, earnings estimates, and how to interpret monetization likelihood.",
+  alternates: { canonical: pageUrl },
+  openGraph: {
+    title: `YouTube Monetization Guides | ${siteConfig.name}`,
+    description:
+      "Learn how YouTube monetization works and how to interpret public signals, earnings ranges, RPM, CPM, and channel activity.",
+    url: pageUrl,
+    siteName: siteConfig.name,
+    images: [siteConfig.ogImage],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `YouTube Monetization Guides | ${siteConfig.name}`,
+    description:
+      "Practical guides for understanding YouTube monetization, public data limits, and earnings estimates.",
+    images: [siteConfig.ogImage],
+  },
+};
 
 export default function GuidesPage() {
-  const [showAll, setShowAll] = useState(false);
-
-  return (
-    <div className="w-full px-6 md:px-10 pt-6 md:pt-10">
-      <div className="mx-auto max-w-6xl space-y-7 md:space-y-8">
-        <GuidesHero
-          title="YouTube Monetization Guides"
-          description="Explore how YouTube monetization works — from requirements and earnings to analyzing whether a channel is actually monetized."
-        />
-
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {allGuides.slice(0, showAll ? allGuides.length : 6).map((guide) => (
-            <GuideCard
-              key={guide.slug}
-              href={`/guides/${guide.slug}`}
-              title={guide.title}
-              description={guide.description}
-            />
-          ))}
-        </div>
-
-        {allGuides.length > 6 && (
-          <div className="flex justify-center pt-2 md:pt-4">
-            <button
-              onClick={() => setShowAll((prev) => !prev)}
-              className="inline-flex items-center gap-2 rounded-2xl border border-[var(--border)] bg-[var(--background-elevated)] px-5 py-2.5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[color:color-mix(in_srgb,var(--background)_92%,transparent)]"
-            >
-              {showAll ? "Show less" : "See more"}
-            </button>
-          </div>
-        )}
-
-        <GuideCTA />
-      </div>
-    </div>
-  );
+  return <GuidesIndexClient />;
 }

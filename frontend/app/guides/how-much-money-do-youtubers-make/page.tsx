@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { DollarSign } from "lucide-react";
 import { siteConfig } from "@/constants/site";
 import GuideHero from "@/components/guides/GuideHero";
@@ -14,13 +15,20 @@ export const metadata: Metadata = {
     "Learn how much money YouTubers make, how YouTube monetization works, and what affects earnings.",
   alternates: { canonical: pageUrl },
   openGraph: {
-    title: `How Much Money Do YouTubers Make?`,
+    title: `How Much Money Do YouTubers Make? | ${siteConfig.name}`,
     description:
       "Understand YouTube earnings, CPM, RPM, and how creators make money.",
     url: pageUrl,
     siteName: siteConfig.name,
     images: [siteConfig.ogImage],
     type: "article",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `How Much Money Do YouTubers Make? | ${siteConfig.name}`,
+    description:
+      "Understand realistic YouTube earnings, RPM ranges, and why two channels with the same views can earn very different amounts.",
+    images: [siteConfig.ogImage],
   },
 };
 
@@ -51,6 +59,44 @@ export default function Page() {
             />
           </GuideSection>
 
+          <GuideSection title="Example RPM ranges by content type">
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              Public earnings estimates usually start with RPM, or revenue per
+              1,000 views. These examples are not guarantees, but they show why
+              a channel&apos;s topic and audience can matter as much as its view
+              count.
+            </p>
+
+            <div className="overflow-x-auto rounded-2xl border border-[var(--border)]">
+              <table className="min-w-full divide-y divide-[var(--border)] text-sm">
+                <thead className="bg-[var(--background-elevated)] text-left text-xs uppercase tracking-[0.12em] text-[var(--foreground-muted)]">
+                  <tr>
+                    <th className="px-4 py-3 font-medium">Content type</th>
+                    <th className="px-4 py-3 font-medium">Lower RPM</th>
+                    <th className="px-4 py-3 font-medium">Typical RPM</th>
+                    <th className="px-4 py-3 font-medium">Higher RPM</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[var(--border)] bg-[var(--card)]">
+                  {[
+                    ["Entertainment", "$0.50", "$2.00", "$4.00"],
+                    ["Gaming", "$0.75", "$2.50", "$5.00"],
+                    ["Education", "$1.50", "$4.00", "$8.00"],
+                    ["Technology", "$2.00", "$5.00", "$10.00"],
+                    ["Finance", "$4.00", "$8.00", "$15.00+"],
+                  ].map(([type, low, typical, high]) => (
+                    <tr key={type}>
+                      <td className="px-4 py-3 font-medium text-[var(--foreground)]">{type}</td>
+                      <td className="px-4 py-3 text-[var(--foreground-muted)]">{low}</td>
+                      <td className="px-4 py-3 text-[var(--foreground-muted)]">{typical}</td>
+                      <td className="px-4 py-3 text-[var(--foreground-muted)]">{high}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </GuideSection>
+
           <GuideSection title="The reality behind YouTube earnings">
             <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
               Not all views are equal. Two channels with the same number of views can earn completely different amounts depending on who is watching and what the content is about.
@@ -74,6 +120,26 @@ export default function Page() {
                 "Revenue streams: sponsorships and affiliates often outperform ads",
               ]}
             />
+          </GuideSection>
+
+          <GuideSection title="Why estimates should be ranges">
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              A single earnings number looks precise, but it is usually less
+              honest than a range. Public data does not reveal the creator&apos;s
+              actual RPM, audience geography, ad fill, limited-ads status,
+              memberships, sponsorships, or affiliate revenue.
+            </p>
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              IsMonetized estimates a range by combining likely monthly views
+              with RPM assumptions. You can see the public-data model on the{" "}
+              <Link
+                href="/methodology"
+                className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+              >
+                methodology page
+              </Link>
+              .
+            </p>
           </GuideSection>
 
           <GuideSection title="Common questions">

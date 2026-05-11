@@ -1,16 +1,20 @@
 
 
 import type { Metadata } from "next";
+import { siteConfig } from "@/constants/site";
 import GuideHero from "@/components/guides/GuideHero";
 import GuideSection from "@/components/guides/GuideSection";
 import GuideList from "@/components/guides/GuideList";
 import GuideCTA from "@/components/guides/GuideCTA";
 import { AlertCircle } from "lucide-react";
 
+const pageUrl = `${siteConfig.url}/guides/why-some-youtube-channels-are-not-monetized`;
+
 export const metadata: Metadata = {
   title: "Why Some YouTube Channels Are Not Monetized (Common Reasons)",
   description:
     "Understand the most common reasons YouTube channels fail to get monetized and how to avoid them.",
+  alternates: { canonical: pageUrl },
 };
 
 export default function Page() {

@@ -1,30 +1,51 @@
-from fastapi import APIRouter, HTTPException
+import logging
+
+from fastapi import APIRouter, Depends, HTTPException, Request
+
 from app.schemas.feedback import FeedbackCreate
 from app.services.feedback_service import create_feedback
+from app.utils.auth import AuthenticatedUser, get_current_user
+from app.utils.rate_limit import enforce_rate_limit, get_client_identifier
 from app.utils.supabase_client import supabase
 
 router = APIRouter()
+logger = logging.getLogger(__name__)
+
 
 @router.post("/feedback")
-async def submit_feedback(payload: FeedbackCreate):
+async def submit_feedback(
+    payload: FeedbackCreate,
+    user: AuthenticatedUser = Depends(get_current_user),
+):
+    enforce_rate_limit(f"feedback:user:{user.id}", limit=5, window_seconds=86400)
+
     try:
         data = payload.dict()
+        data["user_id"] = user.id
         result = await create_feedback(data)
         return {"success": True, "data": result}
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid feedback request")
     except Exception:
+        logger.exception("Failed to submit feedback")
         raise HTTPException(status_code=500, detail="Failed to submit feedback")
 
+
 @router.get("/feedback")
-async def get_feedback(channel_handle: str, user_id: str):
+async def get_feedback(
+    channel_handle: str,
+    user: AuthenticatedUser = Depends(get_current_user),
+):
+    enforce_rate_limit(f"feedback:get:user:{user.id}", limit=120, window_seconds=3600)
+
     try:
+        handle = channel_handle.lstrip("@").lower()
         res = (
             supabase
             .table("feedback")
-            .select("*")
-            .eq("channel_handle", channel_handle)
-            .eq("user_id", user_id)
+            .select("rating")
+            .eq("channel_handle", handle)
+            .eq("user_id", user.id)
             .limit(1)
             .execute()
         )
@@ -34,10 +55,19 @@ async def get_feedback(channel_handle: str, user_id: str):
 
         return {}
     except Exception:
+        logger.exception("Failed to fetch feedback")
         raise HTTPException(status_code=500, detail="Failed to fetch feedback")
-    
+
+
 @router.get("/feedback/summary")
-async def feedback_summary(channel_handle: str):
+async def feedback_summary(channel_handle: str, request: Request):
+    client_id = get_client_identifier(request)
+    enforce_rate_limit(
+        f"feedback-summary:ip:{client_id}",
+        limit=60,
+        window_seconds=3600,
+    )
+
     try:
         handle = channel_handle.lstrip("@").lower()
 
@@ -80,4 +110,5 @@ async def feedback_summary(channel_handle: str):
         }
 
     except Exception:
+        logger.exception("Failed to compute feedback summary")
         raise HTTPException(status_code=500, detail="Failed to compute summary")

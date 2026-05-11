@@ -1,16 +1,20 @@
 
 
 import type { Metadata } from "next";
+import { siteConfig } from "@/constants/site";
 import GuideHero from "@/components/guides/GuideHero";
 import GuideSection from "@/components/guides/GuideSection";
 import GuideList from "@/components/guides/GuideList";
 import GuideCTA from "@/components/guides/GuideCTA";
 import { Clock } from "lucide-react";
 
+const pageUrl = `${siteConfig.url}/guides/how-long-does-it-take-to-get-monetized-on-youtube`;
+
 export const metadata: Metadata = {
   title: "How Long Does It Take to Get Monetized on YouTube? (Real Timeline)",
   description:
     "Learn how long it actually takes to get monetized on YouTube and what factors speed up or slow down the process.",
+  alternates: { canonical: pageUrl },
 };
 
 export default function Page() {

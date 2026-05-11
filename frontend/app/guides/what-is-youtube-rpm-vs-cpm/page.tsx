@@ -1,16 +1,35 @@
-
-
 import type { Metadata } from "next";
+import Link from "next/link";
 import GuideHero from "@/components/guides/GuideHero";
 import GuideSection from "@/components/guides/GuideSection";
 import GuideList from "@/components/guides/GuideList";
 import GuideCTA from "@/components/guides/GuideCTA";
 import { BarChart3 } from "lucide-react";
+import { siteConfig } from "@/constants/site";
+
+const pageUrl = `${siteConfig.url}/guides/what-is-youtube-rpm-vs-cpm`;
 
 export const metadata: Metadata = {
-  title: "RPM vs CPM on YouTube (What Actually Matters?)",
+  title: `RPM vs CPM on YouTube | ${siteConfig.name}`,
   description:
-    "Understand the difference between RPM and CPM on YouTube and which one actually reflects your earnings.",
+    "Understand the difference between RPM and CPM on YouTube, why RPM matters more for creator earnings, and how RPM affects channel revenue estimates.",
+  alternates: { canonical: pageUrl },
+  openGraph: {
+    title: `RPM vs CPM on YouTube | ${siteConfig.name}`,
+    description:
+      "A practical explanation of YouTube RPM, CPM, creator earnings, and why public estimates should use ranges.",
+    url: pageUrl,
+    siteName: siteConfig.name,
+    images: [siteConfig.ogImage],
+    type: "article",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `RPM vs CPM on YouTube | ${siteConfig.name}`,
+    description:
+      "Learn how RPM and CPM differ and why RPM is the better metric for estimating YouTube creator earnings.",
+    images: [siteConfig.ogImage],
+  },
 };
 
 export default function Page() {
@@ -69,9 +88,57 @@ export default function Page() {
             </p>
           </GuideSection>
 
+          <GuideSection title="Simple example">
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]">
+              Suppose a video gets 100,000 views and advertisers pay a $12 CPM.
+              Not every view creates an ad impression, YouTube keeps a revenue
+              share, and some views may not be monetized. The creator might end
+              up with a $3 to $5 RPM, which means roughly $300 to $500 from
+              those 100,000 views.
+            </p>
+
+            <div className="overflow-x-auto rounded-2xl border border-[var(--border)]">
+              <table className="min-w-full divide-y divide-[var(--border)] text-sm">
+                <thead className="bg-[var(--background-elevated)] text-left text-xs uppercase tracking-[0.12em] text-[var(--foreground-muted)]">
+                  <tr>
+                    <th className="px-4 py-3 font-medium">Metric</th>
+                    <th className="px-4 py-3 font-medium">Example</th>
+                    <th className="px-4 py-3 font-medium">Meaning</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[var(--border)] bg-[var(--card)]">
+                  {[
+                    ["Views", "100,000", "Total public video views"],
+                    ["CPM", "$12", "Advertiser spend per 1,000 ad impressions"],
+                    ["RPM", "$3-$5", "Estimated creator revenue per 1,000 views"],
+                    ["Estimated revenue", "$300-$500", "Views divided by 1,000, multiplied by RPM"],
+                  ].map(([metric, example, meaning]) => (
+                    <tr key={metric}>
+                      <td className="px-4 py-3 font-medium text-[var(--foreground)]">{metric}</td>
+                      <td className="px-4 py-3 text-[var(--foreground-muted)]">{example}</td>
+                      <td className="px-4 py-3 text-[var(--foreground-muted)]">{meaning}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </GuideSection>
+
           <GuideSection title="Which one should you focus on?">
             <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]">
               RPM is the number that actually matters for creators. It tells you how much you earn from your content. CPM is useful for understanding your niche and advertiser demand, but it doesn’t reflect your real income.
+            </p>
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]">
+              That is why IsMonetized uses RPM-style assumptions for earnings
+              ranges instead of CPM. The goal is to estimate possible creator
+              revenue, not advertiser spend. Read the{" "}
+              <Link
+                href="/methodology"
+                className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+              >
+                methodology
+              </Link>{" "}
+              for the current public-data assumptions.
             </p>
           </GuideSection>
 

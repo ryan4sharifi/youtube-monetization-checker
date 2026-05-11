@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.config import supabase
+from app.config import get_allowed_origins
 from app.routers.check import router as check_router
 from app.routers.feedback import router as feedback_router
 from app.routers.saved import router as saved_router
@@ -9,7 +9,7 @@ app = FastAPI(title="YouTube Monetization Checker API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # dev only
+    allow_origins=get_allowed_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -27,12 +27,3 @@ def root():
 @app.get("/health")
 def health():
     return {"status": "ok"}
-
-
-@app.get("/test-db")
-def test_db():
-    response = supabase.table("channels").select("*").limit(1).execute()
-    return {
-        "success": True,
-        "data": response.data,
-    }

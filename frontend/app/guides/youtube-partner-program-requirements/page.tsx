@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Users } from "lucide-react";
 import { siteConfig } from "@/constants/site";
 import GuideHero from "@/components/guides/GuideHero";
@@ -114,6 +115,42 @@ export default function YouTubePartnerProgramRequirementsPage() {
             />
           </GuideSection>
 
+          <GuideSection title="Public requirement map">
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              Public metrics can show whether a channel appears close to
+              eligibility, but they do not show whether YouTube has approved the
+              channel or whether the creator has completed private account
+              setup.
+            </p>
+
+            <div className="overflow-x-auto rounded-2xl border border-[var(--border)]">
+              <table className="min-w-full divide-y divide-[var(--border)] text-sm">
+                <thead className="bg-[var(--background-elevated)] text-left text-xs uppercase tracking-[0.12em] text-[var(--foreground-muted)]">
+                  <tr>
+                    <th className="px-4 py-3 font-medium">Area</th>
+                    <th className="px-4 py-3 font-medium">Publicly visible?</th>
+                    <th className="px-4 py-3 font-medium">How to interpret it</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[var(--border)] bg-[var(--card)]">
+                  {[
+                    ["Subscribers", "Usually visible", "Good eligibility signal, but not approval"],
+                    ["Watch hours", "Not directly visible", "Must be inferred from views and activity"],
+                    ["Shorts eligibility", "Partially visible", "Public Shorts views can be incomplete or hard to isolate"],
+                    ["Policy standing", "Not visible", "A major approval factor that public tools cannot confirm"],
+                    ["AdSense setup", "Not visible", "Private account and payment status are not public"],
+                  ].map(([area, visible, interpretation]) => (
+                    <tr key={area}>
+                      <td className="px-4 py-3 font-medium text-[var(--foreground)]">{area}</td>
+                      <td className="px-4 py-3 text-[var(--foreground-muted)]">{visible}</td>
+                      <td className="px-4 py-3 text-[var(--foreground-muted)]">{interpretation}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </GuideSection>
+
           <GuideSection title="What public numbers cannot prove">
             <GuideList
               items={[
@@ -132,6 +169,32 @@ export default function YouTubePartnerProgramRequirementsPage() {
             </p>
             <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
               This is why some channels that look eligible publicly are not approved, while others with smaller audiences can still be monetized if they meet quality standards.
+            </p>
+          </GuideSection>
+
+          <GuideSection title="How to use public data responsibly">
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              Use public metrics to estimate likelihood, not to make final
+              claims. If a channel appears eligible but has low activity, reused
+              content, policy-sensitive topics, or inconsistent performance, the
+              public data may overstate its monetization odds.
+            </p>
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              To see how IsMonetized weighs those signals, review the{" "}
+              <Link
+                href="/methodology"
+                className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+              >
+                methodology
+              </Link>{" "}
+              or run a channel through the{" "}
+              <Link
+                href="/"
+                className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+              >
+                checker
+              </Link>
+              .
             </p>
           </GuideSection>
 

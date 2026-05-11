@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
+import { siteConfig } from "@/constants/site";
 import GuideHero from "@/components/guides/GuideHero";
 import GuideSection from "@/components/guides/GuideSection";
 import GuideList from "@/components/guides/GuideList";
 import GuideCTA from "@/components/guides/GuideCTA";
 import { TrendingUp } from "lucide-react";
 
+const pageUrl = `${siteConfig.url}/guides/how-to-increase-youtube-rpm`;
+
 export const metadata: Metadata = {
   title: "How to Increase Your YouTube RPM (Practical Tips)",
   description:
     "Learn practical ways to increase your YouTube RPM without relying only on more views.",
+  alternates: { canonical: pageUrl },
 };
 
 export default function Page() {

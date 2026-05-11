@@ -1,16 +1,20 @@
 
 
 import type { Metadata } from "next";
+import { siteConfig } from "@/constants/site";
 import GuideHero from "@/components/guides/GuideHero";
 import GuideSection from "@/components/guides/GuideSection";
 import GuideList from "@/components/guides/GuideList";
 import GuideCTA from "@/components/guides/GuideCTA";
 import { CircleDollarSign } from "lucide-react";
 
+const pageUrl = `${siteConfig.url}/guides/how-youtube-monetization-works`;
+
 export const metadata: Metadata = {
   title: "How YouTube Monetization Actually Works (Simple Breakdown)",
   description:
     "A clear, realistic explanation of how YouTube monetization works and how creators actually make money.",
+  alternates: { canonical: pageUrl },
 };
 
 export default function Page() {

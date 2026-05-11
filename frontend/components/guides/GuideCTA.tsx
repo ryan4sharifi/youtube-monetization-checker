@@ -31,6 +31,14 @@ export default function GuideCTA() {
           Explore guides
           <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1.5" />
         </Link>
+
+        <Link
+          href="/methodology"
+          className="inline-flex items-center gap-1 text-sm font-medium text-[var(--foreground-muted)] transition-colors hover:text-[var(--foreground)]"
+        >
+          View methodology
+          <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1.5" />
+        </Link>
       </div>
     </div>
   );

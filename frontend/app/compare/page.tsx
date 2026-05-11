@@ -1,4 +1,15 @@
+import type { Metadata } from "next";
 import CompareClient from "@/components/compare/CompareClient";
+import { siteConfig } from "@/constants/site";
+
+const pageUrl = `${siteConfig.url}/compare`;
+
+export const metadata: Metadata = {
+  title: `Compare YouTube Channels | ${siteConfig.shortName}`,
+  description:
+    "Compare public YouTube channel signals, monetization estimates, audience size, and earnings ranges side by side.",
+  alternates: { canonical: pageUrl },
+};
 
 async function getFeaturedChannels() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
