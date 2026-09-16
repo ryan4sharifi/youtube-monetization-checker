@@ -54,13 +54,13 @@ export default function ExamplePreview() {
             className="mt-2 text-2xl font-semibold tracking-[-0.03em] md:text-3xl"
             style={{ fontFamily: "var(--font-plus-jakarta)" }}
           >
-            See the kind of result your visitors will get
+            See what a channel result includes
           </h2>
 
           <p className="mt-3 max-w-xl text-sm leading-6 text-[var(--foreground-muted)]">
-            Give users an instant, polished breakdown of a channel’s likely
-            monetization status, confidence score, and the signals behind the
-            estimate — all on a page that feels premium and easy to trust.
+            Review a channel&apos;s likely monetization status, confidence score,
+            public data, earnings range, and the signals behind the estimate in
+            one clear report.
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
@@ -79,7 +79,7 @@ export default function ExamplePreview() {
             </Link>
 
             <span className="text-[var(--foreground-muted)]">
-              Built for clean UX, SEO pages, and conversion.
+              Estimates are based on public data, not private YouTube Studio access.
             </span>
           </div>
         </div>

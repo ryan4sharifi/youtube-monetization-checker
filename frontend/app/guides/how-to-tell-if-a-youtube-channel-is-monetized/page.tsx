@@ -42,7 +42,7 @@ export default function HowToTellIfChannelIsMonetizedPage() {
     description:
       "Learn how to estimate whether a YouTube channel is monetized using public signals.",
     author: {
-      "@type": "Person",
+      "@type": "Organization",
       name: siteConfig.author,
     },
     publisher: {

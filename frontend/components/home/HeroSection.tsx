@@ -50,21 +50,21 @@ export default function HeroSection({
 
   return (
     <div className="w-full px-6 md:px-10">
-      <section className="relative mx-auto w-full max-w-6xl rounded-[28px] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--card)_94%,transparent)] px-6 py-7 shadow-[0_16px_40px_rgba(15,23,42,0.06)] md:px-10 md:py-9">
+      <section id="hero" className="relative mx-auto w-full max-w-6xl rounded-[28px] border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--card)_94%,transparent)] px-6 py-7 shadow-[0_16px_40px_rgba(15,23,42,0.06)] md:px-10 md:py-9">
       <div className="relative z-10 mx-auto max-w-6xl text-center">
         <div className="mb-4 inline-flex items-center rounded-full border border-[var(--border)] bg-[var(--background-elevated)] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--foreground-muted)]">
-          YouTube Monetization Checker
+          Free YouTube Monetization Checker
         </div>
 
         <h1
           className="mx-auto max-w-3xl text-[26px] md:text-[32px] font-semibold tracking-[-0.035em]"
           style={{ fontFamily: "var(--font-plus-jakarta)" }}
         >
-          Instantly estimate YouTube monetization
+          Check if a YouTube channel is monetized
         </h1>
 
         <p className="mx-auto mt-3 max-w-xl text-[15px] leading-[1.65] text-[var(--foreground-muted)]">
-          Analyze channels using real public signals like subscribers, views, and activity — in seconds.
+          Enter any channel to estimate its monetization status and earnings from public subscribers, views, uploads, and activity signals.
         </p>
 
         <div className="mx-auto mt-6 w-full max-w-3xl md:max-w-4xl">

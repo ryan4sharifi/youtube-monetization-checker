@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 import ChannelCard from "@/components/result/ChannelCard";
 import ScoreCard from "@/components/result/ScoreCard";
 import SignalsCard from "@/components/result/SignalsCard";
@@ -74,26 +75,29 @@ type CheckResponse = {
   };
 };
 
-async function getChannelData(handle: string): Promise<CheckResponse | null> {
+const getChannelData = cache(async function getChannelData(
+  handle: string
+): Promise<CheckResponse | null> {
   if (!API_BASE) return null;
 
-  try {
-    const res = await fetch(`${API_BASE}/api/check`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ query: handle }),
-      cache: "no-store",
-    });
+  const res = await fetch(`${API_BASE}/api/check`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ query: handle }),
+    cache: "no-store",
+    signal: AbortSignal.timeout(10_000),
+  });
 
-    if (!res.ok) return null;
+  if (res.status === 400 || res.status === 404) return null;
 
-    return res.json();
-  } catch {
-    return null;
+  if (!res.ok) {
+    throw new Error(`Channel lookup failed with status ${res.status}`);
   }
-}
+
+  return res.json();
+});
 
 function getCanonicalHandleForResult(data: CheckResponse | null, input: string) {
   return (
@@ -233,7 +237,7 @@ function getEarningsRangeExplanation(earnings: CheckResponse["earnings"]) {
 function getNoindexRobots() {
   return {
     index: false,
-    follow: false,
+    follow: true,
   };
 }
 
@@ -245,40 +249,38 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const canonicalHandle = getCanonicalHandleForResult(data, input);
   const canonicalUrl = canonicalHandle
     ? buildCheckCanonicalUrl(canonicalHandle, siteConfig.url)
-    : `${siteConfig.url}/check/${encodeURIComponent(input)}`;
+    : null;
   const displayHandle = canonicalHandle ?? input;
   const indexable = Boolean(canonicalHandle && isIndexableCheckResult(data));
+  const channelName = data?.channel.title?.trim() || displayHandle;
+  const pageTitle = indexable
+    ? `Is ${channelName} Monetized on YouTube? | IsMonetized`
+    : "Channel Result Unavailable | IsMonetized";
 
   return {
-    title: indexable
-      ? `Is ${displayHandle} monetized? | ${siteConfig.name}`
-      : `Channel result unavailable | ${siteConfig.name}`,
+    title: pageTitle,
     description: indexable
-      ? `Check if ${displayHandle} is monetized on YouTube. View an estimate based on subscribers, views, upload history, and other public signals.`
+      ? `Check if ${channelName} (${displayHandle}) is likely monetized on YouTube. See public channel signals, confidence, and estimated earnings.`
       : "This channel result could not be indexed because the public data is unavailable, invalid, or insufficient.",
     robots: indexable ? undefined : getNoindexRobots(),
     alternates: {
-      canonical: canonicalUrl ?? undefined,
+      canonical: indexable ? canonicalUrl ?? undefined : undefined,
     },
     openGraph: {
-      title: indexable
-        ? `Is ${displayHandle} monetized? | ${siteConfig.name}`
-        : `Channel result unavailable | ${siteConfig.name}`,
+      title: pageTitle,
       description: indexable
-        ? `Estimate whether ${displayHandle} is monetized on YouTube using public channel signals.`
+        ? `Estimate whether ${channelName} is monetized on YouTube using public channel signals.`
         : "This channel result is not indexed because the public data is unavailable, invalid, or insufficient.",
-      url: canonicalUrl ?? undefined,
+      url: indexable ? canonicalUrl ?? undefined : undefined,
       siteName: siteConfig.name,
       images: [siteConfig.ogImage],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: indexable
-        ? `Is ${displayHandle} monetized? | ${siteConfig.name}`
-        : `Channel result unavailable | ${siteConfig.name}`,
+      title: pageTitle,
       description: indexable
-        ? `Estimate whether ${displayHandle} is monetized on YouTube using public signals.`
+        ? `Estimate whether ${channelName} is monetized on YouTube using public signals.`
         : "This channel result is not indexed because the public data is unavailable, invalid, or insufficient.",
       images: [siteConfig.ogImage],
     },
@@ -313,6 +315,7 @@ export default async function CheckPage({ params }: PageProps) {
   const canonicalUrl =
     canonicalHandle && buildCheckCanonicalUrl(canonicalHandle, siteConfig.url);
   const indexable = Boolean(canonicalHandle && isIndexableCheckResult(data));
+  const channelName = data?.channel.title?.trim() || displayHandle;
 
   const relatedGuides = guides
     .slice(0, 4)
@@ -356,9 +359,9 @@ export default async function CheckPage({ params }: PageProps) {
   const websiteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: `Is ${displayHandle} monetized?`,
+    name: `Is ${channelName} monetized on YouTube?`,
     url: canonicalUrl,
-    description: `Estimate whether ${displayHandle} is monetized on YouTube using public signals.`,
+    description: `Estimate whether ${channelName} is monetized on YouTube using public signals.`,
   };
 
   return (
@@ -374,7 +377,7 @@ export default async function CheckPage({ params }: PageProps) {
               className="max-w-3xl text-2xl font-semibold tracking-[-0.03em] md:text-3xl"
               style={{ fontFamily: "var(--font-plus-jakarta)" }}
             >
-              Is {displayHandle} monetized on YouTube?
+              Is {channelName} monetized on YouTube?
             </h1>
             <p className="max-w-2xl text-sm leading-6 text-[var(--foreground-muted)]">
               This page provides an estimate of whether <span className="font-medium text-[var(--foreground)]">{displayHandle}</span> is monetized on YouTube using public signals such as subscribers, views, and upload activity. This is not an official YouTube confirmation, but a data-driven indication of whether the channel appears likely to be monetized.

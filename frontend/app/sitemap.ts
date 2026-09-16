@@ -2,13 +2,13 @@ import type { MetadataRoute } from "next";
 import { siteConfig } from "@/constants/site";
 import { guides } from "@/lib/guides";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const revalidate = 86400;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base =
     process.env.NEXT_PUBLIC_SITE_URL ||
     siteConfig.url ||
     "https://ismonetized.com";
-
-  const now = new Date();
 
   const staticRoutes = [
     "",
@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/contact",
     "/faq",
     "/methodology",
+    "/compare",
     "/guides",
     "/privacy-policy",
     "/terms-of-service",
@@ -24,20 +25,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const guideRoutes = guides.map((g) => `/guides/${g.slug}`);
 
-  const allRoutes = [
+  const allRoutes = Array.from(new Set([
     ...staticRoutes,
     ...guideRoutes,
-  ];
+  ]));
 
   return allRoutes.map((path) => ({
     url: `${base}${path}`,
-    lastModified: now,
-    changeFrequency: path === "" ? "daily" : "weekly",
+    changeFrequency: path === "" ? "daily" : "monthly",
     priority:
       path === ""
         ? 1
         : path.startsWith("/guides")
-        ? 0.8
+        ? 0.7
         : 0.6,
   }));
 }

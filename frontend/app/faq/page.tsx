@@ -5,6 +5,33 @@ import { siteConfig } from "@/constants/site";
 
 const pageUrl = `${siteConfig.url}/faq`;
 
+const faqItems = [
+  {
+    q: "Can you actually tell if a YouTube channel is monetized?",
+    a: "Not directly. YouTube does not publish another channel's official monetization status. IsMonetized combines subscribers, views, uploads, activity, and other public signals to provide an estimate.",
+  },
+  {
+    q: "What are the current requirements to get monetized?",
+    a: "For ad and YouTube Premium revenue, a channel generally needs 1,000 subscribers plus either 4,000 qualified watch hours in 12 months or 10 million qualified Shorts views in 90 days. Expanded YPP access can begin earlier in eligible regions.",
+  },
+  {
+    q: "How accurate is this checker?",
+    a: "It is an estimate, not official confirmation. The result is most useful as a consistent summary of public evidence and is less certain when channel data is limited.",
+  },
+  {
+    q: "Why do I sometimes see ads on small or inactive channels?",
+    a: "YouTube can place ads on videos without proving that the channel owner receives revenue. That is why ads alone are not a reliable monetization signal.",
+  },
+  {
+    q: "Why can results change over time?",
+    a: "Channels grow, slow down, and change their upload patterns. Estimates can change when newer public subscriber, view, video, or activity data becomes available.",
+  },
+  {
+    q: "Can a channel lose monetization?",
+    a: "Yes. YouTube continuously reviews channels for policy and program compliance, so access to monetization features can change over time.",
+  },
+] as const;
+
 export const metadata: Metadata = {
   title: `FAQ | ${siteConfig.name}`,
   description:
@@ -22,6 +49,19 @@ export const metadata: Metadata = {
 };
 
 export default function FAQPage() {
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
+      },
+    })),
+  };
+
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors">
       <div className="w-full px-6 md:px-10 pt-4 md:pt-6 xl:pt-8">
@@ -48,32 +88,7 @@ export default function FAQPage() {
 
           {/* Questions */}
           <div className="space-y-4">
-            {[
-              {
-                q: "Can you actually tell if a YouTube channel is monetized?",
-                a: "Not directly. YouTube doesn’t display monetization status publicly. What you can do is look at patterns — subscriber count, recent views, upload consistency, and whether ads appear. This tool uses those signals to make an educated estimate.",
-              },
-              {
-                q: "What are the exact requirements to get monetized?",
-                a: "Most creators qualify once they hit 1,000 subscribers and 4,000 watch hours over the past 12 months. Alternatively, Shorts creators can qualify with 10 million views over 90 days. Even then, approval isn’t guaranteed — YouTube still reviews the channel.",
-              },
-              {
-                q: "How accurate is this checker?",
-                a: "It’s not official, but it’s directionally useful. The goal isn’t to give a yes/no answer with certainty — it’s to give you a realistic sense of whether a channel is likely monetized based on publicly available data.",
-              },
-              {
-                q: "Why do I sometimes see ads on small or inactive channels?",
-                a: "YouTube can place ads on videos even if the creator isn’t in the Partner Program. That’s why ads alone aren’t a reliable signal of monetization.",
-              },
-              {
-                q: "Why can results change over time?",
-                a: "Channels grow, slow down, or change their upload patterns. A channel that looked inactive last month might suddenly become active again. The estimates adjust based on the latest data.",
-              },
-              {
-                q: "Can a channel lose monetization?",
-                a: "Yes. If a channel becomes inactive, violates policies, or no longer meets requirements, monetization can be removed. That’s another reason why status isn’t always stable.",
-              },
-            ].map((item, index) => (
+            {faqItems.map((item, index) => (
               <div
                 key={index}
                 className="group rounded-[24px] border border-[var(--border)] bg-[var(--card)] p-5 md:p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--border-strong)] hover:shadow-[0_14px_40px_rgba(15,23,42,0.10)]"
@@ -131,6 +146,10 @@ export default function FAQPage() {
           </div>
         </div>
       </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
     </main>
   );
 }

@@ -1,11 +1,5 @@
 export const guides = [
   {
-    slug: "can-you-see-if-a-youtube-channel-is-monetized",
-    title: "Can You See If a YouTube Channel Is Monetized?",
-    description:
-      "Understand whether you can directly tell if a YouTube channel is monetized and what signals to look for.",
-  },
-  {
     slug: "how-many-subscribers-to-get-monetized-on-youtube",
     title: "How Many Subscribers to Get Monetized on YouTube",
     description:
@@ -22,12 +16,6 @@ export const guides = [
     title: "How to Tell If a YouTube Channel Is Monetized",
     description:
       "Learn how to estimate whether a channel is monetized using public signals like views and activity.",
-  },
-  {
-    slug: "youtube-monetization-checker",
-    title: "YouTube Monetization Checker Explained",
-    description:
-      "Understand how a monetization checker works and how it estimates channel monetization.",
   },
   {
     slug: "youtube-monetization-rules",

@@ -12,7 +12,7 @@ const pageUrl = `${siteConfig.url}/guides/youtube-partner-program-requirements`;
 export const metadata: Metadata = {
   title: `YouTube Partner Program Requirements | ${siteConfig.name}`,
   description:
-    "Learn the YouTube Partner Program requirements, including public eligibility signals, policy considerations, and what creators need before monetization approval.",
+    "See current YouTube Partner Program requirements for fan funding and ad revenue, including subscribers, watch hours, Shorts views, and review rules.",
   alternates: {
     canonical: pageUrl,
   },
@@ -42,7 +42,7 @@ export default function YouTubePartnerProgramRequirementsPage() {
     description:
       "A guide to YouTube Partner Program requirements, public eligibility signals, and monetization approval factors.",
     author: {
-      "@type": "Person",
+      "@type": "Organization",
       name: siteConfig.author,
     },
     publisher: {
@@ -50,6 +50,7 @@ export default function YouTubePartnerProgramRequirementsPage() {
       name: siteConfig.name,
     },
     mainEntityOfPage: pageUrl,
+    dateModified: "2026-09-16",
   };
 
   const faqJsonLd = {
@@ -61,7 +62,7 @@ export default function YouTubePartnerProgramRequirementsPage() {
         name: "What are the YouTube Partner Program requirements?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "They include eligibility thresholds, policy compliance, review approval, and availability in a supported market.",
+          text: "For full ad revenue, a channel generally needs 1,000 subscribers plus either 4,000 qualified public watch hours in 12 months or 10 million qualified Shorts views in 90 days. In eligible regions, expanded YPP access can begin at 500 subscribers, three public uploads in 90 days, and either 3,000 qualified watch hours or 3 million qualified Shorts views.",
         },
       },
       {
@@ -91,7 +92,7 @@ export default function YouTubePartnerProgramRequirementsPage() {
             eyebrow="YouTube Monetization Guide"
             icon={<Users />}
             title="YouTube Partner Program requirements"
-            description="Most creators focus on hitting public thresholds — but approval for the YouTube Partner Program depends just as much on policy compliance and review. Numbers get you eligible; consistency and content quality get you approved."
+            description="YouTube has separate thresholds for early fan-funding access and full ad-revenue sharing. Reaching the numbers makes a channel eligible to apply, but policy compliance and YouTube's review still determine approval."
           />
 
           <GuideSection title="The short answer">
@@ -100,6 +101,45 @@ export default function YouTubePartnerProgramRequirementsPage() {
             </p>
             <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
               Meeting thresholds makes you eligible — it does not guarantee approval.
+            </p>
+          </GuideSection>
+
+          <GuideSection title="Current YouTube monetization thresholds">
+            <div className="overflow-x-auto border-y border-[var(--border)]">
+              <table className="min-w-full divide-y divide-[var(--border)] text-sm">
+                <thead className="text-left text-xs uppercase tracking-[0.12em] text-[var(--foreground-muted)]">
+                  <tr>
+                    <th className="px-3 py-3 font-medium">Access level</th>
+                    <th className="px-3 py-3 font-medium">Subscribers</th>
+                    <th className="px-3 py-3 font-medium">Long-form path</th>
+                    <th className="px-3 py-3 font-medium">Shorts path</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[var(--border)]">
+                  <tr>
+                    <td className="px-3 py-4 font-medium text-[var(--foreground)]">Expanded YPP in eligible regions</td>
+                    <td className="px-3 py-4 text-[var(--foreground-muted)]">500 plus 3 public uploads in 90 days</td>
+                    <td className="px-3 py-4 text-[var(--foreground-muted)]">3,000 qualified watch hours in 12 months</td>
+                    <td className="px-3 py-4 text-[var(--foreground-muted)]">3 million qualified Shorts views in 90 days</td>
+                  </tr>
+                  <tr>
+                    <td className="px-3 py-4 font-medium text-[var(--foreground)]">Ads and YouTube Premium revenue</td>
+                    <td className="px-3 py-4 text-[var(--foreground-muted)]">1,000</td>
+                    <td className="px-3 py-4 text-[var(--foreground-muted)]">4,000 qualified watch hours in 12 months</td>
+                    <td className="px-3 py-4 text-[var(--foreground-muted)]">10 million qualified Shorts views in 90 days</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-sm leading-6 text-[var(--foreground-muted)]">
+              Expanded YPP availability varies by country. Requirements and feature access can change, so confirm the latest details in the{" "}
+              <a
+                href="https://support.google.com/youtube/answer/94522"
+                className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]"
+              >
+                official YouTube monetization guide
+              </a>
+              .
             </p>
           </GuideSection>
 
@@ -219,7 +259,7 @@ export default function YouTubePartnerProgramRequirementsPage() {
           <GuideSection title="Common questions">
             <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
               <strong className="text-[var(--foreground)]">What are the YouTube Partner Program requirements?</strong><br />
-              They include eligibility thresholds, policy compliance, review approval, and availability in a supported market.
+              Full ad-revenue access generally requires 1,000 subscribers plus 4,000 qualified watch hours in 12 months or 10 million qualified Shorts views in 90 days. Expanded YPP has a lower entry tier in eligible regions.
             </p>
             <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
               <strong className="text-[var(--foreground)]">Does meeting thresholds guarantee monetization?</strong><br />

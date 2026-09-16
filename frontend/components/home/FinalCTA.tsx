@@ -24,8 +24,8 @@ export default function FinalCTA() {
           </h2>
 
           <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[var(--foreground-muted)]">
-            Get a clean monetization estimate using public signals like subscribers,
-            views, upload history, and channel activity — with no login required.
+            Get a clear monetization estimate using public signals like subscribers,
+            views, upload history, and channel activity without connecting YouTube Studio.
           </p>
 
           <div className="mt-5 flex flex-col items-center justify-center gap-2 sm:flex-row">

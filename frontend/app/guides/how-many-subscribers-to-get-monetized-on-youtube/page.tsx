@@ -11,7 +11,7 @@ const pageUrl = `${siteConfig.url}/guides/how-many-subscribers-to-get-monetized-
 export const metadata: Metadata = {
   title: `How Many Subscribers to Get Monetized on YouTube? | ${siteConfig.name}`,
   description:
-    "Learn how many subscribers and watch hours you need to get monetized on YouTube and join the YouTube Partner Program.",
+    "You need 1,000 subscribers for YouTube ad revenue, while expanded YPP access may begin at 500. See the current watch-hour and Shorts requirements.",
   alternates: { canonical: pageUrl },
   openGraph: {
     title: `How Many Subscribers to Get Monetized on YouTube?`,
@@ -33,7 +33,7 @@ export default function Page() {
             eyebrow="YouTube Monetization Guide"
             icon={<Users />}
             title="How many subscribers do you need to get monetized on YouTube?"
-            description="Most people think you just need 1,000 subscribers to get monetized on YouTube — but that’s only part of the picture. In reality, monetization depends on a combination of subscribers, watch time, and consistent content performance."
+            description="You generally need 1,000 subscribers for ad and YouTube Premium revenue. In eligible regions, some fan-funding features may become available at 500 subscribers when the additional activity threshold is met."
           />
 
           <GuideSection title="YouTube monetization requirements">
@@ -43,9 +43,10 @@ export default function Page() {
 
             <GuideList
               items={[
-                "At least 1,000 subscribers (required for all monetization paths)",
-                "4,000 public watch hours in the last 12 months (long-form content)",
-                "OR 10 million Shorts views in the last 90 days (Shorts path)",
+                "For ad revenue: 1,000 subscribers and 4,000 qualified watch hours in the last 12 months",
+                "OR, for the Shorts path: 1,000 subscribers and 10 million qualified Shorts views in 90 days",
+                "For expanded YPP in eligible regions: 500 subscribers and 3 public uploads in 90 days",
+                "Expanded YPP also requires 3,000 qualified watch hours or 3 million qualified Shorts views",
                 "Follow YouTube’s monetization and advertiser-friendly policies",
                 "No active community guideline strikes",
               ]}
@@ -80,7 +81,16 @@ export default function Page() {
           <GuideSection title="Common questions">
             <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
               <strong className="text-[var(--foreground)]">Can you get monetized with less than 1,000 subscribers?</strong><br />
-              No. YouTube requires at least 1,000 subscribers before you can apply for full monetization, and you still need to meet watch time or Shorts view requirements.
+              Some fan-funding and shopping features can become available through expanded YPP at 500 subscribers in eligible regions. Full ad and YouTube Premium revenue generally requires 1,000 subscribers plus the watch-hour or Shorts threshold.
+            </p>
+
+            <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">
+              <strong className="text-[var(--foreground)]">Where should I verify the current requirements?</strong><br />
+              Check the{" "}
+              <a href="https://support.google.com/youtube/answer/94522" className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]">
+                official YouTube monetization guide
+              </a>{" "}
+              because thresholds and regional availability can change.
             </p>
 
             <p className="leading-7 md:leading-8 text-[var(--foreground-muted)]/90">

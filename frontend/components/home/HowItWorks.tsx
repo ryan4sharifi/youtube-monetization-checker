@@ -40,7 +40,7 @@ export default function HowItWorks() {
           </h2>
 
           <p className="mt-3 max-w-xl mx-auto text-sm leading-6 text-[var(--foreground-muted)]">
-            Get a monetization estimate in seconds using structured public data — no login, no friction.
+            Get a monetization estimate in seconds using structured public data without connecting a YouTube account.
           </p>
         </div>
 
